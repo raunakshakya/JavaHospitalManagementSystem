@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hospitalmgmtsystemproject;
+package com.hospitalmgmtsystem.project;
 
 import java.awt.FlowLayout;
 import javax.swing.JInternalFrame;
@@ -20,7 +20,7 @@ public class VersionPage extends JInternalFrame {
     JPanel pn;
 
     public VersionPage() {
-        super("Current Version");
+        super(LayoutUtils.CURRENT_VERSION_TITLE);
 
         pn = new JPanel();
         lblversion = new JLabel("Version Page");

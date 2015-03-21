@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hospitalmgmtsystemproject;
+package com.hospitalmgmtsystem.project;
 
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import java.awt.Color;
@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -20,6 +21,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -183,7 +185,7 @@ public class HospitalMgmtSystemProject implements ActionListener {
                         passwordField.setText("");
                         frame.setVisible(false);
                         frame.dispose();
-                        new IndexPage();
+                        IndexPage indexPage = new IndexPage();
                     }
                 }
                 if (flag != 1) {
@@ -191,7 +193,7 @@ public class HospitalMgmtSystemProject implements ActionListener {
                     passwordField.setText("");
                     JOptionPane.showMessageDialog(null, "User Name and Password Invalid", "Login Failure", JOptionPane.WARNING_MESSAGE);
                 }
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | SQLException | HeadlessException e) {
                 JOptionPane.showMessageDialog(null, "Error in Logging in!");
             }
         } else if (ae.getSource() == cancelBtn) {

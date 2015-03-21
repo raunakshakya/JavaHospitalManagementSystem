@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hospitalmgmtsystemproject;
+package com.hospitalmgmtsystem.project;
 
 /**
  *
@@ -13,6 +13,7 @@ public class LayoutUtils {
     
     //Application title
     public static final String APPLICATION_TITLE = "Vayodha Hospital Management System";
+    public static final String CURRENT_VERSION_TITLE = "Current Version";
     
     //Login window width and height
     public static final Integer LOGIN_WINDOW_WIDTH = 550;

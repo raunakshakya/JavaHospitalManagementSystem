@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hospitalmgmtsystemproject;
+package com.hospitalmgmtsystem.project;
 
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
@@ -18,7 +18,7 @@ import javax.swing.*;
  *
  * @author Raunak Shakya
  */
-public final class DoctorAdd extends JInternalFrame implements ActionListener {
+public final class StaffAdd extends JInternalFrame implements ActionListener {
 
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -26,60 +26,61 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
 
     JLabel mainTitle, subTitle, subprofTitle,
             lblfullname, lbladdress, lblcontact, lbldob, lbldobformat, lblgender,
-            lblspec, lbldoj, lbldojformat, lblshiftfron, lblshiftto, lbltimeformat1, lbltimeformat2;
+            lbldept, lblstatus, lblpost, lbldoj, lbldojformat, lblshiftfron, lblshiftto;
     JTextField txtfullname, txtcontact, txtdob, txtgender;
-    JTextField txtdoj, txtshiftfrom, txtshiftto;
-    TextArea txtaddress, txtSpec;
+    JTextField txtDept, txtpost, txtdoj, txtshiftfrom, txtshiftto;
+    TextArea txtaddress;
     JCheckBox chkboxStatus;
     CheckboxGroup cbmf;
     Checkbox cbm, cbf;
     JButton btnAdd, btnClear;
-    int doctorStatus;
+    int staffStatus;
 
-    public DoctorAdd() {
-        super("New Doctor Information");
+    public StaffAdd() {
+        super("New Staff Information");
 
         Container con = getContentPane();
 
         //Patient's Personal Information...
-        mainTitle = new JLabel("Add Doctor Information");
+        mainTitle = new JLabel("Add Staff Information");
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(LayoutUtils.HEADING_X_COORDINATE, LayoutUtils.HEADING_Y_COORDINATE, LayoutUtils.HEADING_HORIZONTAL_LENGTH, LayoutUtils.HEADING_VERTICAL_LENGTH);
         add(mainTitle);
 
         subTitle = new JLabel("Personal Information");
-        subTitle.setFont(new Font("Arial", Font.BOLD, 20));
+        subTitle.setFont(new Font("Arial", Font.BOLD, 18));
         subTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.UPPER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subTitle);
 
         lblfullname = new JLabel("Full Name :");
-        lblfullname.setBounds(100, 100, 70, 25);
+        lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, LayoutUtils.LABEL_LEFT_Y_COORDINATE, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
         txtfullname = new JTextField(30);
-        txtfullname.setBounds(220, 100, 250, 25);
+        txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtfullname);
 
         lbladdress = new JLabel("Address :");
-        lbladdress.setBounds(100, 140, 70, 25);
+        
+        lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
         txtaddress = new TextArea();
-        txtaddress.setBounds(220, 140, 250, 100);
+        txtaddress.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 140, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, 100);
         add(txtaddress);
 
         //Patient's Date Of Birth...
         lbldob = new JLabel("Date of Birth :");
-        lbldob.setBounds(540, 100, 120, 25);
+        lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
         txtdob = new JTextField(15);
-        txtdob.setBounds(670, 100, 120, 25);
+        txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdob);
         lbldobformat = new JLabel("(dd-mm-yyyy)");
-        lbldobformat.setBounds(800, 100, 100, 25);
+        lbldobformat.setBounds(800, 100, 100, 20);
         add(lbldobformat);
 
         //Gender...
         lblgender = new JLabel("Gender :");
-        lblgender.setBounds(540, 140, 50, 25);
+        lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
         cbm = new Checkbox("Male", cbmf, false);
@@ -91,10 +92,10 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
 
         //Telephone...
         lblcontact = new JLabel("Contact :");
-        lblcontact.setBounds(540, 180, 50, 25);
+        lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
         txtcontact = new JTextField(30);
-        txtcontact.setBounds(670, 180, 120, 25);
+        txtcontact.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 180, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtcontact);
 
         //Professional Information...
@@ -103,51 +104,57 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         subprofTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.LOWER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subprofTitle);
 
-        //Specialization...
-        lblspec = new JLabel("Specialization:");
-        lblspec.setBounds(100, 310, 100, 25);
-        add(lblspec);
-        txtSpec = new TextArea();
-        txtSpec.setBounds(220, 310, 250, 100);
-        add(txtSpec);
+        //Department...
+        lbldept = new JLabel("Department:");
+        lbldept.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lbldept);
+        txtDept = new JTextField(30);
+        txtDept.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(txtDept);
 
-        chkboxStatus = new JCheckBox("Status");
-        chkboxStatus.setBounds(220, 430, 100, 25);
+        //Post...
+        lblpost = new JLabel("Post:");
+        lblpost.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lblpost);
+        txtpost = new JTextField(30);
+        txtpost.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 350, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(txtpost);
+
+        //Status...
+        lblstatus = new JLabel("Status:");
+        lblstatus.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lblstatus);
+        chkboxStatus = new JCheckBox();
+        chkboxStatus.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(chkboxStatus);
-
-        //Date of Join...
-        lbldoj = new JLabel("Date Of Join :");
-        lbldoj.setBounds(540, 310, 120, 25);
-        add(lbldoj);
-        txtdoj = new JTextField(40);
-        txtdoj.setBounds(670, 310, 120, 25);
-        add(txtdoj);
-        lbldojformat = new JLabel("(dd-mm-yyyy)");
-        lbldojformat.setBounds(800, 310, 100, 25);
-        add(lbldojformat);
-
+        
         //Shift From...
         lblshiftfron = new JLabel("Shift From :");
-        lblshiftfron.setBounds(540, 350, 100, 25);
+        lblshiftfron.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftfron);
         txtshiftfrom = new JTextField(100);
-        txtshiftfrom.setBounds(670, 350, 120, 25);
+        txtshiftfrom.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtshiftfrom);
-        lbltimeformat1 = new JLabel("(hh-mm-ss)");
-        lbltimeformat1.setBounds(800, 350, 100, 25);
-        add(lbltimeformat1);
 
         //Shift To...
         lblshiftto = new JLabel("Shift To :");
-        lblshiftto.setBounds(540, 390, 100, 25);
+        lblshiftto.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftto);
         txtshiftto = new JTextField(100);
-        txtshiftto.setBounds(670, 390, 120, 25);
+        txtshiftto.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 350, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtshiftto);
-        lbltimeformat2 = new JLabel("(hh-mm-ss)");
-        lbltimeformat2.setBounds(800, 390, 100, 25);
-        add(lbltimeformat2);
 
+        //Date of Join...
+        lbldoj = new JLabel("Date Of Join :");
+        lbldoj.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lbldoj);
+        txtdoj = new JTextField(40);
+        txtdoj.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(txtdoj);
+        lbldojformat = new JLabel("(dd-mm-yyyy)");
+        lbldojformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 410, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(lbldojformat);
+        
         //Button to submit information...
         btnAdd = new JButton("ADD");
         btnAdd.setBounds(330, 520, 100, 30);
@@ -187,16 +194,16 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent ae) {
             txtfullname.setText("");
-            txtSpec.setText("");
+            txtDept.setText("");
             txtdob.setText("");
             cbmf.setSelectedCheckbox(null);
             txtaddress.setText("");
+            txtpost.setText("");
             chkboxStatus.setSelected(false);
             txtshiftfrom.setText("");
             txtcontact.setText("");
             txtshiftto.setText("");
             txtdoj.setText("");
-
         }
     }
 
@@ -207,7 +214,8 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
             String fullname = txtfullname.getText().trim();
             String address = txtaddress.getText().trim();
             String contact = txtcontact.getText().trim();
-            String specialization = txtSpec.getText().trim();
+            String department = txtDept.getText().trim();
+            String post = txtpost.getText().trim();
             String shiftto = txtshiftto.getText().trim();
             String shiftfrom = txtshiftfrom.getText().trim();
             String dob = txtdob.getText().trim();
@@ -221,29 +229,31 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
             }
 
             if (chkboxStatus.isSelected()) {
-                doctorStatus = 1;
+                staffStatus = 1;
             } else {
-                doctorStatus = 0;
+                staffStatus = 0;
             }
 
-            if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || specialization.isEmpty() || shiftto.isEmpty()
-                    || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
+            if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || department.isEmpty() || post.isEmpty() 
+                    || shiftto.isEmpty() || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
             } else {
                 try {
-                    stmt = conn.prepareStatement("INSERT INTO doctor_table(doctor_fullname, doctor_address, "
-                            + "doctor_contact, doctor_dateofbirth, doctor_dateofjoin, "
-                            + "doctor_specialization, doctor_workshiftfrom, doctor_workshiftto, doctor_gender, doctor_isactive) VALUES('" + fullname + "', '" + address + "', '" + contact + "', '"
-                            + dob + "', '" + doj + "', '" + specialization + "', '" + shiftfrom + "', '" + shiftto + "', '" + gender + "', '" + doctorStatus + "');");
+                    stmt = conn.prepareStatement("INSERT INTO staff_table(staff_fullname, staff_address, "
+                            + "staff_contact, staff_dateofbirth, staff_dateofjoin, "
+                            + "staff_department, staff_post, staff_workshiftfrom, staff_workshiftto, staff_gender, staff_isactive) VALUES('" + fullname + "', '" + address + "', '" + contact + "', '"
+                            + dob + "', '" + doj + "', '" + department + "', '" + post + "', '" + shiftfrom + "', '" + shiftto + "', '" + gender + "', '" + staffStatus + "');");
 
                     int success = stmt.executeUpdate();
                     if (success > 0) {
-                        JOptionPane.showMessageDialog(null, "New Doctor Has Been Added!!!", "Insert Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(new JFrame(), "New Staff Has Been Added!!!", "Insert Success", JOptionPane.INFORMATION_MESSAGE);
                     }
+                    conn.close();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Error in inserting Doctor Data!!!");
                 }
             }
         }
     }
+
 }

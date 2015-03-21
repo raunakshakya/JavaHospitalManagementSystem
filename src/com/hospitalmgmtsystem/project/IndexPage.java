@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hospitalmgmtsystemproject;
+package com.hospitalmgmtsystem.project;
 
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import java.awt.Color;
