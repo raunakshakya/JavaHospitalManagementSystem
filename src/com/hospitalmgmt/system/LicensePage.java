@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hospitalmgmtsystem.project;
+package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.system.utils.LayoutUtils;
 import javax.swing.JInternalFrame;
 
 /**
  *
  * @author Raunak Shakya
  */
-public class UpdatePage extends JInternalFrame {
+public class LicensePage extends JInternalFrame{
 
-    public UpdatePage() {
+    public LicensePage() {
 
-        super("Update");
+        super(LayoutUtils.LICENSE_TITLE);
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);

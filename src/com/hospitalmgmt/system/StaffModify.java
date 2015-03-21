@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hospitalmgmtsystem.project;
+package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.system.utils.LayoutUtils;
+import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
 import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -15,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,22 +29,22 @@ import javax.swing.JTextField;
  *
  * @author Raunak Shakya
  */
-public class StaffView extends JInternalFrame {
+public class StaffModify extends JInternalFrame {
 
     Connection conn = null;
-    PreparedStatement stmt1 = null;
-    PreparedStatement stmt2 = null;
-    ResultSet rs1 = null;
-    ResultSet rs2 = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
 
     JLabel mainTitle, lblInsertSNo, lblsubTitle, lblfullname, lbladdress, lblcontact, lblgender, lbldob, lbldf1,
             lblprofTitle, lbldepartment, lblstaffid, lwork, lblworkfrom, lblworkto, lbldoj, lbldf2, lblpost;
     JTextField txtfullname, txtcontact, txtgender, txtdob, txtstaffid, txtworkfrom, txtworkto, txtdoj;
     TextArea txtaddress, txtdepartment, txtpost;
-    JButton btnSubmit, btnClear;
+    JButton btnSubmit, btnClear, btnModify;
+    Checkbox cbm, cbf;
+    CheckboxGroup cbmf;
 
-    public StaffView() {
-        super("View Staff Information");
+    public StaffModify() {
+        super("Modify Staff Information");
 
         mainTitle = new JLabel("Staff Information");
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
@@ -67,6 +72,10 @@ public class StaffView extends JInternalFrame {
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
 
+        btnModify = new JButton("UPDATE STAFF");
+        btnModify.setBounds(540, 98, 150, 30);
+        add(btnModify);
+
         lblsubTitle = new JLabel("Personal Information");
         lblsubTitle.setFont(new Font("Arial", Font.BOLD, 20));
         lblsubTitle.setBounds(40, 150, 200, 30);
@@ -78,7 +87,6 @@ public class StaffView extends JInternalFrame {
 
         txtfullname = new JTextField(30);
         txtfullname.setBounds(200, 200, 200, 25);
-        txtfullname.setEditable(false);
         add(txtfullname);
 
         lbladdress = new JLabel("Address :");
@@ -87,7 +95,6 @@ public class StaffView extends JInternalFrame {
 
         txtaddress = new TextArea();
         txtaddress.setBounds(200, 240, 200, 100);
-        txtaddress.setEditable(false);
         add(txtaddress);
 
         lblcontact = new JLabel("Contact :");
@@ -96,17 +103,19 @@ public class StaffView extends JInternalFrame {
 
         txtcontact = new JTextField(30);
         txtcontact.setBounds(660, 200, 200, 25);
-        txtcontact.setEditable(false);
         add(txtcontact);
 
         lblgender = new JLabel("Gender :");
         lblgender.setBounds(540, 240, 60, 25);
         add(lblgender);
 
-        txtgender = new JTextField(50);
-        txtgender.setBounds(660, 240, 200, 25);
-        txtgender.setEditable(false);
-        add(txtgender);
+        cbmf = new CheckboxGroup();
+        cbm = new Checkbox("Male", cbmf, false);
+        cbf = new Checkbox("Female", cbmf, false);
+        cbm.setBounds(680, 240, 60, 25);
+        add(cbm);
+        cbf.setBounds(740, 240, 60, 25);
+        add(cbf);
 
         lbldob = new JLabel("Date of Birth :");
         lbldob.setBounds(540, 280, 120, 25);
@@ -114,7 +123,6 @@ public class StaffView extends JInternalFrame {
 
         txtdob = new JTextField(15);
         txtdob.setBounds(660, 280, 200, 25);
-        txtdob.setEditable(false);
         add(txtdob);
 
         lbldf1 = new JLabel("(dd-mm-yyyy)");
@@ -133,7 +141,6 @@ public class StaffView extends JInternalFrame {
 
         txtdepartment = new TextArea();
         txtdepartment.setBounds(200, 450, 200, 130);
-        txtdepartment.setEditable(false);
         add(txtdepartment);
 
         lbldoj = new JLabel("Date Of Join :");
@@ -142,7 +149,6 @@ public class StaffView extends JInternalFrame {
 
         txtdoj = new JTextField(40);
         txtdoj.setBounds(200, 600, 200, 25);
-        txtdoj.setEditable(false);
         add(txtdoj);
 
         lbldf2 = new JLabel("(dd-mm-yyyy)");
@@ -155,7 +161,6 @@ public class StaffView extends JInternalFrame {
 
         txtworkfrom = new JTextField(30);
         txtworkfrom.setBounds(660, 450, 200, 25);
-        txtworkfrom.setEditable(false);
         add(txtworkfrom);
 
         lblworkto = new JLabel("Shift To :");
@@ -164,7 +169,6 @@ public class StaffView extends JInternalFrame {
 
         txtworkto = new JTextField(30);
         txtworkto.setBounds(660, 490, 200, 25);
-        txtworkto.setEditable(false);
         add(txtworkto);
 
         lblpost = new JLabel("Job Post");
@@ -173,7 +177,6 @@ public class StaffView extends JInternalFrame {
 
         txtpost = new TextArea();
         txtpost.setBounds(660, 530, 200, 100);
-        txtpost.setEditable(false);
         add(txtpost);
 
         //Database Connection...
@@ -186,6 +189,7 @@ public class StaffView extends JInternalFrame {
 
         btnClear.addActionListener(new clear());
         btnSubmit.addActionListener(new submit());
+        btnModify.addActionListener(new modify());
 
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
@@ -196,25 +200,39 @@ public class StaffView extends JInternalFrame {
         setLayout(null);
     }
 
+//    public static void main(String[] args) {
+//
+//        try {
+//            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+//
+//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//            Logger.getLogger(StaffModify.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        StaffModify staffModify = new StaffModify();
+//    }
+
+    public void actionPerformed(ActionEvent ae) {
+    }
+
     class clear implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            txtstaffid.setText("");
+
             txtfullname.setText("");
-            txtaddress.setText("");
             txtcontact.setText("");
+            txtstaffid.setText("");
             txtworkfrom.setText("");
             txtworkto.setText("");
+            txtaddress.setText("");
             txtdepartment.setText("");
             txtpost.setText("");
-            txtdoj.setText("");
             txtdob.setText("");
-            txtgender.setText("");
-        }
-    }
+            txtdoj.setText("");
+            cbmf.setSelectedCheckbox(null);
 
-    public void actionPerformed(ActionEvent ae) {
+        }
     }
 
     class submit implements ActionListener {
@@ -222,53 +240,48 @@ public class StaffView extends JInternalFrame {
         @Override
         public void actionPerformed(ActionEvent ae) {
             try {
-                if (!txtstaffid.getText().trim().equals("")) {
-                    Integer num = Integer.parseInt(txtstaffid.getText());
-                    String name, addr, contact, dept, post, workf, workt, gender, dob, doj;
+                if (!txtstaffid.getText().isEmpty()) {
 
-                    stmt1 = conn.prepareStatement("SELECT * FROM staff_table WHERE staff_id=?");
-                    stmt1.setInt(1, num);
-                    ResultSet rs1 = stmt1.executeQuery();
+                    Integer num = Integer.parseInt(txtstaffid.getText().trim());
+                    String name, addr, contact, gender, dept, post, workf, workt, dob, doj;
 
-                    if (rs1.next()) {
-                        name = rs1.getString("staff_fullname");
-                        addr = rs1.getString("staff_address");
-                        contact = rs1.getString("staff_contact");
-                        gender = rs1.getString("staff_gender");
-                        dob = rs1.getString("staff_dateofbirth");
-                        doj = rs1.getString("staff_dateofjoin");
-                        dept = rs1.getString("staff_department");
-                        workf = rs1.getString("staff_workshiftfrom");
-                        workt = rs1.getString("staff_workshiftto");
-                        post = rs1.getString("staff_post");
+                    stmt = conn.prepareStatement("SELECT * FROM staff_table WHERE staff_id=?");
+                    stmt.setInt(1, num);
+                    rs = stmt.executeQuery();
+
+                    if (rs.next()) {
+                        name = rs.getString("staff_fullname");
+                        addr = rs.getString("staff_address");
+                        contact = rs.getString("staff_contact");
+                        gender = rs.getString("staff_gender");
+                        dept = rs.getString("staff_department");
+                        post = rs.getString("staff_post");
+                        workf = rs.getString("staff_workshiftfrom");
+                        workt = rs.getString("staff_workshiftto");
+                        dob = rs.getString("staff_dateofbirth");
+                        doj = rs.getString("staff_dateofjoin");
+
+                        if (gender.equals("M")) {
+                            cbm.setState(true);
+                        } else if (gender.equals("F")) {
+                            cbf.setState(true);
+                        }
 
                         txtfullname.setText(name);
                         txtaddress.setText(addr);
                         txtcontact.setText(contact);
                         txtdepartment.setText(dept);
+                        txtpost.setText(post);
                         txtworkfrom.setText(workf);
                         txtworkto.setText(workt);
                         txtdob.setText(dob);
                         txtdoj.setText(doj);
-                        txtgender.setText(gender);
-                        txtpost.setText(post);
 
                     } else {
-                        txtstaffid.setText("");
-                        txtfullname.setText("");
-                        txtaddress.setText("");
-                        txtcontact.setText("");
-                        txtworkfrom.setText("");
-                        txtworkto.setText("");
-                        txtdepartment.setText("");
-                        txtpost.setText("");
-                        txtdoj.setText("");
-                        txtdob.setText("");
-                        txtgender.setText("");
                         JOptionPane.showMessageDialog(null, "Staff Record Not Found!!!");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "First Enter the Staff ID!!!");
+                    JOptionPane.showMessageDialog(null, "First Enter the Staff ID......");
                 }
             } catch (SQLException sq) {
                 JOptionPane.showMessageDialog(null, "Error in retrieving Staff Data!!!");
@@ -276,4 +289,56 @@ public class StaffView extends JInternalFrame {
         }
     }
 
-}
+    class modify implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            try {
+                Integer num1 = Integer.parseInt(txtstaffid.getText().trim());
+                if (num1.equals(null)) {
+                    JOptionPane.showMessageDialog(null, "First Enter the Patient ID...");
+                } else {
+
+                    String name1 = txtfullname.getText().trim();
+                    String addr1 = txtaddress.getText().trim();
+                    String contact1 = txtcontact.getText().trim();
+                    String dept1 = txtdepartment.getText().trim();
+                    String workf1 = txtworkfrom.getText().trim();
+                    String workt1 = txtworkto.getText().trim();
+                    String dob1 = txtdob.getText().trim();
+                    String datedoj1 = txtdoj.getText().trim();
+
+                    String query = "UPDATE staff_table SET staff_fullname=?, staff_address=?, staff_contact=?, "
+                            + "staff_department=?, staff_gender=?, staff_workshiftfrom='" + workf1 + "', "
+                            + "staff_workshiftto='" + workt1 + "', staff_dateofbirth='" + dob1 + "', staff_dateofjoin='"
+                            + datedoj1 + "' WHERE staff_id=?";
+
+                    String gender1 = "";
+                    if (cbm.getState() == true) {
+                        gender1 = "M";
+                    }
+                    if (cbf.getState() == true) {
+                        gender1 = "F";
+                    }
+
+                    PreparedStatement stmt = conn.prepareStatement(query);
+                    stmt.setString(1, name1);
+                    stmt.setString(2, addr1);
+                    stmt.setString(3, contact1);
+                    stmt.setString(4, dept1);
+                    stmt.setString(5, gender1);
+                    stmt.setInt(6, num1);
+
+                    stmt.executeUpdate();
+
+                    JOptionPane.showMessageDialog(new JFrame(), "Data Modified successfully!", "Done!",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }catch (Exception e) {
+                JOptionPane.showMessageDialog(new JFrame(), "Error in updating Staff Data......", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            }
+        }
+
+    }

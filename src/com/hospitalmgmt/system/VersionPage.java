@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hospitalmgmtsystem.project;
+package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.system.utils.LayoutUtils;
 import java.awt.FlowLayout;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;

@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hospitalmgmtsystem.project;
+package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.system.utils.LayoutUtils;
+import com.hospitalmgmt.system.utils.DBConnectionUtils;
 import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -25,7 +26,7 @@ import javax.swing.JTextField;
  *
  * @author Raunak Shakya
  */
-public class DoctorView extends JInternalFrame {
+public class StaffView extends JInternalFrame {
 
     Connection conn = null;
     PreparedStatement stmt1 = null;
@@ -33,32 +34,32 @@ public class DoctorView extends JInternalFrame {
     ResultSet rs1 = null;
     ResultSet rs2 = null;
 
-    JLabel mainTitle, lblInsertDNo, lblsubTitle, lblfullname, lbladdress, lblcontact, lblgender, lbldob, lbldf1,
-            lblprofTitle, lblspecialization, lbldoctorid, lwork, lblworkfrom, lblworkto, lbldoj, lbldf2, lblpatientlist;
-    JTextField txtfullname, txtcontact, txtgender, txtdob, txtdoctorid, txtworkfrom, txtworkto, txtdoj;
-    TextArea txtaddress, txtspecialization, txtpatientlist;
-    JButton btnSubmit, btnClear, bback;
+    JLabel mainTitle, lblInsertSNo, lblsubTitle, lblfullname, lbladdress, lblcontact, lblgender, lbldob, lbldf1,
+            lblprofTitle, lbldepartment, lblstaffid, lwork, lblworkfrom, lblworkto, lbldoj, lbldf2, lblpost;
+    JTextField txtfullname, txtcontact, txtgender, txtdob, txtstaffid, txtworkfrom, txtworkto, txtdoj;
+    TextArea txtaddress, txtdepartment, txtpost;
+    JButton btnSubmit, btnClear;
 
-    public DoctorView() {
-        super("View Doctor Information");
+    public StaffView() {
+        super("View Staff Information");
 
-        mainTitle = new JLabel("Doctor Information");
+        mainTitle = new JLabel("Staff Information");
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(350, 25, 400, 30);
         add(mainTitle);
 
-        lblInsertDNo = new JLabel("Insert Doctor Identity :");
-        lblInsertDNo.setFont(new Font("Arial", Font.BOLD, 14));
-        lblInsertDNo.setBounds(40, 70, 160, 25);
-        add(lblInsertDNo);
+        lblInsertSNo = new JLabel("Insert Staff Identity :");
+        lblInsertSNo.setFont(new Font("Arial", Font.BOLD, 14));
+        lblInsertSNo.setBounds(40, 70, 160, 25);
+        add(lblInsertSNo);
 
-        lbldoctorid = new JLabel("Doctor ID :");
-        lbldoctorid.setBounds(40, 100, 100, 25);
-        add(lbldoctorid);
+        lblstaffid = new JLabel("Staff ID :");
+        lblstaffid.setBounds(40, 100, 100, 25);
+        add(lblstaffid);
 
-        txtdoctorid = new JTextField(30);
-        txtdoctorid.setBounds(140, 100, 160, 25);
-        add(txtdoctorid);
+        txtstaffid = new JTextField(30);
+        txtstaffid.setBounds(140, 100, 160, 25);
+        add(txtstaffid);
 
         btnSubmit = new JButton("SEARCH");
         btnSubmit.setBounds(320, 98, 100, 30);
@@ -128,14 +129,14 @@ public class DoctorView extends JInternalFrame {
         lblprofTitle.setBounds(40, 400, 300, 30);
         add(lblprofTitle);
 
-        lblspecialization = new JLabel("Specialization :");
-        lblspecialization.setBounds(60, 450, 100, 25);
-        add(lblspecialization);
+        lbldepartment = new JLabel("Department :");
+        lbldepartment.setBounds(60, 450, 100, 25);
+        add(lbldepartment);
 
-        txtspecialization = new TextArea();
-        txtspecialization.setBounds(200, 450, 200, 130);
-        txtspecialization.setEditable(false);
-        add(txtspecialization);
+        txtdepartment = new TextArea();
+        txtdepartment.setBounds(200, 450, 200, 130);
+        txtdepartment.setEditable(false);
+        add(txtdepartment);
 
         lbldoj = new JLabel("Date Of Join :");
         lbldoj.setBounds(60, 600, 100, 25);
@@ -168,20 +169,21 @@ public class DoctorView extends JInternalFrame {
         txtworkto.setEditable(false);
         add(txtworkto);
 
-        lblpatientlist = new JLabel("Patient List");
-        lblpatientlist.setBounds(540, 530, 80, 25);
-        add(lblpatientlist);
+        lblpost = new JLabel("Job Post");
+        lblpost.setBounds(540, 530, 80, 25);
+        add(lblpost);
 
-        txtpatientlist = new TextArea();
-        txtpatientlist.setBounds(660, 530, 200, 100);
-        add(txtpatientlist);
+        txtpost = new TextArea();
+        txtpost.setBounds(660, 530, 200, 100);
+        txtpost.setEditable(false);
+        add(txtpost);
 
         //Database Connection...
         try {
             Class.forName(DBConnectionUtils.DB_DRIVER);
             conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error connecting to the Database!!!");
+            System.out.println(e);
         }
 
         btnClear.addActionListener(new clear());
@@ -200,16 +202,16 @@ public class DoctorView extends JInternalFrame {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            txtdoctorid.setText("");
+            txtstaffid.setText("");
             txtfullname.setText("");
             txtaddress.setText("");
             txtcontact.setText("");
             txtworkfrom.setText("");
             txtworkto.setText("");
-            txtspecialization.setText("");
-            txtpatientlist.setText("");
-            txtdob.setText("");
+            txtdepartment.setText("");
+            txtpost.setText("");
             txtdoj.setText("");
+            txtdob.setText("");
             txtgender.setText("");
         }
     }
@@ -222,62 +224,56 @@ public class DoctorView extends JInternalFrame {
         @Override
         public void actionPerformed(ActionEvent ae) {
             try {
-                if (!txtdoctorid.getText().trim().equals("")) {
-                    Integer num = Integer.parseInt(txtdoctorid.getText());
-                    String name, addr, contact, spec, workf, workt, gender, dob, doj;
+                if (!txtstaffid.getText().trim().equals("")) {
+                    Integer num = Integer.parseInt(txtstaffid.getText());
+                    String name, addr, contact, dept, post, workf, workt, gender, dob, doj;
 
-                    stmt1 = conn.prepareStatement("SELECT * FROM doctor_table WHERE doctor_id=?");
+                    stmt1 = conn.prepareStatement("SELECT * FROM staff_table WHERE staff_id=?");
                     stmt1.setInt(1, num);
                     ResultSet rs1 = stmt1.executeQuery();
 
                     if (rs1.next()) {
-                        name = rs1.getString("doctor_fullname");
-                        addr = rs1.getString("doctor_address");
-                        contact = rs1.getString("doctor_contact");
-                        gender = rs1.getString("doctor_gender");
-                        dob = rs1.getString("doctor_dateofbirth");
-                        doj = rs1.getString("doctor_dateofjoin");
-                        spec = rs1.getString("doctor_specialization");
-                        workf = rs1.getString("doctor_workshiftfrom");
-                        workt = rs1.getString("doctor_workshiftto");
+                        name = rs1.getString("staff_fullname");
+                        addr = rs1.getString("staff_address");
+                        contact = rs1.getString("staff_contact");
+                        gender = rs1.getString("staff_gender");
+                        dob = rs1.getString("staff_dateofbirth");
+                        doj = rs1.getString("staff_dateofjoin");
+                        dept = rs1.getString("staff_department");
+                        workf = rs1.getString("staff_workshiftfrom");
+                        workt = rs1.getString("staff_workshiftto");
+                        post = rs1.getString("staff_post");
 
                         txtfullname.setText(name);
                         txtaddress.setText(addr);
                         txtcontact.setText(contact);
-                        txtspecialization.setText(spec);
+                        txtdepartment.setText(dept);
                         txtworkfrom.setText(workf);
                         txtworkto.setText(workt);
                         txtdob.setText(dob);
                         txtdoj.setText(doj);
                         txtgender.setText(gender);
+                        txtpost.setText(post);
 
-                        stmt2 = conn.prepareStatement("SELECT patient_id, patient_fullname FROM patient_table WHERE patient_doctorid=?");
-                        stmt2.setInt(1, num);
-                        rs2 = stmt2.executeQuery();
-                        ResultSetMetaData rsmt = rs2.getMetaData();
-                        int ctr = rsmt.getColumnCount();
-                        while (rs2.next()) {
-                            for (int i = 1; i <= ctr; i++) {
-                                txtpatientlist.append(rs2.getString(i) + " ");
-                            }
-                            txtpatientlist.append("\n");
-                        }
                     } else {
-                        txtdoctorid.setText("");
+                        txtstaffid.setText("");
                         txtfullname.setText("");
                         txtaddress.setText("");
                         txtcontact.setText("");
                         txtworkfrom.setText("");
                         txtworkto.setText("");
-                        txtspecialization.setText("");
-                        txtpatientlist.setText("");
-                        JOptionPane.showMessageDialog(null, "Doctor Reocrd Not Found!!!");
+                        txtdepartment.setText("");
+                        txtpost.setText("");
+                        txtdoj.setText("");
+                        txtdob.setText("");
+                        txtgender.setText("");
+                        JOptionPane.showMessageDialog(null, "Staff Record Not Found!!!");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "First Enter the Doctor ID!!!");
+                    JOptionPane.showMessageDialog(null, "First Enter the Staff ID!!!");
                 }
             } catch (SQLException sq) {
-                JOptionPane.showMessageDialog(null, "Error in retrieving Doctor Data!!!");
+                JOptionPane.showMessageDialog(null, "Error in retrieving Staff Data!!!");
             }
         }
     }

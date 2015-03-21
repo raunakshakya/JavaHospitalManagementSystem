@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hospitalmgmtsystem.project;
+package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.system.utils.LayoutUtils;
+import com.hospitalmgmt.system.utils.DBConnectionUtils;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
