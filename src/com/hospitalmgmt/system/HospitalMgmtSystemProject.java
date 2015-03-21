@@ -112,12 +112,12 @@ public class HospitalMgmtSystemProject implements ActionListener {
         panel3.setBackground(Color.GRAY);
 
         //Login Button...
-        loginBtn = new JButton("Login");//, new ImageIcon(getClass().getResource("/images/key.gif")));
+        loginBtn = new JButton(LayoutUtils.LOGIN_BUTTON_LABEL);//, new ImageIcon(getClass().getResource("/images/key.gif")));
         loginBtn.setPreferredSize(new Dimension(100, 30));
         loginBtn.addActionListener(this);
 
         //Login Cancel Button...
-        cancelBtn = new JButton("Cancel");//, new ImageIcon(getClass().getResource("/images/Keys.gif")));
+        cancelBtn = new JButton(LayoutUtils.CANCEL_BUTTON_LABEL);//, new ImageIcon(getClass().getResource("/images/Keys.gif")));
         cancelBtn.setPreferredSize(new Dimension(100, 30));
         cancelBtn.addActionListener(this);
 
@@ -155,7 +155,7 @@ public class HospitalMgmtSystemProject implements ActionListener {
         AcrylLookAndFeel.setCurrentTheme(props);
 
         try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+            UIManager.setLookAndFeel(LayoutUtils.JTATTOO_APPLICATION_THEME);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(HospitalMgmtSystemProject.class.getName()).log(Level.SEVERE, null, ex);
         }

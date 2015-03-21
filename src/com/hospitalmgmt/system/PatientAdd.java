@@ -42,7 +42,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
     int patientStatus;
 
     public PatientAdd() {
-        super(LayoutUtils.ADD_PATIENT_TITLE);
+        super(LayoutUtils.NEW_PATIENT_TITLE);
 
         Container con = getContentPane();
 
@@ -52,19 +52,19 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         mainTitle.setBounds(LayoutUtils.HEADING_X_COORDINATE, LayoutUtils.HEADING_Y_COORDINATE, LayoutUtils.HEADING_HORIZONTAL_LENGTH, LayoutUtils.HEADING_VERTICAL_LENGTH);
         add(mainTitle);
 
-        subTitle = new JLabel("Personal Information");
+        subTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
         subTitle.setFont(new Font("Arial", Font.BOLD, 18));
         subTitle.setBounds(40, 70, 200, 20);
         add(subTitle);
 
-        lblfullname = new JLabel("Full Name :");
+        lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
         lblfullname.setBounds(100, 100, 70, 20);
         add(lblfullname);
         txtfullname = new JTextField(30);
         txtfullname.setBounds(220, 100, 200, 20);
         add(txtfullname);
 
-        lbladdress = new JLabel("Address :");
+        lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
         lbladdress.setBounds(100, 140, 70, 20);
         add(lbladdress);
         txtaddress = new TextArea();
@@ -72,18 +72,18 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txtaddress);
 
         //Patient's Date Of Birth...
-        lbldob = new JLabel("Date of Birth :");
+        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
         lbldob.setBounds(540, 100, 120, 20);
         add(lbldob);
         txtdob = new JTextField(15);
         txtdob.setBounds(670, 100, 120, 20);
         add(txtdob);
-        lbldobformat = new JLabel("(dd-mm-yyyy)");
+        lbldobformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldobformat.setBounds(800, 100, 100, 20);
         add(lbldobformat);
 
         //Gender...
-        lblgender = new JLabel("Gender :");
+        lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
         lblgender.setBounds(540, 140, 50, 25);
         add(lblgender);
         cbmf = new CheckboxGroup();
@@ -95,7 +95,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(cbf);
 
         //Telephone...
-        lblcontact = new JLabel("Contact :");
+        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
         lblcontact.setBounds(540, 180, 50, 20);
         add(lblcontact);
         txtcontact = new JTextField(30);
@@ -103,18 +103,18 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txtcontact);
 
         //Medical Information...
-        submedTitle = new JLabel("Medical Information");
+        submedTitle = new JLabel(LayoutUtils.MEDICAL_INFORMATION_LABEL);
         submedTitle.setFont(new Font("Arial", Font.BOLD, 18));
         submedTitle.setBounds(40, 275, 200, 20);
         add(submedTitle);
 
         //BLood Group...
-        lblbloodgroup = new JLabel("Blood Group :");
+        lblbloodgroup = new JLabel(LayoutUtils.BLOOD_GROUP_LABEL);
         lblbloodgroup.setBounds(100, 310, 80, 20);
         add(lblbloodgroup);
         choiceBG = new Choice();
         choiceBG.setBounds(220, 310, 200, 20);
-        choiceBG.addItem("-----Select Blood Group-----");
+        choiceBG.addItem(LayoutUtils.BLOOD_GROUP_SELECT_LABEL);
         choiceBG.addItem("A -ve");
         choiceBG.addItem("A +ve");
         choiceBG.addItem("B -ve");
@@ -126,7 +126,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(choiceBG);
 
         //Medical History...
-        lblhistory = new JLabel("History :");
+        lblhistory = new JLabel(LayoutUtils.HISTORY_LABEL);
         lblhistory.setBounds(100, 350, 50, 20);
         add(lblhistory);
         txthistory = new TextArea();
@@ -134,7 +134,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txthistory);
 
         //Room...
-        lblroom = new JLabel("Room No.:");
+        lblroom = new JLabel(LayoutUtils.ROOM_NUMBER_LABEL);
         lblroom.setBounds(100, 510, 60, 20);
         add(lblroom);
         txtroom = new JTextField(30);
@@ -142,18 +142,18 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txtroom);
 
         //Date of Admission...
-        lbldoa = new JLabel("Date Of Admission :");
+        lbldoa = new JLabel(LayoutUtils.DATE_OF_ADMISSION_LABEL);
         lbldoa.setBounds(540, 310, 120, 20);
         add(lbldoa);
         txtdoa = new JTextField(40);
         txtdoa.setBounds(670, 310, 120, 20);
         add(txtdoa);
-        lbldoaformat = new JLabel("(dd-mm-yyyy)");
+        lbldoaformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldoaformat.setBounds(800, 310, 100, 20);
         add(lbldoaformat);
 
         //Current Problem...
-        lblcurrentprob = new JLabel("Current Problem :");
+        lblcurrentprob = new JLabel(LayoutUtils.CURRENT_PROBLEM_LABEL);
         lblcurrentprob.setBounds(540, 350, 100, 20);
         add(lblcurrentprob);
         txtcurrentprob = new TextArea();
@@ -161,25 +161,22 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txtcurrentprob);
 
         //Treating Doctor...
-        lbldoctor = new JLabel("Attending Doctor :");
+        lbldoctor = new JLabel(LayoutUtils.ATTENDING_DOCTOR_LABEL);
         lbldoctor.setBounds(540, 510, 130, 20);
         add(lbldoctor);
 
         choiceDoc = new Choice();
         choiceDoc.setBounds(670, 510, 200, 20);
-        choiceDoc.addItem("-----Select Doctor-----");
+        choiceDoc.addItem(LayoutUtils.ATTENDING_DOCTOR_SELECT_LABEL);
         add(choiceDoc);
 
-//        txtdoctor = new JTextField(100);
-//        txtdoctor.setBounds(670, 510, 200, 20);
-//        add(txtdoctor);
         //Button to submit information...
-        btnAdd = new JButton("ADD");
+        btnAdd = new JButton(LayoutUtils.ADD_BUTTON_LABEL);
         btnAdd.setBounds(330, 575, 100, 30);
         add(btnAdd);
 
         //Button to clear information...
-        btnClear = new JButton("CLEAR");
+        btnClear = new JButton(LayoutUtils.CLEAR_BUTTON_LABEL);
         btnClear.setBounds(460, 575, 100, 30);
         add(btnClear);
 
@@ -209,7 +206,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         setMaximizable(true);
         setResizable(true);
         setVisible(true);
-        setLocation(200, 100);
+        setLocation(LayoutUtils.SUB_WINDOW_X_COORDINATE, LayoutUtils.SUB_WINDOW_Y_COORDINATE);
         setLayout(null);
     }
 
@@ -232,7 +229,6 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
             cbmf.setSelectedCheckbox(null);
             choiceBG.select(0);
             choiceDoc.select(0);
-            
         }
     }
 

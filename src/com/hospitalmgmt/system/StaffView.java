@@ -61,20 +61,20 @@ public class StaffView extends JInternalFrame {
         txtstaffid.setBounds(140, 100, 160, 25);
         add(txtstaffid);
 
-        btnSubmit = new JButton("SEARCH");
+        btnSubmit = new JButton(LayoutUtils.SEARCH_BUTTON_LABEL);
         btnSubmit.setBounds(320, 98, 100, 30);
         add(btnSubmit);
 
-        btnClear = new JButton("CLEAR ALL");
+        btnClear = new JButton(LayoutUtils.CLEAR_ALL_BUTTON_LABEL);
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
 
-        lblsubTitle = new JLabel("Personal Information");
+        lblsubTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
         lblsubTitle.setFont(new Font("Arial", Font.BOLD, 20));
         lblsubTitle.setBounds(40, 150, 200, 30);
         add(lblsubTitle);
 
-        lblfullname = new JLabel("Full Name :");
+        lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
         lblfullname.setBounds(60, 200, 70, 25);
         add(lblfullname);
 
@@ -83,7 +83,7 @@ public class StaffView extends JInternalFrame {
         txtfullname.setEditable(false);
         add(txtfullname);
 
-        lbladdress = new JLabel("Address :");
+        lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
         lbladdress.setBounds(60, 240, 80, 25);
         add(lbladdress);
 
@@ -92,7 +92,7 @@ public class StaffView extends JInternalFrame {
         txtaddress.setEditable(false);
         add(txtaddress);
 
-        lblcontact = new JLabel("Contact :");
+        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
         lblcontact.setBounds(540, 200, 60, 25);
         add(lblcontact);
 
@@ -101,7 +101,7 @@ public class StaffView extends JInternalFrame {
         txtcontact.setEditable(false);
         add(txtcontact);
 
-        lblgender = new JLabel("Gender :");
+        lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
         lblgender.setBounds(540, 240, 60, 25);
         add(lblgender);
 
@@ -110,7 +110,7 @@ public class StaffView extends JInternalFrame {
         txtgender.setEditable(false);
         add(txtgender);
 
-        lbldob = new JLabel("Date of Birth :");
+        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
         lbldob.setBounds(540, 280, 120, 25);
         add(lbldob);
 
@@ -119,17 +119,17 @@ public class StaffView extends JInternalFrame {
         txtdob.setEditable(false);
         add(txtdob);
 
-        lbldf1 = new JLabel("(dd-mm-yyyy)");
+        lbldf1 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldf1.setBounds(780, 310, 100, 25);
         add(lbldf1);
 
         //Professional Title...
-        lblprofTitle = new JLabel("Professional Information");
+        lblprofTitle = new JLabel(LayoutUtils.PROFESSIONAL_INFORMATION_LABEL);
         lblprofTitle.setFont(new Font("Arial", Font.BOLD, 20));
         lblprofTitle.setBounds(40, 400, 300, 30);
         add(lblprofTitle);
 
-        lbldepartment = new JLabel("Department :");
+        lbldepartment = new JLabel(LayoutUtils.DEPARTMENT_LABEL);
         lbldepartment.setBounds(60, 450, 100, 25);
         add(lbldepartment);
 
@@ -138,7 +138,7 @@ public class StaffView extends JInternalFrame {
         txtdepartment.setEditable(false);
         add(txtdepartment);
 
-        lbldoj = new JLabel("Date Of Join :");
+        lbldoj = new JLabel(LayoutUtils.DATE_OF_JOIN_LABEL);
         lbldoj.setBounds(60, 600, 100, 25);
         add(lbldoj);
 
@@ -147,11 +147,11 @@ public class StaffView extends JInternalFrame {
         txtdoj.setEditable(false);
         add(txtdoj);
 
-        lbldf2 = new JLabel("(dd-mm-yyyy)");
+        lbldf2 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldf2.setBounds(320, 630, 100, 20);
         add(lbldf2);
 
-        lblworkfrom = new JLabel("Shift From :");
+        lblworkfrom = new JLabel(LayoutUtils.SHIFT_FROM_LABEL);
         lblworkfrom.setBounds(540, 450, 80, 25);
         add(lblworkfrom);
 
@@ -160,7 +160,7 @@ public class StaffView extends JInternalFrame {
         txtworkfrom.setEditable(false);
         add(txtworkfrom);
 
-        lblworkto = new JLabel("Shift To :");
+        lblworkto = new JLabel(LayoutUtils.SHIFT_TO_LABEL);
         lblworkto.setBounds(540, 490, 80, 25);
         add(lblworkto);
 

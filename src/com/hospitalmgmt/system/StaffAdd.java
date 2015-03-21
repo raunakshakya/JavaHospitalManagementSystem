@@ -39,29 +39,29 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
     int staffStatus;
 
     public StaffAdd() {
-        super("New Staff Information");
+        super(LayoutUtils.NEW_STAFF_TITLE);
 
         Container con = getContentPane();
 
         //Patient's Personal Information...
-        mainTitle = new JLabel("Add Staff Information");
+        mainTitle = new JLabel(LayoutUtils.ADD_STAFF_TITLE);
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(LayoutUtils.HEADING_X_COORDINATE, LayoutUtils.HEADING_Y_COORDINATE, LayoutUtils.HEADING_HORIZONTAL_LENGTH, LayoutUtils.HEADING_VERTICAL_LENGTH);
         add(mainTitle);
 
-        subTitle = new JLabel("Personal Information");
+        subTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
         subTitle.setFont(new Font("Arial", Font.BOLD, 18));
         subTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.UPPER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subTitle);
 
-        lblfullname = new JLabel("Full Name :");
+        lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
         lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, LayoutUtils.LABEL_LEFT_Y_COORDINATE, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
         txtfullname = new JTextField(30);
         txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtfullname);
 
-        lbladdress = new JLabel("Address :");
+        lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
         
         lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
@@ -70,18 +70,18 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtaddress);
 
         //Patient's Date Of Birth...
-        lbldob = new JLabel("Date of Birth :");
+        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
         lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
         txtdob = new JTextField(15);
         txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdob);
-        lbldobformat = new JLabel("(dd-mm-yyyy)");
+        lbldobformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldobformat.setBounds(800, 100, 100, 20);
         add(lbldobformat);
 
         //Gender...
-        lblgender = new JLabel("Gender :");
+        lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
         lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
@@ -93,7 +93,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(cbf);
 
         //Telephone...
-        lblcontact = new JLabel("Contact :");
+        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
         lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
         txtcontact = new JTextField(30);
@@ -101,7 +101,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtcontact);
 
         //Professional Information...
-        subprofTitle = new JLabel("Professional Information");
+        subprofTitle = new JLabel(LayoutUtils.PROFESSIONAL_INFORMATION_LABEL);
         subprofTitle.setFont(new Font("Arial", Font.BOLD, 18));
         subprofTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.LOWER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subprofTitle);
@@ -131,7 +131,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(chkboxStatus);
         
         //Shift From...
-        lblshiftfron = new JLabel("Shift From :");
+        lblshiftfron = new JLabel(LayoutUtils.SHIFT_FROM_LABEL);
         lblshiftfron.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftfron);
         txtshiftfrom = new JTextField(100);
@@ -139,7 +139,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtshiftfrom);
 
         //Shift To...
-        lblshiftto = new JLabel("Shift To :");
+        lblshiftto = new JLabel(LayoutUtils.SHIFT_TO_LABEL);
         lblshiftto.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftto);
         txtshiftto = new JTextField(100);
@@ -147,13 +147,13 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtshiftto);
 
         //Date of Join...
-        lbldoj = new JLabel("Date Of Join :");
+        lbldoj = new JLabel(LayoutUtils.DATE_OF_JOIN_LABEL);
         lbldoj.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoj);
         txtdoj = new JTextField(40);
         txtdoj.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdoj);
-        lbldojformat = new JLabel("(dd-mm-yyyy)");
+        lbldojformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldojformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 410, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(lbldojformat);
         
@@ -183,7 +183,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         setMaximizable(true);
         setResizable(true);
         setVisible(true);
-        setLocation(200, 100);
+        setLocation(LayoutUtils.SUB_WINDOW_X_COORDINATE, LayoutUtils.SUB_WINDOW_Y_COORDINATE);
         setLayout(null);
     }
 

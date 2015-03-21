@@ -6,6 +6,7 @@
 package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.system.utils.LayoutUtils;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,13 +17,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -35,7 +32,7 @@ public class StaffDBData extends JInternalFrame {
     ResultSet rs = null;
 
     public StaffDBData() {
-        super("Display Staff Information");
+        super(LayoutUtils.VIEW_STAFF_TITLE);
 
         Container con = getContentPane();
 
@@ -43,37 +40,29 @@ public class StaffDBData extends JInternalFrame {
         Vector data = new Vector();
 
         try {
-            String driver = "org.postgresql.Driver";
-            try {
-                Class.forName(DBConnectionUtils.DB_DRIVER);
+            Class.forName(DBConnectionUtils.DB_DRIVER);
             conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-            } catch (ClassNotFoundException | SQLException e) {
-                System.out.println(e);
-            }
 
-            //  Read data from a table
+            //Read data from a table
             stmt = conn.prepareStatement("Select * from staff_table");
-            ResultSet rs = stmt.executeQuery();
-            ResultSetMetaData md = rs.getMetaData();
+            ResultSet resultSet = stmt.executeQuery();
+            ResultSetMetaData md = resultSet.getMetaData();
             int columns = md.getColumnCount();
 
-            //  Get column names
+            //Get column names
             for (int i = 1; i <= columns; i++) {
                 columnNames.addElement(md.getColumnName(i));
             }
 
-            //  Get row data
-            while (rs.next()) {
+            //Get row data
+            while (resultSet.next()) {
                 Vector row = new Vector(columns);
                 for (int i = 1; i <= columns; i++) {
-                    row.addElement(rs.getObject(i));
+                    row.addElement(resultSet.getObject(i));
                 }
                 data.addElement(row);
             }
-
-            // rs.close();
-            //stmt.close();
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
 
@@ -92,7 +81,7 @@ public class StaffDBData extends JInternalFrame {
         table.getColumnModel().getColumn(9).setPreferredWidth(110);
         table.getColumnModel().getColumn(10).setPreferredWidth(125);
         table.getColumnModel().getColumn(11).setPreferredWidth(125);
-        
+
         table.setPreferredScrollableViewportSize(new Dimension(1300, 600));
         table.setFillsViewportHeight(true);
         table.getTableHeader().setReorderingAllowed(false);
@@ -110,16 +99,6 @@ public class StaffDBData extends JInternalFrame {
         setVisible(true);
         setLocation(50, 50);
         setLayout(new FlowLayout(FlowLayout.CENTER));
-
     }
 
-//    public static void main(String[] args) {
-//        try {
-//            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-//            Logger.getLogger(StaffDBData.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        StaffDBData staffDBData = new StaffDBData();
-//    }
 }

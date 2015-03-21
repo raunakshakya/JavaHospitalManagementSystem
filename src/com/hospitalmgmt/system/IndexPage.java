@@ -284,7 +284,7 @@ public class IndexPage extends JFrame {
 
         AcrylLookAndFeel.setCurrentTheme(props); //set your theme
         try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel"); //select the Look and Feel
+            UIManager.setLookAndFeel(LayoutUtils.JTATTOO_APPLICATION_THEME); //select the Look and Feel
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(IndexPage.class.getName()).log(Level.SEVERE, null, ex);
         }

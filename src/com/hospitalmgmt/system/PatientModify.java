@@ -68,11 +68,11 @@ public class PatientModify extends JInternalFrame {
         txtpatno.setBounds(140, 100, 160, 25);
         add(txtpatno);
 
-        btnSubmit = new JButton("SEARCH");
+        btnSubmit = new JButton(LayoutUtils.SEARCH_BUTTON_LABEL);
         btnSubmit.setBounds(320, 98, 100, 30);
         add(btnSubmit);
 
-        btnClear = new JButton("CLEAR ALL");
+        btnClear = new JButton(LayoutUtils.CLEAR_ALL_BUTTON_LABEL);
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
 
@@ -81,12 +81,12 @@ public class PatientModify extends JInternalFrame {
         add(btnModify);
 
         //Personal Information Title...
-        subTitle = new JLabel("Personal Information");
+        subTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
         subTitle.setFont(new Font("Arial", Font.BOLD, 20));
         subTitle.setBounds(40, 160, 200, 30);
         add(subTitle);
 
-        lblfullname = new JLabel("Full Name :");
+        lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
         lblfullname.setBounds(60, 200, 80, 25);
         add(lblfullname);
 
@@ -94,7 +94,7 @@ public class PatientModify extends JInternalFrame {
         txtfullname.setBounds(200, 200, 200, 25);
         add(txtfullname);
 
-        lbladdress = new JLabel("Address :");
+        lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
         lbladdress.setBounds(60, 240, 80, 25);
         add(lbladdress);
 
@@ -102,7 +102,7 @@ public class PatientModify extends JInternalFrame {
         txtaddress.setBounds(200, 240, 200, 90);
         add(txtaddress);
 
-        lblcontact = new JLabel("Contact :");
+        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
         lblcontact.setBounds(540, 200, 60, 25);
         add(lblcontact);
 
@@ -110,7 +110,7 @@ public class PatientModify extends JInternalFrame {
         txtcontact.setBounds(680, 200, 200, 25);
         add(txtcontact);
 
-        lblgender = new JLabel("Gender :");
+        lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
         lblgender.setBounds(540, 240, 60, 25);
         add(lblgender);
 
@@ -122,7 +122,7 @@ public class PatientModify extends JInternalFrame {
         cbf.setBounds(740, 240, 60, 25);
         add(cbf);
 
-        lbldob = new JLabel("Date of Birth :");
+        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
         lbldob.setBounds(540, 280, 120, 25);
         add(lbldob);
 
@@ -130,7 +130,7 @@ public class PatientModify extends JInternalFrame {
         txtdob.setBounds(680, 280, 200, 25);
         add(txtdob);
 
-        lbldf1 = new JLabel("(dd-mm-yyyy)");
+        lbldf1 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldf1.setBounds(800, 310, 100, 25);
         add(lbldf1);
 
@@ -180,7 +180,7 @@ public class PatientModify extends JInternalFrame {
         txtdoa.setBounds(680, 400, 125, 20);
         add(txtdoa);
 
-        lbldf2 = new JLabel("(dd-mm-yyyy)");
+        lbldf2 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldf2.setBounds(810, 400, 100, 20);
         add(lbldf2);
 
@@ -223,17 +223,6 @@ public class PatientModify extends JInternalFrame {
 
     public void actionPerformed(ActionEvent ae) {
     }
-
-//    public static void main(String[] args) {
-//        try {
-//            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
-//
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-//            Logger.getLogger(PatientModify.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        PatientModify patientModify = new PatientModify();
-//    }
 
     class clear implements ActionListener {
 

@@ -94,7 +94,7 @@ public class BillingPage extends JInternalFrame {
         txtamount.setEditable(false);
         add(txtamount);
 
-        btnSearch = new JButton("SEARCH");
+        btnSearch = new JButton(LayoutUtils.SEARCH_BUTTON_LABEL);
         btnSearch.setBounds(350, 430, 120, 30);
         add(btnSearch);
 

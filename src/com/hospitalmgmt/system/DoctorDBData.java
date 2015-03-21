@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.system.utils.LayoutUtils;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -30,61 +30,50 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Raunak Shakya
  */
-public class DoctorDBData extends JInternalFrame{
+public class DoctorDBData extends JInternalFrame {
 
     static Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
     public DoctorDBData() {
-        super("Display Doctor Information");
-        
+        super(LayoutUtils.VIEW_DOCTOR_TITLE);
+
         Container con = getContentPane();
-        
+
         Vector columnNames = new Vector();
         Vector data = new Vector();
 
         try {
-            String driver = "org.postgresql.Driver";
-            try {
-                Class.forName(DBConnectionUtils.DB_DRIVER);
-                conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-            } catch (ClassNotFoundException | SQLException e) {
-                System.out.println(e);
-            }
-
-            //  Read data from a table
+            Class.forName(DBConnectionUtils.DB_DRIVER);
+            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
+            
+            //Read data from a table
             stmt = conn.prepareStatement("Select * from doctor_table");
             ResultSet resultSet = stmt.executeQuery();
             ResultSetMetaData md = resultSet.getMetaData();
             int columns = md.getColumnCount();
-            
-            //  Get column names
+
+            //Get column names
             for (int i = 1; i <= columns; i++) {
                 columnNames.addElement(md.getColumnName(i));
             }
 
-            //  Get row data
+            //Get row data
             while (resultSet.next()) {
                 Vector row = new Vector(columns);
-
                 for (int i = 1; i <= columns; i++) {
                     row.addElement(resultSet.getObject(i));
-
                 }
-
                 data.addElement(row);
             }
-
-            // rs.close();
-            //stmt.close();
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
 
         //  Create table with database data
         JTable table = new JTable(data, columnNames);
-        
+
         table.getColumnModel().getColumn(0).setPreferredWidth(75);
         table.getColumnModel().getColumn(1).setPreferredWidth(110);
         table.getColumnModel().getColumn(2).setPreferredWidth(115);
@@ -96,13 +85,13 @@ public class DoctorDBData extends JInternalFrame{
         table.getColumnModel().getColumn(8).setPreferredWidth(90);
         table.getColumnModel().getColumn(9).setPreferredWidth(115);
         table.getColumnModel().getColumn(10).setPreferredWidth(115);
-        
+
         table.setPreferredScrollableViewportSize(new Dimension(1300, 500));
         table.setFillsViewportHeight(true);
         table.getTableHeader().setReorderingAllowed(false);
         table.setAutoCreateRowSorter(true);
-        
-        JPanel pn=new JPanel();
+
+        JPanel pn = new JPanel();
         JScrollPane scrollPane = new JScrollPane(table);
         pn.add(scrollPane);
 
@@ -117,12 +106,11 @@ public class DoctorDBData extends JInternalFrame{
         setVisible(true);
         setLocation(50, 50);
         setLayout(new FlowLayout(FlowLayout.CENTER));
-
     }
 
-        public static void main(String[] args) {
+    public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+            UIManager.setLookAndFeel(LayoutUtils.JTATTOO_APPLICATION_THEME);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(DoctorAdd.class.getName()).log(Level.SEVERE, null, ex);
         }
