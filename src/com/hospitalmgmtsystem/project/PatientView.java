@@ -38,10 +38,10 @@ public class PatientView extends JInternalFrame {
     JButton btnSubmit, btnClear, bback;
 
     public PatientView() {
-        super("View Patient Information");
+        super(LayoutUtils.VIEW_PATIENT_TITLE);
 
         // PERSONAL INFORMATION
-        mainTitle = new JLabel("View Patient Information");
+        mainTitle = new JLabel(LayoutUtils.VIEW_PATIENT_TITLE);
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(350, 25, 400, 20);
         add(mainTitle);

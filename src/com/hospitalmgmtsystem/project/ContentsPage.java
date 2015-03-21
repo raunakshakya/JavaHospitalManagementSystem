@@ -20,7 +20,7 @@ public class ContentsPage extends JInternalFrame {
     JScrollPane sp;
 
     public ContentsPage() {
-        super("Help Contents");
+        super(LayoutUtils.HELP_CONTENTS_TITLE);
 
         txtHelpContents = new JTextArea(10, 30);
         txtHelpContents.setEditable(false);

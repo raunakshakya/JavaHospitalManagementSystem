@@ -17,15 +17,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -48,10 +44,10 @@ public class PatientModify extends JInternalFrame {
     Checkbox cbm, cbf;
 
     public PatientModify() {
-        super("Modify Patient Information");
+        super(LayoutUtils.MODIFY_PATIENT_TITLE);
 
         //Main Title
-        mainTitle = new JLabel("Modify Patient Information");
+        mainTitle = new JLabel(LayoutUtils.MODIFY_PATIENT_TITLE);
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(350, 25, 400, 30);
         add(mainTitle);

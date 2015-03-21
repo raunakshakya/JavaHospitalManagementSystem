@@ -15,7 +15,7 @@ public class LicensePage extends JInternalFrame{
 
     public LicensePage() {
 
-        super("License");
+        super(LayoutUtils.LICENSE_TITLE);
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);

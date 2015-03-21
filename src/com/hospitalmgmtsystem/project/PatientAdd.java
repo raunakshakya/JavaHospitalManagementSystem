@@ -40,12 +40,12 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
     int patientStatus;
 
     public PatientAdd() {
-        super("New Patient Information");
+        super(LayoutUtils.ADD_PATIENT_TITLE);
 
         Container con = getContentPane();
 
         //Patient's Personal Information...
-        mainTitle = new JLabel("Add Patient Information");
+        mainTitle = new JLabel(LayoutUtils.ADD_PATIENT_TITLE);
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(LayoutUtils.HEADING_X_COORDINATE, LayoutUtils.HEADING_Y_COORDINATE, LayoutUtils.HEADING_HORIZONTAL_LENGTH, LayoutUtils.HEADING_VERTICAL_LENGTH);
         add(mainTitle);

@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -30,7 +31,7 @@ public class PatientDBData extends JInternalFrame {
     ResultSet rs = null;
 
     public PatientDBData() {
-        super("Display Patient Information");
+        super(LayoutUtils.VIEW_PATIENT_TITLE);
 
         Container con = getContentPane();
 
@@ -42,14 +43,14 @@ public class PatientDBData extends JInternalFrame {
             try {
                 Class.forName("org.postgresql.Driver");
                 conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | SQLException e) {
                 System.out.println(e);
             }
 
             //  Read data from a table
             stmt = conn.prepareStatement("Select * from patient_table");
-            ResultSet rs = stmt.executeQuery();
-            ResultSetMetaData md = rs.getMetaData();
+            ResultSet resultSet = stmt.executeQuery();
+            ResultSetMetaData md = resultSet.getMetaData();
             int columns = md.getColumnCount();
 
             //  Get column names
@@ -58,10 +59,10 @@ public class PatientDBData extends JInternalFrame {
             }
 
             //  Get row data
-            while (rs.next()) {
+            while (resultSet.next()) {
                 Vector row = new Vector(columns);
                 for (int i = 1; i <= columns; i++) {
-                    row.addElement(rs.getObject(i));
+                    row.addElement(resultSet.getObject(i));
                 }
                 data.addElement(row);
             }
@@ -104,7 +105,6 @@ public class PatientDBData extends JInternalFrame {
         setVisible(true);
         setLocation(50, 50);
         setLayout(new FlowLayout(FlowLayout.CENTER));
-
     }
 
 //    public static void main(String[] args) {
