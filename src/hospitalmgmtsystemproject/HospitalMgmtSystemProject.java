@@ -54,8 +54,8 @@ public class HospitalMgmtSystemProject implements ActionListener {
     public HospitalMgmtSystemProject() {
 
         //Defining the frame properties...
-        frame = new JFrame("Vayodha Hospital Management System");
-        frame.setSize(500, 300);
+        frame = new JFrame(LayoutUtils.APPLICATION_TITLE);
+        frame.setSize(LayoutUtils.LOGIN_WINDOW_WIDTH, LayoutUtils.LOGIN_WINDOW_HEIGHT);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.addWindowListener(new WindowAdapter() {

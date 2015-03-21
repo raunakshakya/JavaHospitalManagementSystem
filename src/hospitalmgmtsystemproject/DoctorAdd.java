@@ -49,7 +49,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
 
         subTitle = new JLabel("Personal Information");
         subTitle.setFont(new Font("Arial", Font.BOLD, 20));
-        subTitle.setBounds(40, 70, 200, 25);
+        subTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.UPPER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subTitle);
 
         lblfullname = new JLabel("Full Name :");
@@ -100,7 +100,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         //Professional Information...
         subprofTitle = new JLabel("Professional Information");
         subprofTitle.setFont(new Font("Arial", Font.BOLD, 18));
-        subprofTitle.setBounds(40, 275, 240, 25);
+        subprofTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.LOWER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subprofTitle);
 
         //Specialization...
@@ -169,7 +169,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         btnClear.addActionListener(new clear());
         btnAdd.addActionListener(new submit());
 
-        setSize(600, 400);
+        setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
         setResizable(true);

@@ -202,7 +202,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         btnClear.addActionListener(new clear());
         btnAdd.addActionListener(new submit());
 
-        setSize(600, 400);
+        setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
         setResizable(true);

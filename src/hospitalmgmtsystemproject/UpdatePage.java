@@ -16,12 +16,12 @@ public class UpdatePage extends JInternalFrame {
     public UpdatePage() {
 
         super("Update");
-        setSize(600, 400);
+        setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setVisible(true);
-        setLocation(230, 130);
+        setLocation(LayoutUtils.SUB_WINDOW_X_COORDINATE, LayoutUtils.SUB_WINDOW_Y_COORDINATE);
         setLayout(null);
     }
 

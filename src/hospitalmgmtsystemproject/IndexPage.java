@@ -41,7 +41,7 @@ public class IndexPage extends JFrame {
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     
     public IndexPage() {
-        super("Vayodha Hospital Management System");
+        super(LayoutUtils.APPLICATION_TITLE);
         
         JMenuBar menuBar = new JMenuBar();
         JMenu addMenu = new JMenu(" File ");

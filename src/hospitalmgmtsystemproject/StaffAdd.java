@@ -49,7 +49,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
 
         subTitle = new JLabel("Personal Information");
         subTitle.setFont(new Font("Arial", Font.BOLD, 18));
-        subTitle.setBounds(40, 70, 200, 20);
+        subTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.UPPER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subTitle);
 
         lblfullname = new JLabel("Full Name :");
@@ -85,7 +85,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         cbmf = new CheckboxGroup();
         cbm = new Checkbox("Male", cbmf, false);
         cbf = new Checkbox("Female", cbmf, false);
-        cbm.setBounds(674, 140, 70, 25);
+        cbm.setBounds(670, 140, 70, 25);
         add(cbm);
         cbf.setBounds(740, 140, 80, 25);
         add(cbf);
@@ -101,7 +101,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         //Professional Information...
         subprofTitle = new JLabel("Professional Information");
         subprofTitle.setFont(new Font("Arial", Font.BOLD, 18));
-        subprofTitle.setBounds(40, 275, 200, 20);
+        subprofTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.LOWER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subprofTitle);
 
         //Department...
@@ -176,7 +176,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         btnClear.addActionListener(new clear());
         btnAdd.addActionListener(new submit());
 
-        setSize(600, 400);
+        setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
         setResizable(true);

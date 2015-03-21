@@ -8,6 +8,7 @@ package hospitalmgmtsystemproject;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -80,7 +81,7 @@ public class DoctorModify extends JInternalFrame {
 
         lblsubTitle = new JLabel("Personal Information");
         lblsubTitle.setFont(new Font("Arial", Font.BOLD, 20));
-        lblsubTitle.setBounds(40, 150, 200, 30);
+        lblsubTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, 150, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(lblsubTitle);
 
         lblfullname = new JLabel("Full Name :");
@@ -185,12 +186,12 @@ public class DoctorModify extends JInternalFrame {
         btnSubmit.addActionListener(new submit());
         btnModify.addActionListener(new modify());
         
-        setSize(600, 400);
+        setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setVisible(true);
-        setLocation(230, 130);
+        setLocation(LayoutUtils.SUB_WINDOW_X_COORDINATE, LayoutUtils.SUB_WINDOW_Y_COORDINATE);
         setLayout(null);
     }
 
@@ -294,7 +295,7 @@ public class DoctorModify extends JInternalFrame {
         public void actionPerformed(ActionEvent ae) {
             try {
                 Integer num1 = Integer.parseInt(txtdoctorid.getText().trim());
-                if (num1.equals(null)) {
+                if (num1 == null) {
                     JOptionPane.showMessageDialog(null, "First Enter the Doctor ID...");
                 } else {
 
@@ -333,7 +334,7 @@ public class DoctorModify extends JInternalFrame {
                     JOptionPane.showMessageDialog(new JFrame(), "Data Modified successfully!", "Done!",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException | HeadlessException | SQLException e) {
                 JOptionPane.showMessageDialog(new JFrame(), "Error in updating Doctor Data......", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
