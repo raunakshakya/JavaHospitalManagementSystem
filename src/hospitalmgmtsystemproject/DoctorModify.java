@@ -176,7 +176,7 @@ public class DoctorModify extends JInternalFrame {
         //Database Connection...
         try {
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "niitktm");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
         } catch (Exception e) {
             System.out.println(e);
         }

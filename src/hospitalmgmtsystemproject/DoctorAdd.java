@@ -44,7 +44,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         //Patient's Personal Information...
         mainTitle = new JLabel("Add Doctor Information");
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
-        mainTitle.setBounds(350, 25, 300, 20);
+        mainTitle.setBounds(LayoutUtils.HEADING_X_COORDINATE, LayoutUtils.HEADING_Y_COORDINATE, LayoutUtils.HEADING_HORIZONTAL_LENGTH, LayoutUtils.HEADING_VERTICAL_LENGTH);
         add(mainTitle);
 
         subTitle = new JLabel("Personal Information");
@@ -161,7 +161,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         //Database Connection...
         try {
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "niitktm");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }

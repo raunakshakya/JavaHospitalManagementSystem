@@ -26,7 +26,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
 
     JLabel mainTitle, subTitle, subprofTitle,
             lblfullname, lbladdress, lblcontact, lbldob, lbldobformat, lblgender,
-            lbldept, lblpost, lbldoj, lbldojformat, lblshiftfron, lblshiftto;
+            lbldept, lblstatus, lblpost, lbldoj, lbldojformat, lblshiftfron, lblshiftto;
     JTextField txtfullname, txtcontact, txtdob, txtgender;
     JTextField txtDept, txtpost, txtdoj, txtshiftfrom, txtshiftto;
     TextArea txtaddress;
@@ -44,7 +44,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         //Patient's Personal Information...
         mainTitle = new JLabel("Add Staff Information");
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
-        mainTitle.setBounds(350, 25, 300, 20);
+        mainTitle.setBounds(LayoutUtils.HEADING_X_COORDINATE, LayoutUtils.HEADING_Y_COORDINATE, LayoutUtils.HEADING_HORIZONTAL_LENGTH, LayoutUtils.HEADING_VERTICAL_LENGTH);
         add(mainTitle);
 
         subTitle = new JLabel("Personal Information");
@@ -53,25 +53,26 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(subTitle);
 
         lblfullname = new JLabel("Full Name :");
-        lblfullname.setBounds(100, 100, 70, 20);
+        lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, LayoutUtils.LABEL_LEFT_Y_COORDINATE, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
         txtfullname = new JTextField(30);
-        txtfullname.setBounds(220, 100, 250, 20);
+        txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtfullname);
 
         lbladdress = new JLabel("Address :");
-        lbladdress.setBounds(100, 140, 70, 20);
+        
+        lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
         txtaddress = new TextArea();
-        txtaddress.setBounds(220, 140, 250, 100);
+        txtaddress.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 140, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, 100);
         add(txtaddress);
 
         //Patient's Date Of Birth...
         lbldob = new JLabel("Date of Birth :");
-        lbldob.setBounds(540, 100, 120, 20);
+        lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
         txtdob = new JTextField(15);
-        txtdob.setBounds(670, 100, 120, 20);
+        txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdob);
         lbldobformat = new JLabel("(dd-mm-yyyy)");
         lbldobformat.setBounds(800, 100, 100, 20);
@@ -79,22 +80,22 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
 
         //Gender...
         lblgender = new JLabel("Gender :");
-        lblgender.setBounds(540, 140, 50, 25);
+        lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
         cbm = new Checkbox("Male", cbmf, false);
         cbf = new Checkbox("Female", cbmf, false);
-        cbm.setBounds(670, 140, 70, 25);
+        cbm.setBounds(674, 140, 70, 25);
         add(cbm);
         cbf.setBounds(740, 140, 80, 25);
         add(cbf);
 
         //Telephone...
         lblcontact = new JLabel("Contact :");
-        lblcontact.setBounds(540, 180, 50, 20);
+        lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
         txtcontact = new JTextField(30);
-        txtcontact.setBounds(670, 180, 120, 20);
+        txtcontact.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 180, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtcontact);
 
         //Professional Information...
@@ -105,51 +106,55 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
 
         //Department...
         lbldept = new JLabel("Department:");
-        lbldept.setBounds(100, 310, 100, 20);
+        lbldept.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldept);
         txtDept = new JTextField(30);
-        txtDept.setBounds(220, 310, 250, 20);
+        txtDept.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtDept);
-
-        chkboxStatus = new JCheckBox("Status");
-        chkboxStatus.setBounds(220, 390, 100, 20);
-        add(chkboxStatus);
 
         //Post...
         lblpost = new JLabel("Post:");
-        lblpost.setBounds(100, 350, 60, 20);
+        lblpost.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblpost);
         txtpost = new JTextField(30);
-        txtpost.setBounds(220, 350, 250, 20);
+        txtpost.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 350, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtpost);
 
-        //Date of Join...
-        lbldoj = new JLabel("Date Of Join :");
-        lbldoj.setBounds(540, 310, 120, 20);
-        add(lbldoj);
-        txtdoj = new JTextField(40);
-        txtdoj.setBounds(670, 310, 120, 20);
-        add(txtdoj);
-        lbldojformat = new JLabel("(dd-mm-yyyy)");
-        lbldojformat.setBounds(800, 310, 100, 20);
-        add(lbldojformat);
-
+        //Status...
+        lblstatus = new JLabel("Status:");
+        lblstatus.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lblstatus);
+        chkboxStatus = new JCheckBox();
+        chkboxStatus.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(chkboxStatus);
+        
         //Shift From...
         lblshiftfron = new JLabel("Shift From :");
-        lblshiftfron.setBounds(540, 350, 100, 20);
+        lblshiftfron.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftfron);
         txtshiftfrom = new JTextField(100);
-        txtshiftfrom.setBounds(670, 350, 200, 20);
+        txtshiftfrom.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtshiftfrom);
 
         //Shift To...
         lblshiftto = new JLabel("Shift To :");
-        lblshiftto.setBounds(540, 390, 130, 20);
+        lblshiftto.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftto);
         txtshiftto = new JTextField(100);
-        txtshiftto.setBounds(670, 390, 200, 20);
+        txtshiftto.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 350, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtshiftto);
 
+        //Date of Join...
+        lbldoj = new JLabel("Date Of Join :");
+        lbldoj.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lbldoj);
+        txtdoj = new JTextField(40);
+        txtdoj.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(txtdoj);
+        lbldojformat = new JLabel("(dd-mm-yyyy)");
+        lbldojformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 410, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(lbldojformat);
+        
         //Button to submit information...
         btnAdd = new JButton("ADD");
         btnAdd.setBounds(330, 520, 100, 30);
@@ -163,7 +168,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         //Database Connection...
         try {
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "niitktm");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }

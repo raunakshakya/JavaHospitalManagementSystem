@@ -183,7 +183,7 @@ public class DoctorView extends JInternalFrame {
         //Database Connection...
         try {
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "niitktm");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error connecting to the Database!!!");
         }

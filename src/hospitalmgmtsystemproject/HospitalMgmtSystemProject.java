@@ -44,7 +44,7 @@ public class HospitalMgmtSystemProject implements ActionListener {
     static JFrame frame;
     private static JPanel panel1, panel2, panel3;
     private final JButton loginBtn, cancelBtn;
-    private JLabel loginFormTitle, usernameLbl, passwordLbl;
+    private final JLabel loginFormTitle, usernameLbl, passwordLbl;
     private static JTextField usernameField;
     private static JPasswordField passwordField;
     private Connection conn = null;

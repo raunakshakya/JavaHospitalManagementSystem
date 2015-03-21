@@ -44,7 +44,7 @@ public class StaffDBData extends JInternalFrame {
             String driver = "org.postgresql.Driver";
             try {
                 Class.forName("org.postgresql.Driver");
-                conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "niitktm");
+                conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
             } catch (Exception e) {
                 System.out.println(e);
             }
