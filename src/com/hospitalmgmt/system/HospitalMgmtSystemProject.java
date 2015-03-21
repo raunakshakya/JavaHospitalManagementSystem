@@ -86,7 +86,7 @@ public class HospitalMgmtSystemProject implements ActionListener {
 
         //User Name Label & TextField...
         Font usernameLblFont = new Font("Arial", Font.BOLD, 20);
-        usernameLbl = new JLabel("          User Name: ");
+        usernameLbl = new JLabel("      User Name: ");
         usernameLbl.setFont(usernameLblFont);
         usernameLbl.setForeground(Color.WHITE);
         usernameField = new JTextField(30);
@@ -94,7 +94,7 @@ public class HospitalMgmtSystemProject implements ActionListener {
 
         //Password Label & Field...
         Font passwordLblFont = new Font("Arial", Font.BOLD, 20);
-        passwordLbl = new JLabel("            Password: ");
+        passwordLbl = new JLabel("        Password: ");
         passwordLbl.setFont(passwordLblFont);
         passwordLbl.setForeground(Color.WHITE);
         passwordField = new JPasswordField(30);
@@ -108,17 +108,17 @@ public class HospitalMgmtSystemProject implements ActionListener {
 
         //Third Panel...
         panel3 = new JPanel();
-        panel3.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 10));
+        panel3.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         panel3.setBackground(Color.GRAY);
 
         //Login Button...
         loginBtn = new JButton("Login");//, new ImageIcon(getClass().getResource("/images/key.gif")));
-        loginBtn.setPreferredSize(new Dimension(90, 30));
+        loginBtn.setPreferredSize(new Dimension(100, 30));
         loginBtn.addActionListener(this);
 
         //Login Cancel Button...
         cancelBtn = new JButton("Cancel");//, new ImageIcon(getClass().getResource("/images/Keys.gif")));
-        cancelBtn.setPreferredSize(new Dimension(90, 30));
+        cancelBtn.setPreferredSize(new Dimension(100, 30));
         cancelBtn.addActionListener(this);
 
         //Add Login & Cancel buttons to panel3...
@@ -126,21 +126,18 @@ public class HospitalMgmtSystemProject implements ActionListener {
         panel3.add(cancelBtn);
 
         //Fourth Panel...
-        //panel4 = new JPanel();
-        //panel4.setBackground(Color.RED);
-        JLabel footerLabel = new JLabel("Developer: Raunak Shakya @NIIT Kantipath 2014");
+        JLabel footerLabel = new JLabel(LayoutUtils.FOOTER_TITLE);
         Font footerFont = new Font("Comic Sans MS", Font.BOLD, 16);
         footerLabel.setFont(footerFont);
         footerLabel.setForeground(Color.WHITE);
-        //panel4.setPreferredSize(new Dimension(40,50));
         panel3.add(footerLabel);
+
         //Using a container to add all the panels...
         Container container = frame.getContentPane();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.add(panel1);
         container.add(panel2);
         container.add(panel3);
-        //container.add(panel4);
         frame.setVisible(true);
     }
 

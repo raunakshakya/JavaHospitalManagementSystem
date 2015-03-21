@@ -23,6 +23,8 @@ public class LayoutUtils {
     public static final String MODIFY_PATIENT_TITLE = "Modify Patient Information";
     public static final String VIEW_PATIENT_TITLE = "View Patient Information";
     
+    public static final String FOOTER_TITLE = "Developer: Raunak Shakya @NIIT Kantipath 2014";
+    
     //Login window width and height
     public static final Integer LOGIN_WINDOW_WIDTH = 550;
     public static final Integer LOGIN_WINDOW_HEIGHT = 300;
