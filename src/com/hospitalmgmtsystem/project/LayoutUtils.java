@@ -13,9 +13,11 @@ public class LayoutUtils {
     
     //Application title
     public static final String APPLICATION_TITLE = "Vayodha Hospital Management System";
+    public static final String APPLICATION_NAME = "Hospital Management System";
     public static final String CURRENT_VERSION_TITLE = "Current Version";
     public static final String HELP_CONTENTS_TITLE = "Help Contents";
     public static final String LICENSE_TITLE = "License";
+    public static final String PATIENT_BILLING_TITLE = "Patient Billing Information";
     
     public static final String ADD_PATIENT_TITLE = "Add Patient Information";
     public static final String MODIFY_PATIENT_TITLE = "Modify Patient Information";

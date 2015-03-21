@@ -71,7 +71,7 @@ public class HospitalMgmtSystemProject implements ActionListener {
         panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
         panel1.setBackground(Color.DARK_GRAY);
-        loginFormTitle = new JLabel("Hospital Management System");
+        loginFormTitle = new JLabel(LayoutUtils.APPLICATION_NAME);
         Font titleFont = new Font("Comic Sans MS", Font.BOLD, 30);
         loginFormTitle.setFont(titleFont);
         loginFormTitle.setForeground(Color.WHITE);
@@ -172,8 +172,8 @@ public class HospitalMgmtSystemProject implements ActionListener {
             loginPassword = passwordField.getText().trim();
 
             try {
-                Class.forName("org.postgresql.Driver");
-                conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
+                Class.forName(DBConnectionUtils.DB_DRIVER);
+                conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
                 stmt = conn.prepareStatement("SELECT username, password FROM admin_table");
                 rs = stmt.executeQuery();
 

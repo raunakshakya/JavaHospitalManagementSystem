@@ -160,8 +160,8 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
 
         //Database Connection...
         try {
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
+            Class.forName(DBConnectionUtils.DB_DRIVER);
+            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }

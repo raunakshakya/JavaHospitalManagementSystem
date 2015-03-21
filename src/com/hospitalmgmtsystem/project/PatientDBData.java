@@ -41,8 +41,8 @@ public class PatientDBData extends JInternalFrame {
         try {
             String driver = "org.postgresql.Driver";
             try {
-                Class.forName("org.postgresql.Driver");
-                conn = DriverManager.getConnection("jdbc:postgresql://localhost/HospitalMgmtSystemDB", "postgres", "postgres");
+                Class.forName(DBConnectionUtils.DB_DRIVER);
+                conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println(e);
             }
@@ -106,14 +106,5 @@ public class PatientDBData extends JInternalFrame {
         setLocation(50, 50);
         setLayout(new FlowLayout(FlowLayout.CENTER));
     }
-
-//    public static void main(String[] args) {
-//        try {
-//            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-//            Logger.getLogger(PatientDBData.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        PatientDBData patientDBData = new PatientDBData();
-//    }
+    
 }
