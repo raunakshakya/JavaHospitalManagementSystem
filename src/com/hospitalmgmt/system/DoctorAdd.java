@@ -27,7 +27,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
     ResultSet rs = null;
 
     JLabel mainTitle, subTitle, subprofTitle,
-            lblfullname, lbladdress, lblcontact, lbldob, lbldobformat, lblgender,
+            lblfullname, lbladdress, lblcontact, lbldob, lbldobformat, lblgender, lblstatus,
             lblspec, lbldoj, lbldojformat, lblshiftfrom, lblshiftto, lbltimeformat1, lbltimeformat2;
     JTextField txtfullname, txtcontact, txtdob, txtgender;
     JTextField txtdoj, txtshiftfrom, txtshiftto;
@@ -55,33 +55,33 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         add(subTitle);
 
         lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
-        lblfullname.setBounds(100, 100, 70, 25);
+        lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, LayoutUtils.LABEL_LEFT_Y_COORDINATE, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
         txtfullname = new JTextField(30);
-        txtfullname.setBounds(220, 100, 250, 25);
+        txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtfullname);
 
         lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
-        lbladdress.setBounds(100, 140, 70, 25);
+        lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
         txtaddress = new TextArea();
-        txtaddress.setBounds(220, 140, 250, 100);
+        txtaddress.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 140, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTAREA_VERTICAL_LENGTH);
         add(txtaddress);
 
         //Patient's Date Of Birth...
         lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
-        lbldob.setBounds(540, 100, 120, 25);
+        lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
         txtdob = new JTextField(15);
-        txtdob.setBounds(670, 100, 120, 25);
+        txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdob);
         lbldobformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
-        lbldobformat.setBounds(800, 100, 100, 25);
+        lbldobformat.setBounds(800, 100, 100, 20);
         add(lbldobformat);
 
         //Gender...
         lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
-        lblgender.setBounds(540, 140, 50, 25);
+        lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
         cbm = new Checkbox("Male", cbmf, false);
@@ -93,10 +93,10 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
 
         //Telephone...
         lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
-        lblcontact.setBounds(540, 180, 50, 25);
+        lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
         txtcontact = new JTextField(30);
-        txtcontact.setBounds(670, 180, 120, 25);
+        txtcontact.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 180, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtcontact);
 
         //Professional Information...
@@ -107,48 +107,52 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
 
         //Specialization...
         lblspec = new JLabel(LayoutUtils.SPECIALIZATION_LABEL);
-        lblspec.setBounds(100, 310, 100, 25);
+        lblspec.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblspec);
         txtSpec = new TextArea();
-        txtSpec.setBounds(220, 310, 250, 100);
+        txtSpec.setBounds(220, 310, 250, LayoutUtils.TEXTAREA_VERTICAL_LENGTH);
         add(txtSpec);
-
-        chkboxStatus = new JCheckBox(LayoutUtils.STATUS_LABEL);
-        chkboxStatus.setBounds(220, 430, 100, 25);
+        
+        //Status...
+        lblstatus = new JLabel(LayoutUtils.STATUS_LABEL);
+        lblstatus.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 430, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lblstatus);
+        chkboxStatus = new JCheckBox();
+        chkboxStatus.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 430, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(chkboxStatus);
 
         //Date of Join...
         lbldoj = new JLabel(LayoutUtils.DATE_OF_JOIN_LABEL);
-        lbldoj.setBounds(540, 310, 120, 25);
+        lbldoj.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoj);
         txtdoj = new JTextField(40);
-        txtdoj.setBounds(670, 310, 120, 25);
+        txtdoj.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdoj);
         lbldojformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldojformat.setBounds(800, 310, 100, 25);
-        add(lbldojformat);
+        //add(lbldojformat);
 
         //Shift From...
         lblshiftfrom = new JLabel(LayoutUtils.SHIFT_FROM_LABEL);
-        lblshiftfrom.setBounds(540, 350, 100, 25);
+        lblshiftfrom.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftfrom);
         txtshiftfrom = new JTextField(100);
-        txtshiftfrom.setBounds(670, 350, 120, 25);
+        txtshiftfrom.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 350, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtshiftfrom);
         lbltimeformat1 = new JLabel(LayoutUtils.TIME_FORMAT_LABEL);
         lbltimeformat1.setBounds(800, 350, 100, 25);
-        add(lbltimeformat1);
+        //add(lbltimeformat1);
 
         //Shift To...
         lblshiftto = new JLabel(LayoutUtils.SHIFT_TO_LABEL);
-        lblshiftto.setBounds(540, 390, 100, 25);
+        lblshiftto.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftto);
         txtshiftto = new JTextField(100);
-        txtshiftto.setBounds(670, 390, 120, 25);
+        txtshiftto.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtshiftto);
         lbltimeformat2 = new JLabel(LayoutUtils.TIME_FORMAT_LABEL);
         lbltimeformat2.setBounds(800, 390, 100, 25);
-        add(lbltimeformat2);
+        //add(lbltimeformat2);
 
         //Button to submit information...
         btnAdd = new JButton(LayoutUtils.ADD_BUTTON_LABEL);

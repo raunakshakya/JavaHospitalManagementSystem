@@ -76,11 +76,11 @@ public class DoctorView extends JInternalFrame {
         add(lblsubTitle);
 
         lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
-        lblfullname.setBounds(60, 200, 70, 25);
+        lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 200, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
 
         txtfullname = new JTextField(30);
-        txtfullname.setBounds(200, 200, 200, 25);
+        txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 200, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         txtfullname.setEditable(false);
         add(txtfullname);
 

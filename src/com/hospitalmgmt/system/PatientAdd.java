@@ -54,29 +54,30 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
 
         subTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
         subTitle.setFont(new Font("Arial", Font.BOLD, 18));
-        subTitle.setBounds(40, 70, 200, 20);
+        subTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.UPPER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subTitle);
 
         lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
-        lblfullname.setBounds(100, 100, 70, 20);
+        lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, LayoutUtils.LABEL_LEFT_Y_COORDINATE, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
         txtfullname = new JTextField(30);
-        txtfullname.setBounds(220, 100, 200, 20);
+        txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtfullname);
 
         lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
-        lbladdress.setBounds(100, 140, 70, 20);
+        lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
         txtaddress = new TextArea();
-        txtaddress.setBounds(220, 140, 200, 100);
+        txtaddress.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 140, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, 100);
+        //txtaddress.setLineWrap(true);
         add(txtaddress);
 
         //Patient's Date Of Birth...
         lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
-        lbldob.setBounds(540, 100, 120, 20);
+        lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
         txtdob = new JTextField(15);
-        txtdob.setBounds(670, 100, 120, 20);
+        txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdob);
         lbldobformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldobformat.setBounds(800, 100, 100, 20);
@@ -84,7 +85,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
 
         //Gender...
         lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
-        lblgender.setBounds(540, 140, 50, 25);
+        lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
         cbm = new Checkbox("Male", cbmf, false);
@@ -96,24 +97,24 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
 
         //Telephone...
         lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
-        lblcontact.setBounds(540, 180, 50, 20);
+        lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
         txtcontact = new JTextField(30);
-        txtcontact.setBounds(670, 180, 200, 20);
+        txtcontact.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 180, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtcontact);
 
         //Medical Information...
         submedTitle = new JLabel(LayoutUtils.MEDICAL_INFORMATION_LABEL);
         submedTitle.setFont(new Font("Arial", Font.BOLD, 18));
-        submedTitle.setBounds(40, 275, 200, 20);
+        submedTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.LOWER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(submedTitle);
 
         //BLood Group...
         lblbloodgroup = new JLabel(LayoutUtils.BLOOD_GROUP_LABEL);
-        lblbloodgroup.setBounds(100, 310, 80, 20);
+        lblbloodgroup.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblbloodgroup);
         choiceBG = new Choice();
-        choiceBG.setBounds(220, 310, 200, 20);
+        choiceBG.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         choiceBG.addItem(LayoutUtils.BLOOD_GROUP_SELECT_LABEL);
         choiceBG.addItem("A -ve");
         choiceBG.addItem("A +ve");
@@ -127,57 +128,59 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
 
         //Medical History...
         lblhistory = new JLabel(LayoutUtils.HISTORY_LABEL);
-        lblhistory.setBounds(100, 350, 50, 20);
+        lblhistory.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblhistory);
         txthistory = new TextArea();
-        txthistory.setBounds(220, 350, 200, 100);
+        txthistory.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 350, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTAREA_VERTICAL_LENGTH);
+        //txthistory.setLineWrap(true);
         add(txthistory);
 
         //Room...
         lblroom = new JLabel(LayoutUtils.ROOM_NUMBER_LABEL);
-        lblroom.setBounds(100, 510, 60, 20);
+        lblroom.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 480, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblroom);
         txtroom = new JTextField(30);
-        txtroom.setBounds(220, 510, 200, 20);
+        txtroom.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 480, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtroom);
 
         //Date of Admission...
         lbldoa = new JLabel(LayoutUtils.DATE_OF_ADMISSION_LABEL);
-        lbldoa.setBounds(540, 310, 120, 20);
+        lbldoa.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoa);
         txtdoa = new JTextField(40);
-        txtdoa.setBounds(670, 310, 120, 20);
+        txtdoa.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdoa);
         lbldoaformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
-        lbldoaformat.setBounds(800, 310, 100, 20);
-        add(lbldoaformat);
+        lbldoaformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 410, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        //add(lbldoaformat);
 
         //Current Problem...
         lblcurrentprob = new JLabel(LayoutUtils.CURRENT_PROBLEM_LABEL);
-        lblcurrentprob.setBounds(540, 350, 100, 20);
+        lblcurrentprob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcurrentprob);
         txtcurrentprob = new TextArea();
-        txtcurrentprob.setBounds(670, 350, 200, 140);
+        txtcurrentprob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 350, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTAREA_VERTICAL_LENGTH);
+        //txtcurrentprob.setLineWrap(true);
         add(txtcurrentprob);
 
         //Treating Doctor...
         lbldoctor = new JLabel(LayoutUtils.ATTENDING_DOCTOR_LABEL);
-        lbldoctor.setBounds(540, 510, 130, 20);
+        lbldoctor.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 480, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoctor);
 
         choiceDoc = new Choice();
-        choiceDoc.setBounds(670, 510, 200, 20);
+        choiceDoc.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 480, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         choiceDoc.addItem(LayoutUtils.ATTENDING_DOCTOR_SELECT_LABEL);
         add(choiceDoc);
 
         //Button to submit information...
         btnAdd = new JButton(LayoutUtils.ADD_BUTTON_LABEL);
-        btnAdd.setBounds(330, 575, 100, 30);
+        btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE + 80, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
 
         //Button to clear information...
         btnClear = new JButton(LayoutUtils.CLEAR_BUTTON_LABEL);
-        btnClear.setBounds(460, 575, 100, 30);
+        btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE + 80, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
 
         //Database Connection...
@@ -192,7 +195,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
             stmt = conn.prepareStatement("SELECT * FROM doctor_table");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                choiceDoc.addItem(rs.getString("doctor_fullname").toString());
+                choiceDoc.addItem(rs.getString("doctor_fullname"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error in populating Doctors!!!");

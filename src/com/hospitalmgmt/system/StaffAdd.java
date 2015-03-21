@@ -62,7 +62,6 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtfullname);
 
         lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
-        
         lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
         txtaddress = new TextArea();
@@ -107,7 +106,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(subprofTitle);
 
         //Department...
-        lbldept = new JLabel("Department:");
+        lbldept = new JLabel(LayoutUtils.DEPARTMENT_LABEL);
         lbldept.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldept);
         txtDept = new JTextField(30);
@@ -115,7 +114,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtDept);
 
         //Post...
-        lblpost = new JLabel("Post:");
+        lblpost = new JLabel(LayoutUtils.POST_LABEL);
         lblpost.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblpost);
         txtpost = new JTextField(30);
@@ -123,7 +122,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtpost);
 
         //Status...
-        lblstatus = new JLabel("Status:");
+        lblstatus = new JLabel(LayoutUtils.STATUS_LABEL);
         lblstatus.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblstatus);
         chkboxStatus = new JCheckBox();
@@ -159,12 +158,12 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         
         //Button to submit information...
         btnAdd = new JButton("ADD");
-        btnAdd.setBounds(330, 520, 100, 30);
+        btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
 
         //Button to clear information...
         btnClear = new JButton("CLEAR");
-        btnClear.setBounds(460, 520, 100, 30);
+        btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
 
         //Database Connection...

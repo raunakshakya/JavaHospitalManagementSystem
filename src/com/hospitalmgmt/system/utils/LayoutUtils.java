@@ -35,9 +35,9 @@ public class LayoutUtils {
     public static final String BLOOD_GROUP_SELECT_LABEL = "-----Select Blood Group-----";
     public static final String HISTORY_LABEL = "History :";
     public static final String ROOM_NUMBER_LABEL = "Room No.:";
-    public static final String DATE_OF_ADMISSION_LABEL = "Date Of Admission :";
-    public static final String CURRENT_PROBLEM_LABEL = "Current Problem :";
-    public static final String ATTENDING_DOCTOR_LABEL = "Attending Doctor :";
+    public static final String DATE_OF_ADMISSION_LABEL = "Admitted On:";
+    public static final String CURRENT_PROBLEM_LABEL = "Problem :";
+    public static final String ATTENDING_DOCTOR_LABEL = "Doctor :";
     public static final String ATTENDING_DOCTOR_SELECT_LABEL = "-----Select Doctor-----";
     public static final String SPECIALIZATION_LABEL = "Specialization :";
     public static final String STATUS_LABEL = "Status";
@@ -46,6 +46,7 @@ public class LayoutUtils {
     public static final String SHIFT_TO_LABEL = "Shift To :";
     public static final String TIME_FORMAT_LABEL = "(hh-mm-ss)";
     public static final String DEPARTMENT_LABEL = "Department :";
+    public static final String POST_LABEL = "Post :";
     
     public static final String NEW_PATIENT_TITLE = "New Patient Information";
     public static final String ADD_PATIENT_TITLE = "Add Patient Information";
@@ -114,6 +115,7 @@ public class LayoutUtils {
     public static final Integer TEXTFIELD_Y_COORDINATE = 100;
     public static final Integer TEXTFIELD_HORIZONTAL_LENGTH = 250;
     public static final Integer TEXTFIELD_VERTICAL_LENGTH = 20;
+    public static final Integer TEXTAREA_VERTICAL_LENGTH = 100;
     
     //Button positions in sub window
     public static final Integer INNER_WINDOW_BUTTON_X_COORDINATE = 380; 
