@@ -40,10 +40,10 @@ public class IndexPage extends JFrame {
 
     //Get the screen size...
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    
+
     public IndexPage() {
         super(LayoutUtils.APPLICATION_TITLE);
-        
+
         JMenuBar menuBar = new JMenuBar();
         JMenu addMenu = new JMenu(" File ");
         addMenu.setMnemonic('F');
@@ -194,8 +194,7 @@ public class IndexPage extends JFrame {
             }
         });
         reportMenu.add(menuItem);
-        
-        
+
         //Adding Billing Menu Item...
         JMenu billingMenu = new JMenu("  Billing  ");
         billingMenu.setMnemonic('B');
@@ -208,7 +207,7 @@ public class IndexPage extends JFrame {
             }
         });
         billingMenu.add(menuItem);
-        
+
         JMenu helpMenu = new JMenu("  Help  ");
         helpMenu.setMnemonic('H');
         menuItem = new JMenuItem("  Contents");
@@ -226,7 +225,6 @@ public class IndexPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 //add(new LicensePage());
-                
                 JOptionPane.showMessageDialog(null, "This software is licensed to Vayodha Hospital & Research Center...", "Software License", JOptionPane.INFORMATION_MESSAGE);
             }
         });
@@ -237,7 +235,6 @@ public class IndexPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 //add(new UpdatePage());
-                
                 JOptionPane.showMessageDialog(null, "No new updates available at present!", "New Updates", JOptionPane.INFORMATION_MESSAGE);
             }
         });
@@ -265,36 +262,33 @@ public class IndexPage extends JFrame {
 
         Container con = getContentPane();
         con.setBackground(Color.GRAY);
-        
+
         //setSize(new Dimension(screen.width/2, screen.height/2));
         //setSize(screen.width, screen.height);
-        setSize(1000, 600);
+        //setSize(1000, 600);
+        setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH); //set home window maximized
         setResizable(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setVisible(true);  
-        JLabel bgPicLbl=new JLabel(new ImageIcon("src/resources/images/a.jpg"));
+        setVisible(true);
+        JLabel bgPicLbl = new JLabel(new ImageIcon("src/resources/images/a.jpg"));
         setContentPane(bgPicLbl);
         setLayout(null);
     }
 
     public static void main(String args[]) {
-        // setup the look and feel properties
+        //setup the look and feel properties
         Properties props = new Properties();
-
         props.put("logoString", "Vayodha");
         props.put("licenseKey", "INSERT YOUR LICENSE KEY HERE");
 
-        // set your theme
-        AcrylLookAndFeel.setCurrentTheme(props);
-
+        AcrylLookAndFeel.setCurrentTheme(props); //set your theme
         try {
-            // select the Look and Feel
-            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel"); //select the Look and Feel
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(IndexPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         IndexPage indexPage = new IndexPage();
     }
 }
