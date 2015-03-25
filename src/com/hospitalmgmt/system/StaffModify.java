@@ -5,8 +5,9 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.Gender;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Font;
@@ -109,10 +110,9 @@ public class StaffModify extends JInternalFrame {
         lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
         lblgender.setBounds(540, 240, 60, 25);
         add(lblgender);
-
         cbmf = new CheckboxGroup();
-        cbm = new Checkbox("Male", cbmf, false);
-        cbf = new Checkbox("Female", cbmf, false);
+        cbm = new Checkbox(Gender.MALE.getName(), cbmf, false);
+        cbf = new Checkbox(Gender.FEMALE.getName(), cbmf, false);
         cbm.setBounds(680, 240, 60, 25);
         add(cbm);
         cbf.setBounds(740, 240, 60, 25);

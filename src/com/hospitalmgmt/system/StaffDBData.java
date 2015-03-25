@@ -5,8 +5,8 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
-import com.hospitalmgmt.system.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;

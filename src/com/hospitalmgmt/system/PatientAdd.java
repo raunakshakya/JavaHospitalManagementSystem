@@ -5,8 +5,10 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.BloodGroup;
+import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.Gender;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Choice;
@@ -34,8 +36,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
     JTextField txtroom, txtdoa, txtdoctor;
     TextArea txtaddress, txthistory, txtcurrentprob;
     JCheckBox chkboxStatus;
-    Choice choiceBG;
-    Choice choiceDoc;
+    Choice choiceBG, choiceDoc;
     CheckboxGroup cbmf;
     Checkbox cbm, cbf;
     JButton btnAdd, btnClear;
@@ -72,36 +73,36 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         //txtaddress.setLineWrap(true);
         add(txtaddress);
 
-        //Patient's Date Of Birth...
-        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
-        lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
-        add(lbldob);
-        txtdob = new JTextField(15);
-        txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
-        add(txtdob);
-        lbldobformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
-        lbldobformat.setBounds(800, 100, 100, 20);
-        add(lbldobformat);
+        //Contact...
+        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
+        lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lblcontact);
+        txtcontact = new JTextField(30);
+        txtcontact.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(txtcontact);
 
         //Gender...
         lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
         lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
-        cbm = new Checkbox("Male", cbmf, false);
-        cbf = new Checkbox("Female", cbmf, false);
+        cbm = new Checkbox(Gender.MALE.getName(), cbmf, false);
+        cbf = new Checkbox(Gender.FEMALE.getName(), cbmf, false);
         cbm.setBounds(670, 140, 70, 25);
         add(cbm);
         cbf.setBounds(740, 140, 80, 25);
         add(cbf);
 
-        //Telephone...
-        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
-        lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
-        add(lblcontact);
-        txtcontact = new JTextField(30);
-        txtcontact.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 180, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
-        add(txtcontact);
+        //Patient's Date Of Birth...
+        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
+        lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        add(lbldob);
+        txtdob = new JTextField(15);
+        txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 180, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        add(txtdob);
+        lbldobformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldobformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 210, 160, 20);
+        add(lbldobformat);
 
         //Medical Information...
         submedTitle = new JLabel(LayoutUtils.MEDICAL_INFORMATION_LABEL);
@@ -116,14 +117,9 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         choiceBG = new Choice();
         choiceBG.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         choiceBG.addItem(LayoutUtils.BLOOD_GROUP_SELECT_LABEL);
-        choiceBG.addItem("A -ve");
-        choiceBG.addItem("A +ve");
-        choiceBG.addItem("B -ve");
-        choiceBG.addItem("B +ve");
-        choiceBG.addItem("AB -ve");
-        choiceBG.addItem("AB +ve");
-        choiceBG.addItem("O +ve");
-        choiceBG.addItem("O -ve");
+        for (BloodGroup bloodgroup : BloodGroup.values()) {
+            choiceBG.addItem(bloodgroup.getName());
+        }
         add(choiceBG);
 
         //Medical History...
@@ -167,7 +163,6 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         lbldoctor = new JLabel(LayoutUtils.ATTENDING_DOCTOR_LABEL);
         lbldoctor.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 480, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoctor);
-
         choiceDoc = new Choice();
         choiceDoc.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 480, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         choiceDoc.addItem(LayoutUtils.ATTENDING_DOCTOR_SELECT_LABEL);

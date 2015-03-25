@@ -5,8 +5,9 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.Gender;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Container;
@@ -84,8 +85,8 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
-        cbm = new Checkbox("Male", cbmf, false);
-        cbf = new Checkbox("Female", cbmf, false);
+        cbm = new Checkbox(Gender.MALE.getName(), cbmf, false);
+        cbf = new Checkbox(Gender.FEMALE.getName(), cbmf, false);
         cbm.setBounds(670, 140, 70, 25);
         add(cbm);
         cbf.setBounds(740, 140, 80, 25);
@@ -128,7 +129,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         chkboxStatus = new JCheckBox();
         chkboxStatus.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(chkboxStatus);
-        
+
         //Shift From...
         lblshiftfron = new JLabel(LayoutUtils.SHIFT_FROM_LABEL);
         lblshiftfron.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
@@ -153,16 +154,16 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         txtdoj.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdoj);
         lbldojformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
-        lbldojformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 410, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        lbldojformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 420, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(lbldojformat);
-        
+
         //Button to submit information...
-        btnAdd = new JButton("ADD");
+        btnAdd = new JButton(LayoutUtils.ADD_BUTTON_LABEL);
         btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
 
         //Button to clear information...
-        btnClear = new JButton("CLEAR");
+        btnClear = new JButton(LayoutUtils.CLEAR_BUTTON_LABEL);
         btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
 
@@ -235,7 +236,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
                 staffStatus = 0;
             }
 
-            if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || department.isEmpty() || post.isEmpty() 
+            if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || department.isEmpty() || post.isEmpty()
                     || shiftto.isEmpty() || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
             } else {

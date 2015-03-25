@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+    <!DOCTYPE hibernate-mapping PUBLIC  
+     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+      
+<hibernate-mapping>  
+    <class name="com.hospitalmgmt.models.Employee" table="employee">  
+        <id name="id">  
+            <generator class="assigned"></generator>  
+        </id>  
+                
+        <property name="fullName"></property>  
+        <property name="address"></property>
+        <property name="dateOfBirth"></property>
+        <property name="gender"></property>
+        <property name="contact"></property>  
+                
+    </class>  
+                
+</hibernate-mapping>  

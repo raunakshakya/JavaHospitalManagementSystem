@@ -5,8 +5,11 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.Gender;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
 import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -38,6 +41,8 @@ public class StaffView extends JInternalFrame {
             lblprofTitle, lbldepartment, lblstaffid, lwork, lblworkfrom, lblworkto, lbldoj, lbldf2, lblpost;
     JTextField txtfullname, txtcontact, txtgender, txtdob, txtstaffid, txtworkfrom, txtworkto, txtdoj;
     TextArea txtaddress, txtdepartment, txtpost;
+    CheckboxGroup cbmf;
+    Checkbox cbm, cbf;
     JButton btnSubmit, btnClear;
 
     public StaffView() {
@@ -77,7 +82,6 @@ public class StaffView extends JInternalFrame {
         lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
         lblfullname.setBounds(60, 200, 70, 25);
         add(lblfullname);
-
         txtfullname = new JTextField(30);
         txtfullname.setBounds(200, 200, 200, 25);
         txtfullname.setEditable(false);
@@ -86,7 +90,6 @@ public class StaffView extends JInternalFrame {
         lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
         lbladdress.setBounds(60, 240, 80, 25);
         add(lbladdress);
-
         txtaddress = new TextArea();
         txtaddress.setBounds(200, 240, 200, 100);
         txtaddress.setEditable(false);
@@ -95,7 +98,6 @@ public class StaffView extends JInternalFrame {
         lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
         lblcontact.setBounds(540, 200, 60, 25);
         add(lblcontact);
-
         txtcontact = new JTextField(30);
         txtcontact.setBounds(660, 200, 200, 25);
         txtcontact.setEditable(false);
@@ -104,21 +106,21 @@ public class StaffView extends JInternalFrame {
         lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
         lblgender.setBounds(540, 240, 60, 25);
         add(lblgender);
-
-        txtgender = new JTextField(50);
-        txtgender.setBounds(660, 240, 200, 25);
-        txtgender.setEditable(false);
-        add(txtgender);
+        cbmf = new CheckboxGroup();
+        cbm = new Checkbox(Gender.MALE.getName(), cbmf, false);
+        cbf = new Checkbox(Gender.FEMALE.getName(), cbmf, false);
+        cbm.setBounds(660, 240, 60, 25);
+        add(cbm);
+        cbf.setBounds(720, 240, 60, 25);
+        add(cbf);
 
         lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
         lbldob.setBounds(540, 280, 120, 25);
         add(lbldob);
-
         txtdob = new JTextField(15);
         txtdob.setBounds(660, 280, 200, 25);
         txtdob.setEditable(false);
         add(txtdob);
-
         lbldf1 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldf1.setBounds(780, 310, 100, 25);
         add(lbldf1);
@@ -132,7 +134,6 @@ public class StaffView extends JInternalFrame {
         lbldepartment = new JLabel(LayoutUtils.DEPARTMENT_LABEL);
         lbldepartment.setBounds(60, 450, 100, 25);
         add(lbldepartment);
-
         txtdepartment = new TextArea();
         txtdepartment.setBounds(200, 450, 200, 130);
         txtdepartment.setEditable(false);
@@ -141,12 +142,10 @@ public class StaffView extends JInternalFrame {
         lbldoj = new JLabel(LayoutUtils.DATE_OF_JOIN_LABEL);
         lbldoj.setBounds(60, 600, 100, 25);
         add(lbldoj);
-
         txtdoj = new JTextField(40);
         txtdoj.setBounds(200, 600, 200, 25);
         txtdoj.setEditable(false);
         add(txtdoj);
-
         lbldf2 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
         lbldf2.setBounds(320, 630, 100, 20);
         add(lbldf2);
@@ -154,7 +153,6 @@ public class StaffView extends JInternalFrame {
         lblworkfrom = new JLabel(LayoutUtils.SHIFT_FROM_LABEL);
         lblworkfrom.setBounds(540, 450, 80, 25);
         add(lblworkfrom);
-
         txtworkfrom = new JTextField(30);
         txtworkfrom.setBounds(660, 450, 200, 25);
         txtworkfrom.setEditable(false);
@@ -163,7 +161,6 @@ public class StaffView extends JInternalFrame {
         lblworkto = new JLabel(LayoutUtils.SHIFT_TO_LABEL);
         lblworkto.setBounds(540, 490, 80, 25);
         add(lblworkto);
-
         txtworkto = new JTextField(30);
         txtworkto.setBounds(660, 490, 200, 25);
         txtworkto.setEditable(false);
@@ -172,7 +169,6 @@ public class StaffView extends JInternalFrame {
         lblpost = new JLabel("Job Post");
         lblpost.setBounds(540, 530, 80, 25);
         add(lblpost);
-
         txtpost = new TextArea();
         txtpost.setBounds(660, 530, 200, 100);
         txtpost.setEditable(false);

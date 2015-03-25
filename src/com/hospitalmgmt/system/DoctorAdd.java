@@ -5,8 +5,9 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.Gender;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Container;
@@ -84,8 +85,8 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
-        cbm = new Checkbox("Male", cbmf, false);
-        cbf = new Checkbox("Female", cbmf, false);
+        cbm = new Checkbox(Gender.MALE.getName(), cbmf, false);
+        cbf = new Checkbox(Gender.FEMALE.getName(), cbmf, false);
         cbm.setBounds(670, 140, 70, 25);
         add(cbm);
         cbf.setBounds(740, 140, 80, 25);
@@ -115,10 +116,10 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         
         //Status...
         lblstatus = new JLabel(LayoutUtils.STATUS_LABEL);
-        lblstatus.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 430, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        lblstatus.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 420, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblstatus);
         chkboxStatus = new JCheckBox();
-        chkboxStatus.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 430, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
+        chkboxStatus.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 420, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(chkboxStatus);
 
         //Date of Join...

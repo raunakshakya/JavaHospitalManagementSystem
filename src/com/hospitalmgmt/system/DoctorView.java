@@ -5,8 +5,10 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
 import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -35,10 +37,12 @@ public class DoctorView extends JInternalFrame {
     ResultSet rs1 = null;
     ResultSet rs2 = null;
 
-    JLabel mainTitle, lblInsertDNo, lblsubTitle, lblfullname, lbladdress, lblcontact, lblgender, lbldob, lbldf1,
-            lblprofTitle, lblspecialization, lbldoctorid, lwork, lblworkfrom, lblworkto, lbldoj, lbldf2, lblpatientlist;
+    JLabel mainTitle, lblInsertDNo, lblsubTitle, lblfullname, lbladdress, lblcontact, lblgender, lbldob, lbldateformat1,
+            lblprofTitle, lblspecialization, lbldoctorid, lwork, lblworkfrom, lblworkto, lbldoj, lbldateformat2, lblpatientlist;
     JTextField txtfullname, txtcontact, txtgender, txtdob, txtdoctorid, txtworkfrom, txtworkto, txtdoj;
     TextArea txtaddress, txtspecialization, txtpatientlist;
+    CheckboxGroup cbmf;
+    Checkbox cbm, cbf;
     JButton btnSubmit, btnClear, bback;
 
     public DoctorView() {
@@ -51,13 +55,12 @@ public class DoctorView extends JInternalFrame {
 
         lblInsertDNo = new JLabel(LayoutUtils.INSERT_DOCTOR_ID_LABEL);
         lblInsertDNo.setFont(new Font("Arial", Font.BOLD, 14));
-        lblInsertDNo.setBounds(40, 70, 160, 25);
+        lblInsertDNo.setBounds(40, 70, 200, 25);
         add(lblInsertDNo);
 
         lbldoctorid = new JLabel(LayoutUtils.DOCTOR_ID_LABEL);
         lbldoctorid.setBounds(40, 100, 100, 25);
         add(lbldoctorid);
-
         txtdoctorid = new JTextField(30);
         txtdoctorid.setBounds(140, 100, 160, 25);
         add(txtdoctorid);
@@ -72,90 +75,83 @@ public class DoctorView extends JInternalFrame {
 
         lblsubTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
         lblsubTitle.setFont(new Font("Arial", Font.BOLD, 20));
-        lblsubTitle.setBounds(40, 150, 200, 30);
+        lblsubTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, 160, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(lblsubTitle);
 
         lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
         lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 200, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
-
         txtfullname = new JTextField(30);
         txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 200, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         txtfullname.setEditable(false);
         add(txtfullname);
 
         lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
-        lbladdress.setBounds(60, 240, 80, 25);
+        lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 240, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
-
         txtaddress = new TextArea();
-        txtaddress.setBounds(200, 240, 200, 100);
+        txtaddress.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 240, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, 100);
         txtaddress.setEditable(false);
         add(txtaddress);
 
         lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
-        lblcontact.setBounds(540, 200, 60, 25);
+        lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 200, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
-
         txtcontact = new JTextField(30);
-        txtcontact.setBounds(660, 200, 200, 25);
+        txtcontact.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 200, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         txtcontact.setEditable(false);
         add(txtcontact);
 
         lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
-        lblgender.setBounds(540, 240, 60, 25);
+        lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 240, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
-
-        txtgender = new JTextField(50);
-        txtgender.setBounds(660, 240, 200, 25);
-        txtgender.setEditable(false);
-        add(txtgender);
+        cbmf = new CheckboxGroup();
+        cbm = new Checkbox("Male", cbmf, false);
+        cbf = new Checkbox("Female", cbmf, false);
+        cbm.setBounds(670, 240, 70, 25);
+        add(cbm);
+        cbf.setBounds(740, 240, 80, 25);
+        add(cbf);
 
         lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
-        lbldob.setBounds(540, 280, 120, 25);
+        lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 280, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
-
         txtdob = new JTextField(15);
-        txtdob.setBounds(660, 280, 200, 25);
+        txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 280, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         txtdob.setEditable(false);
         add(txtdob);
-
-        lbldf1 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
-        lbldf1.setBounds(780, 310, 100, 25);
-        add(lbldf1);
+        lbldateformat1 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldateformat1.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 310, 160, 25);
+        add(lbldateformat1);
 
         //Professional Title...
         lblprofTitle = new JLabel(LayoutUtils.PROFESSIONAL_INFORMATION_LABEL);
         lblprofTitle.setFont(new Font("Arial", Font.BOLD, 20));
-        lblprofTitle.setBounds(40, 400, 300, 30);
+        lblprofTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, 400, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(lblprofTitle);
 
         lblspecialization = new JLabel(LayoutUtils.SPECIALIZATION_LABEL);
-        lblspecialization.setBounds(60, 450, 100, 25);
+        lblspecialization.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 450, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblspecialization);
-
         txtspecialization = new TextArea();
-        txtspecialization.setBounds(200, 450, 200, 130);
+        txtspecialization.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 450, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTAREA_VERTICAL_LENGTH);
         txtspecialization.setEditable(false);
         add(txtspecialization);
 
         lbldoj = new JLabel(LayoutUtils.DATE_OF_JOIN_LABEL);
-        lbldoj.setBounds(60, 600, 100, 25);
+        lbldoj.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 600, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoj);
-
         txtdoj = new JTextField(40);
-        txtdoj.setBounds(200, 600, 200, 25);
+        txtdoj.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 600, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         txtdoj.setEditable(false);
         add(txtdoj);
-
-        lbldf2 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
-        lbldf2.setBounds(320, 630, 100, 20);
-        add(lbldf2);
+        lbldateformat2 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldateformat2.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 630, 160, 20);
+        add(lbldateformat2);
 
         lblworkfrom = new JLabel(LayoutUtils.SHIFT_FROM_LABEL);
         lblworkfrom.setBounds(540, 450, 80, 25);
         add(lblworkfrom);
-
         txtworkfrom = new JTextField(30);
         txtworkfrom.setBounds(660, 450, 200, 25);
         txtworkfrom.setEditable(false);
@@ -164,7 +160,6 @@ public class DoctorView extends JInternalFrame {
         lblworkto = new JLabel(LayoutUtils.SHIFT_TO_LABEL);
         lblworkto.setBounds(540, 490, 80, 25);
         add(lblworkto);
-
         txtworkto = new JTextField(30);
         txtworkto.setBounds(660, 490, 200, 25);
         txtworkto.setEditable(false);

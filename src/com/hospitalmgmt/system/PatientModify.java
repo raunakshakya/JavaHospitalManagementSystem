@@ -5,8 +5,10 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.BloodGroup;
+import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.Gender;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Choice;
@@ -41,7 +43,7 @@ public class PatientModify extends JInternalFrame {
     JTextField txtpatno, txtfullname, txtcontact, txtdob, txtroomno, txtdoa, txtdoctor;
     TextArea txtaddress, txthistory, txtcurrentproblem;
     JButton btnSubmit, btnClear, btnModify;
-    Choice chbg;
+    Choice choiceBG;
     CheckboxGroup cbmf;
     Checkbox cbm, cbf;
 
@@ -55,7 +57,7 @@ public class PatientModify extends JInternalFrame {
         add(mainTitle);
 
         //Get the Patient Number...
-        lblInsertPNo = new JLabel("Insert Patient Number");
+        lblInsertPNo = new JLabel(LayoutUtils.INSERT_PATIENT_NO_LABEL);
         lblInsertPNo.setFont(new Font("Arial", Font.BOLD, 14));
         lblInsertPNo.setBounds(40, 70, 160, 25);
         add(lblInsertPNo);
@@ -63,7 +65,6 @@ public class PatientModify extends JInternalFrame {
         lblPatNo = new JLabel("Patient No.:");
         lblPatNo.setBounds(40, 100, 150, 25);
         add(lblPatNo);
-
         txtpatno = new JTextField(30);
         txtpatno.setBounds(140, 100, 160, 25);
         add(txtpatno);
@@ -115,8 +116,8 @@ public class PatientModify extends JInternalFrame {
         add(lblgender);
 
         cbmf = new CheckboxGroup();
-        cbm = new Checkbox("Male", cbmf, false);
-        cbf = new Checkbox("Female", cbmf, false);
+        cbm = new Checkbox(Gender.MALE.getName(), cbmf, false);
+        cbf = new Checkbox(Gender.FEMALE.getName(), cbmf, false);
         cbm.setBounds(680, 240, 60, 25);
         add(cbm);
         cbf.setBounds(740, 240, 60, 25);
@@ -135,28 +136,23 @@ public class PatientModify extends JInternalFrame {
         add(lbldf1);
 
         //Medical Information Title...
-        submedTitle = new JLabel("Medical Information");
+        submedTitle = new JLabel(LayoutUtils.MEDICAL_INFORMATION_LABEL);
         submedTitle.setFont(new Font("Arial", Font.BOLD, 20));
         submedTitle.setBounds(40, 360, 200, 15);
         add(submedTitle);
 
-        lblbloodgroup = new JLabel("Blood Group :");
+        lblbloodgroup = new JLabel(LayoutUtils.BLOOD_GROUP_LABEL);
         lblbloodgroup.setBounds(60, 400, 80, 25);
         add(lblbloodgroup);
 
-        chbg = new Choice();
-        chbg.setBounds(200, 400, 80, 25);
-        chbg.addItem("A -ve");
-        chbg.addItem("A +ve");
-        chbg.addItem("B -ve");
-        chbg.addItem("B +ve");
-        chbg.addItem("AB -ve");
-        chbg.addItem("AB +ve");
-        chbg.addItem("O +ve");
-        chbg.addItem("O -ve");
-        add(chbg);
+        choiceBG = new Choice();
+        choiceBG.setBounds(200, 400, 80, 25);
+        for (BloodGroup bloodgroup : BloodGroup.values()) {
+            choiceBG.addItem(bloodgroup.getName());
+        }
+        add(choiceBG);
 
-        lblhistory = new JLabel("History :");
+        lblhistory = new JLabel(LayoutUtils.HISTORY_LABEL);
         lblhistory.setBounds(60, 440, 80, 25);
         add(lblhistory);
 
@@ -164,7 +160,7 @@ public class PatientModify extends JInternalFrame {
         txthistory.setBounds(200, 440, 200, 100);
         add(txthistory);
 
-        lblroomno = new JLabel("Room No.:");
+        lblroomno = new JLabel(LayoutUtils.ROOM_NUMBER_LABEL);
         lblroomno.setBounds(60, 560, 80, 25);
         add(lblroomno);
 
@@ -172,7 +168,7 @@ public class PatientModify extends JInternalFrame {
         txtroomno.setBounds(200, 560, 200, 25);
         add(txtroomno);
 
-        lbldoa = new JLabel("Date Of Admission :");
+        lbldoa = new JLabel(LayoutUtils.DATE_OF_ADMISSION_LABEL);
         lbldoa.setBounds(540, 400, 120, 25);
         add(lbldoa);
 
@@ -184,7 +180,7 @@ public class PatientModify extends JInternalFrame {
         lbldf2.setBounds(810, 400, 100, 20);
         add(lbldf2);
 
-        lblcurrentproblem = new JLabel("Current Problem :");
+        lblcurrentproblem = new JLabel(LayoutUtils.CURRENT_PROBLEM_LABEL);
         lblcurrentproblem.setBounds(540, 440, 100, 25);
         add(lblcurrentproblem);
 
@@ -192,7 +188,7 @@ public class PatientModify extends JInternalFrame {
         txtcurrentproblem.setBounds(680, 440, 200, 100);
         add(txtcurrentproblem);
 
-        lbldoctor = new JLabel("Attending Doctor :");
+        lbldoctor = new JLabel(LayoutUtils.ATTENDING_DOCTOR_LABEL);
         lbldoctor.setBounds(540, 560, 100, 25);
         add(lbldoctor);
 
@@ -256,7 +252,7 @@ public class PatientModify extends JInternalFrame {
                     String name1 = txtfullname.getText().trim();
                     String addr1 = txtaddress.getText().trim();
                     String contact1 = txtcontact.getText().trim();
-                    String blgr1 = chbg.getSelectedItem().trim();
+                    String blgr1 = choiceBG.getSelectedItem().trim();
                     String hist1 = txthistory.getText().trim();
                     String dob1 = txtdob.getText().trim();
                     String current1 = txtcurrentproblem.getText().trim();
@@ -280,11 +276,11 @@ public class PatientModify extends JInternalFrame {
                             docid = rs.getInt("doctor_id");
                         }
                     }
-                    
+
                     String query = "UPDATE patient_table SET patient_fullname=?, patient_address=?, patient_contact=?, "
                             + "patient_history=?, patient_bloodgroup=?, patient_currentproblem=?, "
-                            + "patient_roomid=?, patient_gender=?, patient_doctorid=?, patient_dateofbirth='"+dob1
-                            + "', patient_doa='"+dateadd1+"' WHERE patient_id=?";
+                            + "patient_roomid=?, patient_gender=?, patient_doctorid=?, patient_dateofbirth='" + dob1
+                            + "', patient_doa='" + dateadd1 + "' WHERE patient_id=?";
 
                     stmt = conn.prepareStatement(query);
                     stmt.setString(1, name1);
@@ -297,7 +293,7 @@ public class PatientModify extends JInternalFrame {
                     stmt.setString(8, gender1);
                     stmt.setInt(9, docid);
                     stmt.setInt(10, num1);
-         
+
                     stmt.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Patient Data Modified successfully!", "Update Success!", JOptionPane.INFORMATION_MESSAGE);
 
@@ -313,55 +309,55 @@ public class PatientModify extends JInternalFrame {
         @Override
         public void actionPerformed(ActionEvent ae) {
             try {
-                if(!txtpatno.getText().isEmpty()){
-                Integer num = Integer.parseInt(txtpatno.getText());
-                String name, addr, contact, blgr, hist, dob, current, roomno, dateadd, gender, docname = null;
+                if (!txtpatno.getText().isEmpty()) {
+                    Integer num = Integer.parseInt(txtpatno.getText());
+                    String name, addr, contact, blgr, hist, dob, current, roomno, dateadd, gender, docname = null;
 
-                stmt = conn.prepareStatement("SELECT * FROM patient_table WHERE patient_id=?");
-                stmt.setInt(1, num);
-                rs = stmt.executeQuery();
-
-                if (rs.next()) {
-                    name = rs.getString("patient_fullname");
-                    addr = rs.getString("patient_address");
-                    contact = rs.getString("patient_contact");
-                    hist = rs.getString("patient_history");
-                    dob = rs.getString("patient_dateofbirth");
-                    current = rs.getString("patient_currentproblem");
-                    blgr = rs.getString("patient_bloodgroup");
-                    roomno = rs.getString("patient_roomid");
-                    dateadd = rs.getString("patient_doa");
-                    gender = rs.getString("patient_gender");
-
-                    int docid = rs.getInt("patient_doctorid");
-                    stmt = conn.prepareStatement("SELECT * FROM doctor_table WHERE doctor_id=?");
-                    stmt.setInt(1, docid);
+                    stmt = conn.prepareStatement("SELECT * FROM patient_table WHERE patient_id=?");
+                    stmt.setInt(1, num);
                     rs = stmt.executeQuery();
+
                     if (rs.next()) {
-                        docname = rs.getString("doctor_fullname");
+                        name = rs.getString("patient_fullname");
+                        addr = rs.getString("patient_address");
+                        contact = rs.getString("patient_contact");
+                        hist = rs.getString("patient_history");
+                        dob = rs.getString("patient_dateofbirth");
+                        current = rs.getString("patient_currentproblem");
+                        blgr = rs.getString("patient_bloodgroup");
+                        roomno = rs.getString("patient_roomid");
+                        dateadd = rs.getString("patient_doa");
+                        gender = rs.getString("patient_gender");
+
+                        int docid = rs.getInt("patient_doctorid");
+                        stmt = conn.prepareStatement("SELECT * FROM doctor_table WHERE doctor_id=?");
+                        stmt.setInt(1, docid);
+                        rs = stmt.executeQuery();
+                        if (rs.next()) {
+                            docname = rs.getString("doctor_fullname");
+                        }
+
+                        txtfullname.setText(name);
+                        txtcontact.setText(contact);
+                        txtdob.setText(dob);
+                        txtaddress.setText(addr);
+                        txthistory.setText(hist);
+                        txtcurrentproblem.setText(current);
+                        choiceBG.select(blgr);
+                        txtroomno.setText(roomno);
+                        txtdoa.setText(dateadd);
+                        txtdoctor.setText(docname);
+                        if (gender.equals("M")) {
+                            cbm.setState(true);
+                        }
+                        if (gender.equals("F")) {
+                            cbf.setState(true);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Patient Record Not Found!!!");
                     }
 
-                    txtfullname.setText(name);
-                    txtcontact.setText(contact);
-                    txtdob.setText(dob);
-                    txtaddress.setText(addr);
-                    txthistory.setText(hist);
-                    txtcurrentproblem.setText(current);
-                    chbg.select(blgr);
-                    txtroomno.setText(roomno);
-                    txtdoa.setText(dateadd);
-                    txtdoctor.setText(docname);
-                    if (gender.equals("M")) {
-                        cbm.setState(true);
-                    }
-                    if (gender.equals("F")) {
-                        cbf.setState(true);
-                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Patient Record Not Found!!!");
-                }
-                
-                }else{
                     JOptionPane.showMessageDialog(null, "First Enter the Patient ID......");
                 }
             } catch (SQLException sq) {

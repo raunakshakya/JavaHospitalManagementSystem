@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hospitalmgmt.system.utils;
+package com.hospitalmgmt.utils;
 
 /**
  *
@@ -47,6 +47,8 @@ public class LayoutUtils {
     public static final String TIME_FORMAT_LABEL = "(hh-mm-ss)";
     public static final String DEPARTMENT_LABEL = "Department :";
     public static final String POST_LABEL = "Post :";
+    public static final String INSERT_PATIENT_NO_LABEL = "Insert Patient Number";
+    public static final String DOCTOR_NO_LABEL = "Patient No.:";
     
     public static final String NEW_PATIENT_TITLE = "New Patient Information";
     public static final String ADD_PATIENT_TITLE = "Add Patient Information";

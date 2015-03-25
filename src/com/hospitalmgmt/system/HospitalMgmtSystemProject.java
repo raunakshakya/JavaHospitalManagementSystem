@@ -5,8 +5,8 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
-import com.hospitalmgmt.system.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import java.awt.Color;
 import java.awt.Container;

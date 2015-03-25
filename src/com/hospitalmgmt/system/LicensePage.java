@@ -5,7 +5,7 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
 import javax.swing.JInternalFrame;
 
 /**

@@ -5,7 +5,7 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.system.utils.LayoutUtils;
+import com.hospitalmgmt.utils.LayoutUtils;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import java.awt.Color;
 import java.awt.Container;
@@ -271,7 +271,7 @@ public class IndexPage extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
-        JLabel bgPicLbl = new JLabel(new ImageIcon("src/resources/images/a.jpg"));
+        JLabel bgPicLbl = new JLabel(new ImageIcon("src/resources/vayodha_hospital.jpg"));
         setContentPane(bgPicLbl);
         setLayout(null);
     }
