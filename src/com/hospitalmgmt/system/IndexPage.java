@@ -271,7 +271,7 @@ public class IndexPage extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
-        JLabel bgPicLbl = new JLabel(new ImageIcon("src/resources/vayodha_hospital.jpg"));
+        JLabel bgPicLbl = new JLabel(new ImageIcon("resources/images/vayodha_hospital.jpg"));
         setContentPane(bgPicLbl);
         setLayout(null);
     }
