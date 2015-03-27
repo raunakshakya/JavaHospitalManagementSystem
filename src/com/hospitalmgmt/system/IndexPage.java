@@ -6,6 +6,7 @@
 package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.MessageUtils;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import java.awt.Color;
 import java.awt.Container;
@@ -37,8 +38,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class IndexPage extends JFrame {
 
-    public ResourceBundle messages = ResourceBundle.getBundle("com.hospitalmgmt.i18n.MessageBundle", Locale.US);
-
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     JButton bpat, bdoc, bbill, breport, bback, bexit;
     JLabel linfo, linfo1, linfo2, linfo3, linfo4;
 

@@ -7,6 +7,7 @@ package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -28,12 +30,14 @@ import javax.swing.JTable;
  */
 public class PatientDBData extends JInternalFrame {
 
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     static Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
     public PatientDBData() {
-        super(LayoutUtils.VIEW_PATIENT_TITLE);
+        super(messages.getString("label.view.patient.information"));
 
         Container con = getContentPane();
 
@@ -41,7 +45,6 @@ public class PatientDBData extends JInternalFrame {
         Vector data = new Vector();
 
         try {
-            String driver = "org.postgresql.Driver";
             try {
                 Class.forName(DBConnectionUtils.DB_DRIVER);
                 conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);

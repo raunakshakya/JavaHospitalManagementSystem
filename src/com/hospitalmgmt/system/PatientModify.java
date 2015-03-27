@@ -9,6 +9,7 @@ import com.hospitalmgmt.utils.BloodGroup;
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Choice;
@@ -21,6 +22,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -33,6 +35,8 @@ import javax.swing.JTextField;
  */
 public class PatientModify extends JInternalFrame {
 
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -48,16 +52,16 @@ public class PatientModify extends JInternalFrame {
     Checkbox cbm, cbf;
 
     public PatientModify() {
-        super(LayoutUtils.MODIFY_PATIENT_TITLE);
+        super(messages.getString("label.modify.patient.information"));
 
         //Main Title
-        mainTitle = new JLabel(LayoutUtils.MODIFY_PATIENT_TITLE);
+        mainTitle = new JLabel(messages.getString("label.modify.patient.information"));
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(350, 25, 400, 30);
         add(mainTitle);
 
         //Get the Patient Number...
-        lblInsertPNo = new JLabel(LayoutUtils.INSERT_PATIENT_NO_LABEL);
+        lblInsertPNo = new JLabel(messages.getString("label.insert.patient.no"));
         lblInsertPNo.setFont(new Font("Arial", Font.BOLD, 14));
         lblInsertPNo.setBounds(40, 70, 160, 25);
         add(lblInsertPNo);
@@ -69,11 +73,11 @@ public class PatientModify extends JInternalFrame {
         txtpatno.setBounds(140, 100, 160, 25);
         add(txtpatno);
 
-        btnSubmit = new JButton(LayoutUtils.SEARCH_BUTTON_LABEL);
+        btnSubmit = new JButton(messages.getString("common.search"));
         btnSubmit.setBounds(320, 98, 100, 30);
         add(btnSubmit);
 
-        btnClear = new JButton(LayoutUtils.CLEAR_ALL_BUTTON_LABEL);
+        btnClear = new JButton(messages.getString("common.clear.all"));
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
 
@@ -82,12 +86,12 @@ public class PatientModify extends JInternalFrame {
         add(btnModify);
 
         //Personal Information Title...
-        subTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
+        subTitle = new JLabel(messages.getString("personal.information.title"));
         subTitle.setFont(new Font("Arial", Font.BOLD, 20));
         subTitle.setBounds(40, 160, 200, 30);
         add(subTitle);
 
-        lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
+        lblfullname = new JLabel(messages.getString("label.full.name"));
         lblfullname.setBounds(60, 200, 80, 25);
         add(lblfullname);
 
@@ -95,7 +99,7 @@ public class PatientModify extends JInternalFrame {
         txtfullname.setBounds(200, 200, 200, 25);
         add(txtfullname);
 
-        lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
+        lbladdress = new JLabel(messages.getString("label.address"));
         lbladdress.setBounds(60, 240, 80, 25);
         add(lbladdress);
 
@@ -103,7 +107,7 @@ public class PatientModify extends JInternalFrame {
         txtaddress.setBounds(200, 240, 200, 90);
         add(txtaddress);
 
-        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
+        lblcontact = new JLabel(messages.getString("label.contact"));
         lblcontact.setBounds(540, 200, 60, 25);
         add(lblcontact);
 
@@ -111,7 +115,7 @@ public class PatientModify extends JInternalFrame {
         txtcontact.setBounds(680, 200, 200, 25);
         add(txtcontact);
 
-        lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
+        lblgender = new JLabel(messages.getString("label.gender"));
         lblgender.setBounds(540, 240, 60, 25);
         add(lblgender);
 
@@ -123,7 +127,7 @@ public class PatientModify extends JInternalFrame {
         cbf.setBounds(740, 240, 60, 25);
         add(cbf);
 
-        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
+        lbldob = new JLabel(messages.getString("label.date.of.birth"));
         lbldob.setBounds(540, 280, 120, 25);
         add(lbldob);
 
@@ -131,17 +135,17 @@ public class PatientModify extends JInternalFrame {
         txtdob.setBounds(680, 280, 200, 25);
         add(txtdob);
 
-        lbldf1 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldf1 = new JLabel(messages.getString("label.date.format"));
         lbldf1.setBounds(800, 310, 100, 25);
         add(lbldf1);
 
         //Medical Information Title...
-        submedTitle = new JLabel(LayoutUtils.MEDICAL_INFORMATION_LABEL);
+        submedTitle = new JLabel(messages.getString("medical.information.title"));
         submedTitle.setFont(new Font("Arial", Font.BOLD, 20));
         submedTitle.setBounds(40, 360, 200, 15);
         add(submedTitle);
 
-        lblbloodgroup = new JLabel(LayoutUtils.BLOOD_GROUP_LABEL);
+        lblbloodgroup = new JLabel(messages.getString("label.blood.group"));
         lblbloodgroup.setBounds(60, 400, 80, 25);
         add(lblbloodgroup);
 
@@ -152,7 +156,7 @@ public class PatientModify extends JInternalFrame {
         }
         add(choiceBG);
 
-        lblhistory = new JLabel(LayoutUtils.HISTORY_LABEL);
+        lblhistory = new JLabel(messages.getString("label.history"));
         lblhistory.setBounds(60, 440, 80, 25);
         add(lblhistory);
 
@@ -160,7 +164,7 @@ public class PatientModify extends JInternalFrame {
         txthistory.setBounds(200, 440, 200, 100);
         add(txthistory);
 
-        lblroomno = new JLabel(LayoutUtils.ROOM_NUMBER_LABEL);
+        lblroomno = new JLabel(messages.getString("label.room.number"));
         lblroomno.setBounds(60, 560, 80, 25);
         add(lblroomno);
 
@@ -168,7 +172,7 @@ public class PatientModify extends JInternalFrame {
         txtroomno.setBounds(200, 560, 200, 25);
         add(txtroomno);
 
-        lbldoa = new JLabel(LayoutUtils.DATE_OF_ADMISSION_LABEL);
+        lbldoa = new JLabel(messages.getString("label.date.of.admission"));
         lbldoa.setBounds(540, 400, 120, 25);
         add(lbldoa);
 
@@ -176,11 +180,11 @@ public class PatientModify extends JInternalFrame {
         txtdoa.setBounds(680, 400, 125, 20);
         add(txtdoa);
 
-        lbldf2 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldf2 = new JLabel(messages.getString("label.date.format"));
         lbldf2.setBounds(810, 400, 100, 20);
         add(lbldf2);
 
-        lblcurrentproblem = new JLabel(LayoutUtils.CURRENT_PROBLEM_LABEL);
+        lblcurrentproblem = new JLabel(messages.getString("label.problem"));
         lblcurrentproblem.setBounds(540, 440, 100, 25);
         add(lblcurrentproblem);
 
@@ -188,7 +192,7 @@ public class PatientModify extends JInternalFrame {
         txtcurrentproblem.setBounds(680, 440, 200, 100);
         add(txtcurrentproblem);
 
-        lbldoctor = new JLabel(LayoutUtils.ATTENDING_DOCTOR_LABEL);
+        lbldoctor = new JLabel(messages.getString("label.attending.doctor"));
         lbldoctor.setBounds(540, 560, 100, 25);
         add(lbldoctor);
 

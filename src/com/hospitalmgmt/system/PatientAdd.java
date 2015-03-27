@@ -9,6 +9,7 @@ import com.hospitalmgmt.utils.BloodGroup;
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Choice;
@@ -17,6 +18,7 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.ResourceBundle;
 import javax.swing.*;
 
 /**
@@ -25,6 +27,8 @@ import javax.swing.*;
  */
 public final class PatientAdd extends JInternalFrame implements ActionListener {
 
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -43,29 +47,29 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
     int patientStatus;
 
     public PatientAdd() {
-        super(LayoutUtils.NEW_PATIENT_TITLE);
+        super(messages.getString("label.new.patient.information"));
 
         Container con = getContentPane();
 
         //Patient's Personal Information...
-        mainTitle = new JLabel(LayoutUtils.ADD_PATIENT_TITLE);
+        mainTitle = new JLabel(messages.getString("label.add.patient.information"));
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(LayoutUtils.HEADING_X_COORDINATE, LayoutUtils.HEADING_Y_COORDINATE, LayoutUtils.HEADING_HORIZONTAL_LENGTH, LayoutUtils.HEADING_VERTICAL_LENGTH);
         add(mainTitle);
 
-        subTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
+        subTitle = new JLabel(messages.getString("personal.information.title"));
         subTitle.setFont(new Font("Arial", Font.BOLD, 18));
         subTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.UPPER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subTitle);
 
-        lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
+        lblfullname = new JLabel(messages.getString("label.full.name"));
         lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, LayoutUtils.LABEL_LEFT_Y_COORDINATE, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
         txtfullname = new JTextField(30);
         txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtfullname);
 
-        lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
+        lbladdress = new JLabel(messages.getString("label.address"));
         lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
         txtaddress = new TextArea();
@@ -74,7 +78,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txtaddress);
 
         //Contact...
-        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
+        lblcontact = new JLabel(messages.getString("label.contact"));
         lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
         txtcontact = new JTextField(30);
@@ -82,7 +86,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txtcontact);
 
         //Gender...
-        lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
+        lblgender = new JLabel(messages.getString("label.gender"));
         lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
@@ -94,36 +98,36 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(cbf);
 
         //Patient's Date Of Birth...
-        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
+        lbldob = new JLabel(messages.getString("label.date.of.birth"));
         lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
         txtdob = new JTextField(15);
         txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 180, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdob);
-        lbldobformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldobformat = new JLabel(messages.getString("label.date.format"));
         lbldobformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 210, 160, 20);
         add(lbldobformat);
 
         //Medical Information...
-        submedTitle = new JLabel(LayoutUtils.MEDICAL_INFORMATION_LABEL);
+        submedTitle = new JLabel(messages.getString("medical.information.title"));
         submedTitle.setFont(new Font("Arial", Font.BOLD, 18));
         submedTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.LOWER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(submedTitle);
 
         //BLood Group...
-        lblbloodgroup = new JLabel(LayoutUtils.BLOOD_GROUP_LABEL);
+        lblbloodgroup = new JLabel(messages.getString("label.blood.group"));
         lblbloodgroup.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblbloodgroup);
         choiceBG = new Choice();
         choiceBG.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
-        choiceBG.addItem(LayoutUtils.BLOOD_GROUP_SELECT_LABEL);
+        choiceBG.addItem(messages.getString("label.select.blood.group"));
         for (BloodGroup bloodgroup : BloodGroup.values()) {
             choiceBG.addItem(bloodgroup.getName());
         }
         add(choiceBG);
 
         //Medical History...
-        lblhistory = new JLabel(LayoutUtils.HISTORY_LABEL);
+        lblhistory = new JLabel(messages.getString("label.history"));
         lblhistory.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblhistory);
         txthistory = new TextArea();
@@ -132,7 +136,7 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txthistory);
 
         //Room...
-        lblroom = new JLabel(LayoutUtils.ROOM_NUMBER_LABEL);
+        lblroom = new JLabel(messages.getString("label.room.number"));
         lblroom.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 480, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblroom);
         txtroom = new JTextField(30);
@@ -140,18 +144,18 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txtroom);
 
         //Date of Admission...
-        lbldoa = new JLabel(LayoutUtils.DATE_OF_ADMISSION_LABEL);
+        lbldoa = new JLabel(messages.getString("label.date.of.admission"));
         lbldoa.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoa);
         txtdoa = new JTextField(40);
         txtdoa.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 310, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdoa);
-        lbldoaformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldoaformat = new JLabel(messages.getString("label.date.format"));
         lbldoaformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 410, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         //add(lbldoaformat);
 
         //Current Problem...
-        lblcurrentprob = new JLabel(LayoutUtils.CURRENT_PROBLEM_LABEL);
+        lblcurrentprob = new JLabel(messages.getString("label.problem"));
         lblcurrentprob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcurrentprob);
         txtcurrentprob = new TextArea();
@@ -160,21 +164,21 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         add(txtcurrentprob);
 
         //Treating Doctor...
-        lbldoctor = new JLabel(LayoutUtils.ATTENDING_DOCTOR_LABEL);
+        lbldoctor = new JLabel(messages.getString("label.attending.doctor"));
         lbldoctor.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 480, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoctor);
         choiceDoc = new Choice();
         choiceDoc.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 480, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
-        choiceDoc.addItem(LayoutUtils.ATTENDING_DOCTOR_SELECT_LABEL);
+        choiceDoc.addItem(messages.getString("label.attending.doctor.select"));
         add(choiceDoc);
 
         //Button to submit information...
-        btnAdd = new JButton(LayoutUtils.ADD_BUTTON_LABEL);
+        btnAdd = new JButton(messages.getString("common.add"));
         btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE + 80, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
 
         //Button to clear information...
-        btnClear = new JButton(LayoutUtils.CLEAR_BUTTON_LABEL);
+        btnClear = new JButton(messages.getString("common.clear"));
         btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE + 80, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
 

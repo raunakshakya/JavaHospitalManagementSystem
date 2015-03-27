@@ -7,6 +7,7 @@ package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
@@ -27,6 +29,8 @@ import javax.swing.JTable;
  */
 public class StaffDBData extends JInternalFrame {
 
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     static Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;

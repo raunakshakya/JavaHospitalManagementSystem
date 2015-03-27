@@ -8,6 +8,7 @@ package com.hospitalmgmt.system;
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Container;
@@ -15,6 +16,7 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.ResourceBundle;
 import javax.swing.*;
 
 /**
@@ -23,6 +25,8 @@ import javax.swing.*;
  */
 public final class StaffAdd extends JInternalFrame implements ActionListener {
 
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -45,24 +49,24 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         Container con = getContentPane();
 
         //Patient's Personal Information...
-        mainTitle = new JLabel(LayoutUtils.ADD_STAFF_TITLE);
+        mainTitle = new JLabel(messages.getString("label.add.staff.information"));
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(LayoutUtils.HEADING_X_COORDINATE, LayoutUtils.HEADING_Y_COORDINATE, LayoutUtils.HEADING_HORIZONTAL_LENGTH, LayoutUtils.HEADING_VERTICAL_LENGTH);
         add(mainTitle);
 
-        subTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
+        subTitle = new JLabel(messages.getString("personal.information.title"));
         subTitle.setFont(new Font("Arial", Font.BOLD, 18));
         subTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.UPPER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subTitle);
 
-        lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
+        lblfullname = new JLabel(messages.getString("label.full.name"));
         lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, LayoutUtils.LABEL_LEFT_Y_COORDINATE, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
         txtfullname = new JTextField(30);
         txtfullname.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtfullname);
 
-        lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
+        lbladdress = new JLabel(messages.getString("label.address"));
         lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
         txtaddress = new TextArea();
@@ -70,18 +74,18 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtaddress);
 
         //Patient's Date Of Birth...
-        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
+        lbldob = new JLabel(messages.getString("label.date.of.birth"));
         lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 100, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
         txtdob = new JTextField(15);
         txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 100, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdob);
-        lbldobformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldobformat = new JLabel(messages.getString("label.date.format"));
         lbldobformat.setBounds(800, 100, 100, 20);
         add(lbldobformat);
 
         //Gender...
-        lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
+        lblgender = new JLabel(messages.getString("label.gender"));
         lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 140, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
@@ -93,7 +97,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(cbf);
 
         //Telephone...
-        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
+        lblcontact = new JLabel(messages.getString("label.contact"));
         lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 180, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
         txtcontact = new JTextField(30);
@@ -101,13 +105,13 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtcontact);
 
         //Professional Information...
-        subprofTitle = new JLabel(LayoutUtils.PROFESSIONAL_INFORMATION_LABEL);
+        subprofTitle = new JLabel(messages.getString("professional.information.title"));
         subprofTitle.setFont(new Font("Arial", Font.BOLD, 18));
         subprofTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, LayoutUtils.LOWER_SUB_HEADING_Y_COORDINATE, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(subprofTitle);
 
         //Department...
-        lbldept = new JLabel(LayoutUtils.DEPARTMENT_LABEL);
+        lbldept = new JLabel(messages.getString("label.department"));
         lbldept.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldept);
         txtDept = new JTextField(30);
@@ -115,7 +119,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtDept);
 
         //Post...
-        lblpost = new JLabel(LayoutUtils.POST_LABEL);
+        lblpost = new JLabel(messages.getString("label.post"));
         lblpost.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblpost);
         txtpost = new JTextField(30);
@@ -123,7 +127,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtpost);
 
         //Status...
-        lblstatus = new JLabel(LayoutUtils.STATUS_LABEL);
+        lblstatus = new JLabel(messages.getString("label.status"));
         lblstatus.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblstatus);
         chkboxStatus = new JCheckBox();
@@ -131,7 +135,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(chkboxStatus);
 
         //Shift From...
-        lblshiftfron = new JLabel(LayoutUtils.SHIFT_FROM_LABEL);
+        lblshiftfron = new JLabel(messages.getString("label.shift.from"));
         lblshiftfron.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 310, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftfron);
         txtshiftfrom = new JTextField(100);
@@ -139,7 +143,7 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtshiftfrom);
 
         //Shift To...
-        lblshiftto = new JLabel(LayoutUtils.SHIFT_TO_LABEL);
+        lblshiftto = new JLabel(messages.getString("label.shift.to"));
         lblshiftto.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 350, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblshiftto);
         txtshiftto = new JTextField(100);
@@ -147,23 +151,23 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         add(txtshiftto);
 
         //Date of Join...
-        lbldoj = new JLabel(LayoutUtils.DATE_OF_JOIN_LABEL);
+        lbldoj = new JLabel(messages.getString("label.date.of.join"));
         lbldoj.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 390, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoj);
         txtdoj = new JTextField(40);
         txtdoj.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 390, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(txtdoj);
-        lbldojformat = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldojformat = new JLabel(messages.getString("label.date.format"));
         lbldojformat.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 420, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         add(lbldojformat);
 
         //Button to submit information...
-        btnAdd = new JButton(LayoutUtils.ADD_BUTTON_LABEL);
+        btnAdd = new JButton(messages.getString("common.add"));
         btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
 
         //Button to clear information...
-        btnClear = new JButton(LayoutUtils.CLEAR_BUTTON_LABEL);
+        btnClear = new JButton(messages.getString("common.clear"));
         btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
 

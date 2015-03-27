@@ -7,6 +7,7 @@ package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Font;
@@ -19,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -31,6 +33,8 @@ import javax.swing.JTextField;
  */
 public class DoctorView extends JInternalFrame {
 
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     Connection conn = null;
     PreparedStatement stmt1 = null;
     PreparedStatement stmt2 = null;
@@ -48,37 +52,37 @@ public class DoctorView extends JInternalFrame {
     public DoctorView() {
         super(LayoutUtils.VIEW_DOCTOR_TITLE);
 
-        mainTitle = new JLabel(LayoutUtils.DOCTOR_INFORMATION_LABEL);
+        mainTitle = new JLabel(messages.getString("label.doctor.information"));
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(350, 25, 400, 30);
         add(mainTitle);
 
-        lblInsertDNo = new JLabel(LayoutUtils.INSERT_DOCTOR_ID_LABEL);
+        lblInsertDNo = new JLabel(messages.getString("label.insert.doctor.id"));
         lblInsertDNo.setFont(new Font("Arial", Font.BOLD, 14));
         lblInsertDNo.setBounds(40, 70, 200, 25);
         add(lblInsertDNo);
 
-        lbldoctorid = new JLabel(LayoutUtils.DOCTOR_ID_LABEL);
+        lbldoctorid = new JLabel(messages.getString("label.doctor.id"));
         lbldoctorid.setBounds(40, 100, 100, 25);
         add(lbldoctorid);
         txtdoctorid = new JTextField(30);
         txtdoctorid.setBounds(140, 100, 160, 25);
         add(txtdoctorid);
 
-        btnSubmit = new JButton(LayoutUtils.SEARCH_BUTTON_LABEL);
+        btnSubmit = new JButton(messages.getString("common.search"));
         btnSubmit.setBounds(320, 98, 100, 30);
         add(btnSubmit);
 
-        btnClear = new JButton(LayoutUtils.CLEAR_ALL_BUTTON_LABEL);
+        btnClear = new JButton(messages.getString("common.clear.all"));
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
 
-        lblsubTitle = new JLabel(LayoutUtils.PERSONAL_INFORMATION_LABEL);
+        lblsubTitle = new JLabel(messages.getString("personal.information.title"));
         lblsubTitle.setFont(new Font("Arial", Font.BOLD, 20));
         lblsubTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, 160, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(lblsubTitle);
 
-        lblfullname = new JLabel(LayoutUtils.FULL_NAME_LABEL);
+        lblfullname = new JLabel(messages.getString("label.full.name"));
         lblfullname.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 200, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblfullname);
         txtfullname = new JTextField(30);
@@ -86,7 +90,7 @@ public class DoctorView extends JInternalFrame {
         txtfullname.setEditable(false);
         add(txtfullname);
 
-        lbladdress = new JLabel(LayoutUtils.ADDRESS_LABEL);
+        lbladdress = new JLabel(messages.getString("label.address"));
         lbladdress.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 240, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbladdress);
         txtaddress = new TextArea();
@@ -94,7 +98,7 @@ public class DoctorView extends JInternalFrame {
         txtaddress.setEditable(false);
         add(txtaddress);
 
-        lblcontact = new JLabel(LayoutUtils.CONTACT_LABEL);
+        lblcontact = new JLabel(messages.getString("label.contact"));
         lblcontact.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 200, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblcontact);
         txtcontact = new JTextField(30);
@@ -102,7 +106,7 @@ public class DoctorView extends JInternalFrame {
         txtcontact.setEditable(false);
         add(txtcontact);
 
-        lblgender = new JLabel(LayoutUtils.GENDER_LABEL);
+        lblgender = new JLabel(messages.getString("label.gender"));
         lblgender.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 240, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblgender);
         cbmf = new CheckboxGroup();
@@ -113,24 +117,24 @@ public class DoctorView extends JInternalFrame {
         cbf.setBounds(740, 240, 80, 25);
         add(cbf);
 
-        lbldob = new JLabel(LayoutUtils.DATE_OF_BIRTH_LABEL);
+        lbldob = new JLabel(messages.getString("label.date.of.birth"));
         lbldob.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 280, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldob);
         txtdob = new JTextField(15);
         txtdob.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 280, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         txtdob.setEditable(false);
         add(txtdob);
-        lbldateformat1 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldateformat1 = new JLabel(messages.getString("label.date.format"));
         lbldateformat1.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 310, 160, 25);
         add(lbldateformat1);
 
         //Professional Title...
-        lblprofTitle = new JLabel(LayoutUtils.PROFESSIONAL_INFORMATION_LABEL);
+        lblprofTitle = new JLabel(messages.getString("professional.information.title"));
         lblprofTitle.setFont(new Font("Arial", Font.BOLD, 20));
         lblprofTitle.setBounds(LayoutUtils.SUB_HEADING_X_COORDINATE, 400, LayoutUtils.SUB_HEADING_HORIZONTAL_LENGTH, LayoutUtils.SUB_HEADING_VERTICAL_LENGTH);
         add(lblprofTitle);
 
-        lblspecialization = new JLabel(LayoutUtils.SPECIALIZATION_LABEL);
+        lblspecialization = new JLabel(messages.getString("label.specialization"));
         lblspecialization.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 450, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lblspecialization);
         txtspecialization = new TextArea();
@@ -138,18 +142,18 @@ public class DoctorView extends JInternalFrame {
         txtspecialization.setEditable(false);
         add(txtspecialization);
 
-        lbldoj = new JLabel(LayoutUtils.DATE_OF_JOIN_LABEL);
+        lbldoj = new JLabel(messages.getString("label.date.of.join"));
         lbldoj.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 600, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoj);
         txtdoj = new JTextField(40);
         txtdoj.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 600, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
         txtdoj.setEditable(false);
         add(txtdoj);
-        lbldateformat2 = new JLabel(LayoutUtils.DATE_FORMAT_LABEL);
+        lbldateformat2 = new JLabel(messages.getString("label.date.format"));
         lbldateformat2.setBounds(LayoutUtils.TEXTFIELD_LEFT_X_COORDINATE, 630, 160, 20);
         add(lbldateformat2);
 
-        lblworkfrom = new JLabel(LayoutUtils.SHIFT_FROM_LABEL);
+        lblworkfrom = new JLabel(messages.getString("label.shift.from"));
         lblworkfrom.setBounds(540, 450, 80, 25);
         add(lblworkfrom);
         txtworkfrom = new JTextField(30);
@@ -157,7 +161,7 @@ public class DoctorView extends JInternalFrame {
         txtworkfrom.setEditable(false);
         add(txtworkfrom);
 
-        lblworkto = new JLabel(LayoutUtils.SHIFT_TO_LABEL);
+        lblworkto = new JLabel(messages.getString("label.shift.to"));
         lblworkto.setBounds(540, 490, 80, 25);
         add(lblworkto);
         txtworkto = new JTextField(30);
@@ -165,7 +169,7 @@ public class DoctorView extends JInternalFrame {
         txtworkto.setEditable(false);
         add(txtworkto);
 
-        lblpatientlist = new JLabel(LayoutUtils.PATIENT_LIST_TITLE);
+        lblpatientlist = new JLabel(messages.getString("label.patient.list"));
         lblpatientlist.setBounds(540, 530, 80, 25);
         add(lblpatientlist);
 

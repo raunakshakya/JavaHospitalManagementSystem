@@ -7,6 +7,7 @@ package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -29,6 +31,8 @@ import javax.swing.JTextField;
  */
 public class BillingPage extends JInternalFrame {
 
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -41,7 +45,7 @@ public class BillingPage extends JInternalFrame {
         super(LayoutUtils.PATIENT_BILLING_TITLE);
         
         //Billing Information...
-        mainTitle = new JLabel(LayoutUtils.PATIENT_BILLING_TITLE);
+        mainTitle = new JLabel(messages.getString("patient.billing.information.title"));
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(360, 25, 300, 30);
         add(mainTitle);
@@ -94,7 +98,7 @@ public class BillingPage extends JInternalFrame {
         txtamount.setEditable(false);
         add(txtamount);
 
-        btnSearch = new JButton(LayoutUtils.SEARCH_BUTTON_LABEL);
+        btnSearch = new JButton(messages.getString("common.search"));
         btnSearch.setBounds(350, 430, 120, 30);
         add(btnSearch);
 

@@ -7,6 +7,7 @@ package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.utils.MessageUtils;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import java.awt.Color;
 import java.awt.Container;
@@ -46,8 +47,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class HospitalMgmtSystem implements ActionListener {
 
-    public ResourceBundle messages = ResourceBundle.getBundle("com.hospitalmgmt.i18n.MessageBundle", Locale.US);
-
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     //Declaration of Java Swing Components...
     static JFrame frame;
     private static JPanel panel1, panel2, panel3;
@@ -116,12 +117,12 @@ public class HospitalMgmtSystem implements ActionListener {
         panel3.setBackground(Color.GRAY);
 
         //Login Button...
-        loginBtn = new JButton(LayoutUtils.LOGIN_BUTTON_LABEL);//, new ImageIcon(getClass().getResource("/images/key.gif")));
+        loginBtn = new JButton(messages.getString("common.login"));//, new ImageIcon(getClass().getResource("/images/key.gif")));
         loginBtn.setPreferredSize(new Dimension(100, 30));
         loginBtn.addActionListener(this);
 
         //Login Cancel Button...
-        cancelBtn = new JButton(LayoutUtils.CANCEL_BUTTON_LABEL);//, new ImageIcon(getClass().getResource("/images/Keys.gif")));
+        cancelBtn = new JButton(messages.getString("common.cancel"));//, new ImageIcon(getClass().getResource("/images/Keys.gif")));
         cancelBtn.setPreferredSize(new Dimension(100, 30));
         cancelBtn.addActionListener(this);
 
@@ -130,7 +131,7 @@ public class HospitalMgmtSystem implements ActionListener {
         panel3.add(cancelBtn);
 
         //Fourth Panel...
-        JLabel footerLabel = new JLabel(LayoutUtils.FOOTER_TITLE);
+        JLabel footerLabel = new JLabel(messages.getString("footer.title"));
         Font footerFont = new Font("Comic Sans MS", Font.BOLD, 16);
         footerLabel.setFont(footerFont);
         footerLabel.setForeground(Color.WHITE);

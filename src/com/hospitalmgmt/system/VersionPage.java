@@ -6,7 +6,9 @@
 package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.FlowLayout;
+import java.util.ResourceBundle;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +19,8 @@ import javax.swing.JPanel;
  */
 public class VersionPage extends JInternalFrame {
 
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+    
     JLabel lblversion;
     JPanel pn;
 
