@@ -9,11 +9,11 @@
             <generator class="assigned"></generator>  
         </id>  
                 
-        <property name="fullName"></property>  
-        <property name="address"></property>
-        <property name="dateOfBirth"></property>
-        <property name="gender"></property>
-        <property name="contact"></property>  
+        <property name="specialization"></property>  
+        <property name="status"></property>
+        <property name="dateOfJoin"></property>
+        <property name="shiftFrom"></property>
+        <property name="shiftTo"></property>  
                 
     </class>  
                 
