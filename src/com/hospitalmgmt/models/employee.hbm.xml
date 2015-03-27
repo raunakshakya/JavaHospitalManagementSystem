@@ -6,7 +6,7 @@
 <hibernate-mapping>  
     <class name="com.hospitalmgmt.models.Employee" table="employee">  
         <id name="id">  
-            <generator class="assigned"></generator>  
+            <generator class="increment"></generator>  
         </id>  
                 
         <property name="fullName"></property>  

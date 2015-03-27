@@ -24,7 +24,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -42,7 +44,9 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Raunak Shakya
  */
-public class HospitalMgmtSystemProject implements ActionListener {
+public class HospitalMgmtSystem implements ActionListener {
+
+    public ResourceBundle messages = ResourceBundle.getBundle("com.hospitalmgmt.i18n.MessageBundle", Locale.US);
 
     //Declaration of Java Swing Components...
     static JFrame frame;
@@ -55,10 +59,10 @@ public class HospitalMgmtSystemProject implements ActionListener {
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
 
-    public HospitalMgmtSystemProject() {
+    public HospitalMgmtSystem() {
 
         //Defining the frame properties...
-        frame = new JFrame(LayoutUtils.APPLICATION_TITLE);
+        frame = new JFrame(messages.getString("application.title"));
         frame.setSize(LayoutUtils.LOGIN_WINDOW_WIDTH, LayoutUtils.LOGIN_WINDOW_HEIGHT);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
@@ -73,7 +77,7 @@ public class HospitalMgmtSystemProject implements ActionListener {
         panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
         panel1.setBackground(Color.DARK_GRAY);
-        loginFormTitle = new JLabel(LayoutUtils.APPLICATION_NAME);
+        loginFormTitle = new JLabel(messages.getString("application.name"));
         Font titleFont = new Font("Comic Sans MS", Font.BOLD, 30);
         loginFormTitle.setFont(titleFont);
         loginFormTitle.setForeground(Color.WHITE);
@@ -157,9 +161,9 @@ public class HospitalMgmtSystemProject implements ActionListener {
         try {
             UIManager.setLookAndFeel(LayoutUtils.JTATTOO_APPLICATION_THEME);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(HospitalMgmtSystemProject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HospitalMgmtSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        HospitalMgmtSystemProject hospitalMgmtSystemProject = new HospitalMgmtSystemProject();
+        HospitalMgmtSystem hospitalMgmtSystemProject = new HospitalMgmtSystem();
     }
 
     @Override

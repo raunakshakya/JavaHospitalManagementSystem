@@ -14,7 +14,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -34,6 +36,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Raunak Shakya
  */
 public class IndexPage extends JFrame {
+
+    public ResourceBundle messages = ResourceBundle.getBundle("com.hospitalmgmt.i18n.MessageBundle", Locale.US);
 
     JButton bpat, bdoc, bbill, breport, bback, bexit;
     JLabel linfo, linfo1, linfo2, linfo3, linfo4;
@@ -85,7 +89,7 @@ public class IndexPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 setVisible(false);
-                HospitalMgmtSystemProject hospitalMgmtSystemProject = new HospitalMgmtSystemProject();
+                HospitalMgmtSystem hospitalMgmtSystemProject = new HospitalMgmtSystem();
             }
         });
         addMenu.add(menuItem);
