@@ -5,7 +5,13 @@
  */
 package com.hospitalmgmt.models;
 
+import com.hospitalmgmt.utils.Gender;
+import com.hospitalmgmt.utils.HibernateUtils;
 import java.util.Date;
+import java.util.HashMap;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -57,6 +63,100 @@ public class Doctor extends Employee {
 
     public void setShiftTo(Date shiftTo) {
         this.shiftTo = shiftTo;
+    }
+
+    /**
+     * gets the doctor instance with the given id
+     *
+     * @param id
+     * @return
+     */
+    public static Doctor findById(Integer id) {
+        HibernateUtils hibernateUtils = new HibernateUtils();
+        try {
+            Session session = hibernateUtils.getSession();
+            Doctor doctor = (Doctor) session.get(Doctor.class, id);
+            hibernateUtils.commitTransaction();
+            return doctor;
+        } catch (HibernateException hibernateException) {
+            hibernateUtils.rollbackTransaction();
+        } finally {
+            hibernateUtils.closeSession();
+        }
+        return null;
+    }
+
+    /**
+     * creates a doctor instance
+     *
+     * @param doctorDto
+     */
+    public static void create(HashMap doctorDto) {
+        HibernateUtils hibernateUtils = new HibernateUtils();
+        try {
+            Session session = hibernateUtils.getSession();
+            Doctor doctor = new Doctor();
+            bindDoctorAttributes(doctor, doctorDto);
+            session.save(doctor);
+            hibernateUtils.commitTransaction();
+        } catch (HibernateException hibernateException) {
+            hibernateUtils.rollbackTransaction();
+        } finally {
+            hibernateUtils.closeSession();
+        }
+    }
+
+    /**
+     * updates the doctor instance matching the given id with the new values
+     *
+     * @param id
+     * @param doctorDto
+     */
+    public static void updateDoctor(Integer id, HashMap doctorDto) {
+        HibernateUtils hibernateUtils = new HibernateUtils();
+        try {
+            Session session = hibernateUtils.getSession();
+            Doctor doctor = (Doctor) session.get(Doctor.class, id);
+            bindDoctorAttributes(doctor, doctorDto);
+            session.update(doctor);
+            hibernateUtils.commitTransaction();
+        } catch (HibernateException e) {
+            hibernateUtils.rollbackTransaction();
+        } finally {
+            hibernateUtils.closeSession();
+        }
+    }
+
+    /**
+     * deletes the doctor instance matching the given id
+     *
+     * @param id
+     */
+    public static void deleteDoctor(Integer id) {
+        HibernateUtils hibernateUtils = new HibernateUtils();
+        try {
+            Session session = hibernateUtils.getSession();
+            Doctor doctor = (Doctor) session.get(Doctor.class, id);
+            session.delete(doctor);
+            hibernateUtils.commitTransaction();
+        } catch (HibernateException e) {
+            hibernateUtils.rollbackTransaction();
+        } finally {
+            hibernateUtils.closeSession();
+        }
+    }
+
+    private static void bindDoctorAttributes(Doctor doctor, HashMap doctorDto) {
+        doctor.setFullName((String) doctorDto.get("fullName"));
+        doctor.setAddress((String) doctorDto.get("address"));
+        doctor.setContact((String) doctorDto.get("contact"));
+        String genderValue = (String) doctorDto.get("gender");
+        doctor.setGender(Gender.valueOf(genderValue));
+        doctor.setDateOfBirth((Date) doctorDto.get("dateOfBirthd"));
+        doctor.setDateOfJoin((Date) doctorDto.get("dateOfJoin"));
+        doctor.setShiftFrom((Date) doctorDto.get("shiftFrom"));
+        doctor.setShiftTo((Date) doctorDto.get("shiftTo"));
+        doctor.setSpecialization((String) doctorDto.get("specialization"));
     }
 
 }

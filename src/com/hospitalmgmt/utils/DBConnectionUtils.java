@@ -10,10 +10,10 @@ package com.hospitalmgmt.utils;
  * @author raunakshakya
  */
 public class DBConnectionUtils {
-    
+
     public static final String DB_DRIVER = "org.postgresql.Driver";
     public static final String DB_CONNECTION_URL = "jdbc:postgresql://localhost/HospitalMgmtSystemDB";
     public static final String DB_USERNAME = "postgres";
     public static final String DB_PASSWORD = "postgres";
-    
+
 }

@@ -5,6 +5,8 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Doctor;
+import com.hospitalmgmt.models.Patient;
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.MessageUtils;
@@ -20,6 +22,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -34,15 +38,10 @@ import javax.swing.JTextField;
 public class DoctorView extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
-    Connection conn = null;
-    PreparedStatement stmt1 = null;
-    PreparedStatement stmt2 = null;
-    ResultSet rs1 = null;
-    ResultSet rs2 = null;
 
-    JLabel mainTitle, lblInsertDNo, lblsubTitle, lblfullname, lbladdress, lblcontact, lblgender, lbldob, lbldateformat1,
-            lblprofTitle, lblspecialization, lbldoctorid, lwork, lblworkfrom, lblworkto, lbldoj, lbldateformat2, lblpatientlist;
+    JLabel mainTitle, lblInsertDNo, lblsubTitle, lblfullname, lbladdress, lblcontact, lblgender, 
+            lbldob, lbldateformat1, lblprofTitle, lblspecialization, lbldoctorid, lwork, 
+            lblworkfrom, lblworkto, lbldoj, lbldateformat2, lblpatientlist;
     JTextField txtfullname, txtcontact, txtgender, txtdob, txtdoctorid, txtworkfrom, txtworkto, txtdoj;
     TextArea txtaddress, txtspecialization, txtpatientlist;
     CheckboxGroup cbmf;
@@ -72,10 +71,39 @@ public class DoctorView extends JInternalFrame {
         btnSubmit = new JButton(messages.getString("common.search"));
         btnSubmit.setBounds(320, 98, 100, 30);
         add(btnSubmit);
+        btnSubmit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (!txtdoctorid.getText().trim().equals("")) {
+                    JOptionPane.showMessageDialog(null, "First Enter the Doctor ID!!!");
+                    return;
+                }
+
+                Integer id = Integer.parseInt(txtdoctorid.getText());
+                Doctor doctor = Doctor.findById(id);
+                if (doctor == null) {
+                    doClearTheTextFields();
+                    JOptionPane.showMessageDialog(null, "Doctor Reocrd Not Found!!!");
+                }
+
+                doFillTheTextFields(doctor);
+                ArrayList<Patient> patients = Patient.findAllByDoctor(id);
+                for (Patient patient : patients) {
+                    txtpatientlist.append(patient.getFullName() + " ");
+                    txtpatientlist.append("\n");
+                }
+            }
+        });
 
         btnClear = new JButton(messages.getString("common.clear.all"));
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                doClearTheTextFields();
+            }
+        });
 
         lblsubTitle = new JLabel(messages.getString("personal.information.title"));
         lblsubTitle.setFont(new Font("Arial", Font.BOLD, 20));
@@ -177,17 +205,6 @@ public class DoctorView extends JInternalFrame {
         txtpatientlist.setBounds(660, 530, 200, 100);
         add(txtpatientlist);
 
-        //Database Connection...
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error connecting to the Database!!!");
-        }
-
-        btnClear.addActionListener(new clear());
-        btnSubmit.addActionListener(new submit());
-
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
@@ -197,90 +214,30 @@ public class DoctorView extends JInternalFrame {
         setLayout(null);
     }
 
-    class clear implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            txtdoctorid.setText("");
-            txtfullname.setText("");
-            txtaddress.setText("");
-            txtcontact.setText("");
-            txtworkfrom.setText("");
-            txtworkto.setText("");
-            txtspecialization.setText("");
-            txtpatientlist.setText("");
-            txtdob.setText("");
-            txtdoj.setText("");
-            txtgender.setText("");
-        }
+    public void doFillTheTextFields(Doctor doctor) {
+        txtfullname.setText(doctor.getFullName());
+        txtaddress.setText(doctor.getAddress());
+        txtcontact.setText(doctor.getContact());
+        txtspecialization.setText(doctor.getSpecialization());
+        txtworkfrom.setText(doctor.getShiftFrom().toString());
+        txtworkto.setText(doctor.getShiftTo().toString());
+        txtdob.setText(doctor.getDateOfBirth().toString());
+        txtdoj.setText(doctor.getDateOfJoin().toString());
+        txtgender.setText(doctor.getGender().getName());
     }
 
-    public void actionPerformed(ActionEvent ae) {
-    }
-
-    class submit implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            try {
-                if (!txtdoctorid.getText().trim().equals("")) {
-                    Integer num = Integer.parseInt(txtdoctorid.getText());
-                    String name, addr, contact, spec, workf, workt, gender, dob, doj;
-
-                    stmt1 = conn.prepareStatement("SELECT * FROM doctor_table WHERE doctor_id=?");
-                    stmt1.setInt(1, num);
-                    ResultSet rs1 = stmt1.executeQuery();
-
-                    if (rs1.next()) {
-                        name = rs1.getString("doctor_fullname");
-                        addr = rs1.getString("doctor_address");
-                        contact = rs1.getString("doctor_contact");
-                        gender = rs1.getString("doctor_gender");
-                        dob = rs1.getString("doctor_dateofbirth");
-                        doj = rs1.getString("doctor_dateofjoin");
-                        spec = rs1.getString("doctor_specialization");
-                        workf = rs1.getString("doctor_workshiftfrom");
-                        workt = rs1.getString("doctor_workshiftto");
-
-                        txtfullname.setText(name);
-                        txtaddress.setText(addr);
-                        txtcontact.setText(contact);
-                        txtspecialization.setText(spec);
-                        txtworkfrom.setText(workf);
-                        txtworkto.setText(workt);
-                        txtdob.setText(dob);
-                        txtdoj.setText(doj);
-                        txtgender.setText(gender);
-
-                        stmt2 = conn.prepareStatement("SELECT patient_id, patient_fullname FROM patient_table WHERE patient_doctorid=?");
-                        stmt2.setInt(1, num);
-                        rs2 = stmt2.executeQuery();
-                        ResultSetMetaData rsmt = rs2.getMetaData();
-                        int ctr = rsmt.getColumnCount();
-                        while (rs2.next()) {
-                            for (int i = 1; i <= ctr; i++) {
-                                txtpatientlist.append(rs2.getString(i) + " ");
-                            }
-                            txtpatientlist.append("\n");
-                        }
-                    } else {
-                        txtdoctorid.setText("");
-                        txtfullname.setText("");
-                        txtaddress.setText("");
-                        txtcontact.setText("");
-                        txtworkfrom.setText("");
-                        txtworkto.setText("");
-                        txtspecialization.setText("");
-                        txtpatientlist.setText("");
-                        JOptionPane.showMessageDialog(null, "Doctor Reocrd Not Found!!!");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "First Enter the Doctor ID!!!");
-                }
-            } catch (SQLException sq) {
-                JOptionPane.showMessageDialog(null, "Error in retrieving Doctor Data!!!");
-            }
-        }
+    public void doClearTheTextFields() {
+        txtdoctorid.setText("");
+        txtfullname.setText("");
+        txtaddress.setText("");
+        txtcontact.setText("");
+        txtworkfrom.setText("");
+        txtworkto.setText("");
+        txtspecialization.setText("");
+        txtpatientlist.setText("");
+        txtdob.setText("");
+        txtdoj.setText("");
+        txtgender.setText("");
     }
 
 }

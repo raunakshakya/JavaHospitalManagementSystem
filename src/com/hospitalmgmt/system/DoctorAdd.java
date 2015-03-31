@@ -5,17 +5,17 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Doctor;
 import com.hospitalmgmt.utils.LayoutUtils;
-import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.*;
 
@@ -26,7 +26,7 @@ import javax.swing.*;
 public final class DoctorAdd extends JInternalFrame implements ActionListener {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -45,8 +45,6 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
 
     public DoctorAdd() {
         super(LayoutUtils.NEW_DOCTOR_TITLE);
-
-        Container con = getContentPane();
 
         //Patient's Personal Information...
         mainTitle = new JLabel(messages.getString("label.add.doctor.information"));
@@ -117,7 +115,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         txtSpec = new TextArea();
         txtSpec.setBounds(220, 310, 250, LayoutUtils.TEXTAREA_VERTICAL_LENGTH);
         add(txtSpec);
-        
+
         //Status...
         lblstatus = new JLabel(messages.getString("label.status"));
         lblstatus.setBounds(LayoutUtils.LABEL_LEFT_X_COORDINATE, 420, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
@@ -163,22 +161,13 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         btnAdd = new JButton(messages.getString("common.add"));
         btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
+        btnAdd.addActionListener(new submit());
 
         //Button to clear information...
         btnClear = new JButton(messages.getString("common.clear"));
         btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
-
-        //Database Connection...
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
-
         btnClear.addActionListener(new clear());
-        btnAdd.addActionListener(new submit());
 
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
@@ -207,7 +196,6 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
             txtcontact.setText("");
             txtshiftto.setText("");
             txtdoj.setText("");
-
         }
     }
 
@@ -223,37 +211,26 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
             String shiftfrom = txtshiftfrom.getText().trim();
             String dob = txtdob.getText().trim();
             String doj = txtdoj.getText().trim();
-            String gender = "";
-            if (cbm.getState() == true) {
-                gender = "M";
-            }
-            if (cbf.getState() == true) {
-                gender = "F";
-            }
-
-            if (chkboxStatus.isSelected()) {
-                doctorStatus = 1;
-            } else {
-                doctorStatus = 0;
-            }
-
+            String gender = (cbm.getState() == true) ? "M" : ((cbf.getState() == true) ? "F" : null);
+            doctorStatus = chkboxStatus.isSelected() ? 1 : 0;
+            
             if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || specialization.isEmpty() || shiftto.isEmpty()
                     || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
             } else {
-                try {
-                    stmt = conn.prepareStatement("INSERT INTO doctor_table(doctor_fullname, doctor_address, "
-                            + "doctor_contact, doctor_dateofbirth, doctor_dateofjoin, "
-                            + "doctor_specialization, doctor_workshiftfrom, doctor_workshiftto, doctor_gender, doctor_isactive) VALUES('" + fullname + "', '" + address + "', '" + contact + "', '"
-                            + dob + "', '" + doj + "', '" + specialization + "', '" + shiftfrom + "', '" + shiftto + "', '" + gender + "', '" + doctorStatus + "');");
-
-                    int success = stmt.executeUpdate();
-                    if (success > 0) {
-                        JOptionPane.showMessageDialog(null, "New Doctor Has Been Added!!!", "Insert Success", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error in inserting Doctor Data!!!");
-                }
+                HashMap doctorDto = new HashMap();
+                doctorDto.put("fullName", fullname);
+                doctorDto.put("address", address);
+                doctorDto.put("contact", contact);
+                doctorDto.put("dateOfBirth", dob);
+                doctorDto.put("dateOfJoin", doj);
+                doctorDto.put("specialization", specialization);
+                doctorDto.put("shiftFrom", shiftfrom);
+                doctorDto.put("shiftTo", shiftto);
+                doctorDto.put("gender", gender);
+                doctorDto.put("doctorStatus", doctorStatus);
+                
+                Doctor.create(doctorDto);
             }
         }
     }

@@ -25,7 +25,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -48,7 +47,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class HospitalMgmtSystem implements ActionListener {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     //Declaration of Java Swing Components...
     static JFrame frame;
     private static JPanel panel1, panel2, panel3;
