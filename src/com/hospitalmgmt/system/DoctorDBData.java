@@ -39,22 +39,17 @@ public class DoctorDBData extends JInternalFrame {
     public DoctorDBData() {
         super(LayoutUtils.VIEW_DOCTOR_TITLE);
 
-        Container con = getContentPane();
+        Container container = getContentPane();
 
         Vector columnNames = new Vector();
         Vector data = new Vector();
-
         try {
             Class.forName(DBConnectionUtils.DB_DRIVER);
             conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-            
-            //Read data from a table
             stmt = conn.prepareStatement("Select * from doctor_table");
             ResultSet resultSet = stmt.executeQuery();
             ResultSetMetaData md = resultSet.getMetaData();
             int columns = md.getColumnCount();
-
-            //Get column names
             for (int i = 1; i <= columns; i++) {
                 columnNames.addElement(md.getColumnName(i));
             }
@@ -73,7 +68,6 @@ public class DoctorDBData extends JInternalFrame {
 
         //  Create table with database data
         JTable table = new JTable(data, columnNames);
-
         table.getColumnModel().getColumn(0).setPreferredWidth(75);
         table.getColumnModel().getColumn(1).setPreferredWidth(110);
         table.getColumnModel().getColumn(2).setPreferredWidth(115);
@@ -91,14 +85,14 @@ public class DoctorDBData extends JInternalFrame {
         table.getTableHeader().setReorderingAllowed(false);
         table.setAutoCreateRowSorter(true);
 
-        JPanel pn = new JPanel();
+        JPanel jPanel = new JPanel();
         JScrollPane scrollPane = new JScrollPane(table);
-        pn.add(scrollPane);
+        jPanel.add(scrollPane);
 
         JPanel buttonPanel = new JPanel();
-        pn.add(buttonPanel);
+        jPanel.add(buttonPanel);
 
-        con.add(pn);
+        container.add(jPanel);
         setSize(900, 400);
         setClosable(true);
         setMaximizable(true);
@@ -114,7 +108,7 @@ public class DoctorDBData extends JInternalFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(DoctorAdd.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         DoctorDBData doctorDBData = new DoctorDBData();
     }
+    
 }

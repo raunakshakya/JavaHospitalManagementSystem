@@ -14,7 +14,6 @@ import java.awt.CheckboxGroup;
 import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.*;
-import java.sql.*;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.*;
@@ -23,13 +22,9 @@ import javax.swing.*;
  *
  * @author Raunak Shakya
  */
-public final class DoctorAdd extends JInternalFrame implements ActionListener {
+public final class DoctorAdd extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
 
     JLabel mainTitle, subTitle, subprofTitle,
             lblfullname, lbladdress, lblcontact, lbldob, lbldobformat, lblgender, lblstatus,
@@ -161,13 +156,51 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         btnAdd = new JButton(messages.getString("common.add"));
         btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
-        btnAdd.addActionListener(new submit());
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fullname = txtfullname.getText().trim();
+                String address = txtaddress.getText().trim();
+                String contact = txtcontact.getText().trim();
+                String specialization = txtSpec.getText().trim();
+                String shiftto = txtshiftto.getText().trim();
+                String shiftfrom = txtshiftfrom.getText().trim();
+                String dob = txtdob.getText().trim();
+                String doj = txtdoj.getText().trim();
+                String gender = (cbm.getState() == true) ? "M" : ((cbf.getState() == true) ? "F" : null);
+                status = chkboxStatus.isSelected() ? 1 : 0;
+
+                if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || specialization.isEmpty() || shiftto.isEmpty()
+                        || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
+                } else {
+                    HashMap doctorDto = new HashMap();
+                    doctorDto.put("fullName", fullname);
+                    doctorDto.put("address", address);
+                    doctorDto.put("contact", contact);
+                    doctorDto.put("status", status);
+                    doctorDto.put("gender", gender);
+                    doctorDto.put("dateOfBirth", dob);
+                    doctorDto.put("dateOfJoin", doj);
+                    doctorDto.put("specialization", specialization);
+                    doctorDto.put("shiftFrom", shiftfrom);
+                    doctorDto.put("shiftTo", shiftto);
+
+                    Doctor.create(doctorDto);
+                }
+            }
+        });
 
         //Button to clear information...
         btnClear = new JButton(messages.getString("common.clear"));
         btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
-        btnClear.addActionListener(new clear());
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doClearTheTextFields();
+            }
+        });
 
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
@@ -178,60 +211,17 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
         setLayout(null);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
+    public void doClearTheTextFields() {
+        txtfullname.setText("");
+        txtSpec.setText("");
+        txtdob.setText("");
+        cbmf.setSelectedCheckbox(null);
+        txtaddress.setText("");
+        chkboxStatus.setSelected(false);
+        txtshiftfrom.setText("");
+        txtcontact.setText("");
+        txtshiftto.setText("");
+        txtdoj.setText("");
     }
 
-    class clear implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            txtfullname.setText("");
-            txtSpec.setText("");
-            txtdob.setText("");
-            cbmf.setSelectedCheckbox(null);
-            txtaddress.setText("");
-            chkboxStatus.setSelected(false);
-            txtshiftfrom.setText("");
-            txtcontact.setText("");
-            txtshiftto.setText("");
-            txtdoj.setText("");
-        }
-    }
-
-    class submit implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            String fullname = txtfullname.getText().trim();
-            String address = txtaddress.getText().trim();
-            String contact = txtcontact.getText().trim();
-            String specialization = txtSpec.getText().trim();
-            String shiftto = txtshiftto.getText().trim();
-            String shiftfrom = txtshiftfrom.getText().trim();
-            String dob = txtdob.getText().trim();
-            String doj = txtdoj.getText().trim();
-            String gender = (cbm.getState() == true) ? "M" : ((cbf.getState() == true) ? "F" : null);
-            status = chkboxStatus.isSelected() ? 1 : 0;
-            
-            if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || specialization.isEmpty() || shiftto.isEmpty()
-                    || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
-            } else {
-                HashMap doctorDto = new HashMap();
-                doctorDto.put("fullName", fullname);
-                doctorDto.put("address", address);
-                doctorDto.put("contact", contact);
-                doctorDto.put("status", status);
-                doctorDto.put("gender", gender);
-                doctorDto.put("dateOfBirth", dob);
-                doctorDto.put("dateOfJoin", doj);
-                doctorDto.put("specialization", specialization);
-                doctorDto.put("shiftFrom", shiftfrom);
-                doctorDto.put("shiftTo", shiftto);
-                
-                Doctor.create(doctorDto);
-            }
-        }
-    }
 }

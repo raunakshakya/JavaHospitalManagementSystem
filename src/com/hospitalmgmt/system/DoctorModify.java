@@ -6,7 +6,6 @@
 package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.LayoutUtils;
-import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
@@ -16,7 +15,6 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +37,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class DoctorModify extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -54,7 +52,7 @@ public class DoctorModify extends JInternalFrame {
 
     public DoctorModify() {
         super(LayoutUtils.MODIFY_DOCTOR_TITLE);
-        
+
         mainTitle = new JLabel(messages.getString("label.doctor.information"));
         mainTitle.setFont(new Font("Arial", Font.BOLD, 26));
         mainTitle.setBounds(350, 25, 400, 30);
@@ -80,6 +78,12 @@ public class DoctorModify extends JInternalFrame {
         btnClear = new JButton(messages.getString("common.clear.all"));
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doClearTheTextFields();
+            }
+        });
 
         btnModify = new JButton(messages.getString("update.doctor.label"));
         btnModify.setBounds(540, 98, 150, 30);
@@ -180,18 +184,9 @@ public class DoctorModify extends JInternalFrame {
         lbldf2.setBounds(780, 560, 100, 20);
         add(lbldf2);
 
-        //Database Connection...
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
-
-        btnClear.addActionListener(new clear());
         btnSubmit.addActionListener(new submit());
         btnModify.addActionListener(new modify());
-        
+
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
@@ -201,34 +196,25 @@ public class DoctorModify extends JInternalFrame {
         setLayout(null);
     }
 
-    public void actionPerformed(ActionEvent ae) {
-    }
-
-    class clear implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            txtfullname.setText("");
-            txtcontact.setText("");
-            txtdoctorid.setText("");
-            txtworkfrom.setText("");
-            txtworkto.setText("");
-            txtaddress.setText("");
-            txtspecialization.setText("");
-            txtdob.setText("");
-            txtdoj.setText("");
-            cbmf.setSelectedCheckbox(null);
-        }
+    public void doClearTheTextFields() {
+        txtfullname.setText("");
+        txtcontact.setText("");
+        txtdoctorid.setText("");
+        txtworkfrom.setText("");
+        txtworkto.setText("");
+        txtaddress.setText("");
+        txtspecialization.setText("");
+        txtdob.setText("");
+        txtdoj.setText("");
+        cbmf.setSelectedCheckbox(null);
     }
 
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(LayoutUtils.JTATTOO_APPLICATION_THEME);
-
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(DoctorModify.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         DoctorModify doctorModify = new DoctorModify();
     }
 

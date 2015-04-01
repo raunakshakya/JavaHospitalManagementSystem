@@ -20,17 +20,17 @@ import javax.swing.JPanel;
 public class VersionPage extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     JLabel lblversion;
-    JPanel pn;
+    JPanel jPanel;
 
     public VersionPage() {
         super(LayoutUtils.CURRENT_VERSION_TITLE);
 
-        pn = new JPanel();
-        lblversion = new JLabel("Version Page");
-        pn.add(lblversion);
-        add(pn);
+        jPanel = new JPanel();
+        lblversion = new JLabel(messages.getString("version.page.title"));
+        jPanel.add(lblversion);
+        add(jPanel);
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setSize(400, 300);
@@ -40,8 +40,8 @@ public class VersionPage extends JInternalFrame {
         setVisible(true);
         setLocation(300, 200);
     }
-    
-    public static void main(String args[]){
+
+    public static void main(String args[]) {
         VersionPage versionPage = new VersionPage();
     }
 

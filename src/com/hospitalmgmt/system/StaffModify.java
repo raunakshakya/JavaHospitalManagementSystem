@@ -5,22 +5,20 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Staff;
 import com.hospitalmgmt.utils.LayoutUtils;
-import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Font;
-import java.awt.HeadlessException;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,7 +34,7 @@ import javax.swing.JTextField;
 public class StaffModify extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -73,14 +71,100 @@ public class StaffModify extends JInternalFrame {
         btnSubmit = new JButton(messages.getString("common.search"));
         btnSubmit.setBounds(320, 98, 100, 30);
         add(btnSubmit);
+        btnSubmit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!txtstaffid.getText().isEmpty()) {
+                    Integer staffId = Integer.parseInt(txtstaffid.getText().trim());
+                    Staff staff = Staff.findById(staffId);
+                    if (staff == null) {
+                        JOptionPane.showMessageDialog(null, "Staff Record Not Found!!!");
+                    }
+                    String fullName = staff.getFullName();
+                    String address = staff.getAddress();
+                    String contact = staff.getContact();
+                    String gender = staff.getGender().getName();
+                    String department = staff.getDepartment();
+                    String post = staff.getPost();
+                    String shiftFrom = staff.getShiftFrom().toString();
+                    String shiftTo = staff.getShiftTo().toString();
+                    String dateOfBirth = staff.getDateOfBirth().toString();
+                    String dateOfJoin = staff.getDateOfJoin().toString();
+
+                    txtfullname.setText(fullName);
+                    txtaddress.setText(address);
+                    txtcontact.setText(contact);
+                    txtdepartment.setText(department);
+                    txtpost.setText(post);
+                    txtworkfrom.setText(shiftFrom);
+                    txtworkto.setText(shiftTo);
+                    txtdob.setText(dateOfBirth);
+                    txtdoj.setText(dateOfJoin);
+                    switch (gender) {
+                        case "Male":
+                            cbm.setState(true);
+                            break;
+                        case "Female":
+                            cbf.setState(true);
+                            break;
+                        default:
+                            throw new RuntimeException("Incorrect gender");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "First Enter the Staff ID......");
+                }
+            }
+        });
 
         btnClear = new JButton(messages.getString("common.clear.all"));
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doClearTheTextFields();
+            }
+        });
 
         btnModify = new JButton(messages.getString("update.staff.label"));
         btnModify.setBounds(540, 98, 150, 30);
         add(btnModify);
+        btnModify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer staffId = Integer.parseInt(txtstaffid.getText().trim());
+                if (staffId == null) {
+                    JOptionPane.showMessageDialog(null, "First Enter the Patient ID...");
+                } else {
+                    Staff staff = Staff.findById(staffId);
+
+                    String fullName = txtfullname.getText().trim();
+                    String address = txtaddress.getText().trim();
+                    String contact = txtcontact.getText().trim();
+                    String department = txtdepartment.getText().trim();
+                    String shiftFrom = txtworkfrom.getText().trim();
+                    String shiftTo = txtworkto.getText().trim();
+                    String dateOfBirth = txtdob.getText().trim();
+                    String dateOfJoin = txtdoj.getText().trim();
+                    String gender = (cbm.getState() == true) ? "Male" : ((cbf.getState() == true) ? "Female" : null);
+
+                    HashMap staffDto = new HashMap();
+                    staffDto.put("fullName", fullName);
+                    staffDto.put("address", address);
+                    staffDto.put("contact", contact);
+                    staffDto.put("department", department);
+                    staffDto.put("shiftFrom", shiftFrom);
+                    staffDto.put("shiftTo", shiftTo);
+                    staffDto.put("dateOfBirth", dateOfBirth);
+                    staffDto.put("dateOfJoin", dateOfJoin);
+
+                    Staff.update(staff.getId(), staffDto);
+
+                    JOptionPane.showMessageDialog(new JFrame(), "Data Modified successfully!", "Done!",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
 
         lblsubTitle = new JLabel(messages.getString("personal.information.title"));
         lblsubTitle.setFont(new Font("Arial", Font.BOLD, 20));
@@ -184,18 +268,6 @@ public class StaffModify extends JInternalFrame {
         txtpost.setBounds(660, 530, 200, 100);
         add(txtpost);
 
-        //Database Connection...
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
-
-        btnClear.addActionListener(new clear());
-        btnSubmit.addActionListener(new submit());
-        btnModify.addActionListener(new modify());
-
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
@@ -205,136 +277,18 @@ public class StaffModify extends JInternalFrame {
         setLayout(null);
     }
 
-    public void actionPerformed(ActionEvent ae) {
-    }
-
-    class clear implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            txtfullname.setText("");
-            txtcontact.setText("");
-            txtstaffid.setText("");
-            txtworkfrom.setText("");
-            txtworkto.setText("");
-            txtaddress.setText("");
-            txtdepartment.setText("");
-            txtpost.setText("");
-            txtdob.setText("");
-            txtdoj.setText("");
-            cbmf.setSelectedCheckbox(null);
-        }
-    }
-
-    class submit implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            try {
-                if (!txtstaffid.getText().isEmpty()) {
-
-                    Integer num = Integer.parseInt(txtstaffid.getText().trim());
-                    String name, addr, contact, gender, dept, post, workf, workt, dob, doj;
-
-                    stmt = conn.prepareStatement("SELECT * FROM staff_table WHERE staff_id=?");
-                    stmt.setInt(1, num);
-                    rs = stmt.executeQuery();
-
-                    if (rs.next()) {
-                        name = rs.getString("staff_fullname");
-                        addr = rs.getString("staff_address");
-                        contact = rs.getString("staff_contact");
-                        gender = rs.getString("staff_gender");
-                        dept = rs.getString("staff_department");
-                        post = rs.getString("staff_post");
-                        workf = rs.getString("staff_workshiftfrom");
-                        workt = rs.getString("staff_workshiftto");
-                        dob = rs.getString("staff_dateofbirth");
-                        doj = rs.getString("staff_dateofjoin");
-
-                        switch (gender) {
-                            case "M":
-                                cbm.setState(true);
-                                break;
-                            case "F":
-                                cbf.setState(true);
-                                break;
-                            default:
-                                throw new RuntimeException("Incorrect gender");
-                        }
-
-                        txtfullname.setText(name);
-                        txtaddress.setText(addr);
-                        txtcontact.setText(contact);
-                        txtdepartment.setText(dept);
-                        txtpost.setText(post);
-                        txtworkfrom.setText(workf);
-                        txtworkto.setText(workt);
-                        txtdob.setText(dob);
-                        txtdoj.setText(doj);
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Staff Record Not Found!!!");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "First Enter the Staff ID......");
-                }
-            } catch (SQLException sq) {
-                JOptionPane.showMessageDialog(null, "Error in retrieving Staff Data!!!");
-            }
-        }
-    }
-
-    class modify implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            try {
-                Integer num1 = Integer.parseInt(txtstaffid.getText().trim());
-                if (num1 == null) {
-                    JOptionPane.showMessageDialog(null, "First Enter the Patient ID...");
-                } else {
-
-                    String name1 = txtfullname.getText().trim();
-                    String addr1 = txtaddress.getText().trim();
-                    String contact1 = txtcontact.getText().trim();
-                    String dept1 = txtdepartment.getText().trim();
-                    String workf1 = txtworkfrom.getText().trim();
-                    String workt1 = txtworkto.getText().trim();
-                    String dob1 = txtdob.getText().trim();
-                    String datedoj1 = txtdoj.getText().trim();
-
-                    String query = "UPDATE staff_table SET staff_fullname=?, staff_address=?, staff_contact=?, "
-                            + "staff_department=?, staff_gender=?, staff_workshiftfrom='" + workf1 + "', "
-                            + "staff_workshiftto='" + workt1 + "', staff_dateofbirth='" + dob1 + "', staff_dateofjoin='"
-                            + datedoj1 + "' WHERE staff_id=?";
-
-                    String gender1 = "";
-                    if (cbm.getState() == true) {
-                        gender1 = "M";
-                    }
-                    if (cbf.getState() == true) {
-                        gender1 = "F";
-                    }
-
-                    PreparedStatement stmt = conn.prepareStatement(query);
-                    stmt.setString(1, name1);
-                    stmt.setString(2, addr1);
-                    stmt.setString(3, contact1);
-                    stmt.setString(4, dept1);
-                    stmt.setString(5, gender1);
-                    stmt.setInt(6, num1);
-
-                    stmt.executeUpdate();
-
-                    JOptionPane.showMessageDialog(new JFrame(), "Data Modified successfully!", "Done!",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
-            } catch (NumberFormatException | HeadlessException | SQLException e) {
-                JOptionPane.showMessageDialog(new JFrame(), "Error in updating Staff Data......", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        }
+    public void doClearTheTextFields() {
+        txtfullname.setText("");
+        txtcontact.setText("");
+        txtstaffid.setText("");
+        txtworkfrom.setText("");
+        txtworkto.setText("");
+        txtaddress.setText("");
+        txtdepartment.setText("");
+        txtpost.setText("");
+        txtdob.setText("");
+        txtdoj.setText("");
+        cbmf.setSelectedCheckbox(null);
     }
 
 }

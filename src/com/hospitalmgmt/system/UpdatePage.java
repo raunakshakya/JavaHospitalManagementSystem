@@ -15,8 +15,8 @@ import javax.swing.JInternalFrame;
 public class UpdatePage extends JInternalFrame {
 
     public UpdatePage() {
-
         super("Update");
+
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);

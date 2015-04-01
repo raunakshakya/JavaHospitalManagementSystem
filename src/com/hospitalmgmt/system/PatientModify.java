@@ -237,8 +237,8 @@ public class PatientModify extends JInternalFrame {
                 }
             }
         });
+        
         btnModify.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 Integer patientId = Integer.parseInt(txtpatno.getText());

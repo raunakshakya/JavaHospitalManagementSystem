@@ -22,7 +22,9 @@ public class MessageBundle extends ListResourceBundle {
         {"application.title", "Vayodha Hospital Management System"},
         {"application.name", "Hospital Management System"},
         {"current.version.title", "Current Version"},
+        {"version.page.title", "Version Page"},
         {"help.contents.title", "Help Contents"},
+        {"contents.page.descripton", "\nThis is a simple desktop application built in JAVA using Swing Components and PostGreSQL database. \n\nYou need to open PostGreSQL database server and must have the database and its tables created to successfully run this application. Otherwise you will be facing consistent hiccups."},
         {"license.title", "License"},
         {"footer.title", "Developer: Raunak Shakya @NIIT Kantipath 2014"},
         

@@ -6,7 +6,9 @@
 package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.utils.LayoutUtils;
+import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.FlowLayout;
+import java.util.ResourceBundle;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -17,23 +19,23 @@ import javax.swing.JTextArea;
  */
 public class ContentsPage extends JInternalFrame {
 
-    JTextArea txtHelpContents;
-    JScrollPane sp;
+    public static final ResourceBundle messages = MessageUtils.MESSAGES;
+
+    JTextArea helpContents;
+    JScrollPane jScrollPane;
 
     public ContentsPage() {
         super(LayoutUtils.HELP_CONTENTS_TITLE);
 
-        txtHelpContents = new JTextArea(10, 30);
-        txtHelpContents.setEditable(false);
-        txtHelpContents.setLineWrap(true);
-        txtHelpContents.setWrapStyleWord(true);
-        sp = new JScrollPane(txtHelpContents);
-        sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        txtHelpContents.setText("\nThis is a simple desktop application built in JAVA using Swing Components "
-                + "and PostGreSQL database. \n\nYou need to open PostGreSQL database server and must have the database and its"
-                + " tables created to successfully run this application. Otherwise you will be facing consistent hiccups.");
-        add(sp);
+        helpContents = new JTextArea(10, 30);
+        helpContents.setEditable(false);
+        helpContents.setLineWrap(true);
+        helpContents.setWrapStyleWord(true);
+        jScrollPane = new JScrollPane(helpContents);
+        jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        helpContents.setText(messages.getString("contents.page.descripton"));
+        add(jScrollPane);
 
         setLayout(new FlowLayout(FlowLayout.CENTER));
         setSize(360, 210);

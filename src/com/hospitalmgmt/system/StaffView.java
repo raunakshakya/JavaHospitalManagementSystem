@@ -34,7 +34,7 @@ import javax.swing.JTextField;
 public class StaffView extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     Connection conn = null;
     PreparedStatement stmt1 = null;
     PreparedStatement stmt2 = null;
