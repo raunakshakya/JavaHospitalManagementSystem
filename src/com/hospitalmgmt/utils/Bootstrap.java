@@ -5,6 +5,7 @@
  */
 package com.hospitalmgmt.utils;
 
+import com.hospitalmgmt.models.Admin;
 import com.hospitalmgmt.models.Doctor;
 import com.hospitalmgmt.models.Patient;
 import com.hospitalmgmt.models.Staff;
@@ -18,9 +19,22 @@ import java.util.HashMap;
 public class Bootstrap {
 
     public Bootstrap() {
+        bootstrapAdmin();
         bootstrapDoctor();
         bootstrapStaff();
         bootstrapPatient();
+    }
+
+    private void bootstrapAdmin() {
+        HashMap adminDto1 = new HashMap();
+        adminDto1.put("username", "u1");
+        adminDto1.put("password", "u1");
+        Admin.create(adminDto1);
+
+        HashMap adminDto2 = new HashMap();
+        adminDto2.put("username", "u2");
+        adminDto2.put("password", "u2");
+        Admin.create(adminDto2);
     }
 
     private void bootstrapDoctor() {
