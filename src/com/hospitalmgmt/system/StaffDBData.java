@@ -38,7 +38,7 @@ public class StaffDBData extends JInternalFrame {
     public StaffDBData() {
         super(LayoutUtils.VIEW_STAFF_TITLE);
 
-        Container con = getContentPane();
+        Container container = getContentPane();
 
         Vector columnNames = new Vector();
         Vector data = new Vector();
@@ -46,14 +46,10 @@ public class StaffDBData extends JInternalFrame {
         try {
             Class.forName(DBConnectionUtils.DB_DRIVER);
             conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-
-            //Read data from a table
             stmt = conn.prepareStatement("Select * from staff_table");
             ResultSet resultSet = stmt.executeQuery();
             ResultSetMetaData md = resultSet.getMetaData();
             int columns = md.getColumnCount();
-
-            //Get column names
             for (int i = 1; i <= columns; i++) {
                 columnNames.addElement(md.getColumnName(i));
             }
@@ -72,7 +68,6 @@ public class StaffDBData extends JInternalFrame {
 
         //  Create table with database data
         JTable table = new JTable(data, columnNames);
-
         table.getColumnModel().getColumn(0).setPreferredWidth(75);
         table.getColumnModel().getColumn(1).setPreferredWidth(105);
         table.getColumnModel().getColumn(2).setPreferredWidth(105);
@@ -94,7 +89,7 @@ public class StaffDBData extends JInternalFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        con.add(scrollPane);
+        container.add(scrollPane);
 
         setSize(900, 400);
         setClosable(true);

@@ -35,10 +35,6 @@ public class StaffModify extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
 
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
-
     JLabel mainTitle, lblInsertSNo, lblsubTitle, lblfullname, lbladdress, lblcontact, lblgender, lbldob, lbldf1,
             lblprofTitle, lbldepartment, lblstaffid, lwork, lblworkfrom, lblworkto, lbldoj, lbldf2, lblpost;
     JTextField txtfullname, txtcontact, txtgender, txtdob, txtstaffid, txtworkfrom, txtworkto, txtdoj;

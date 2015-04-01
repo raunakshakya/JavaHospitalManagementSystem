@@ -201,7 +201,6 @@ public final class PatientAdd extends JInternalFrame {
                 } else {
                     int doctorid = 0;
                     try {
-                        System.out.println(doctorname);
                         stmt = conn.prepareStatement("SELECT doctor_id FROM doctor_table WHERE doctor_fullname='"
                                 + doctorname + "'");
                         rs = stmt.executeQuery();

@@ -28,10 +28,6 @@ public class StaffAdd extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
 
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
-
     JLabel mainTitle, subTitle, subprofTitle,
             lblfullname, lbladdress, lblcontact, lbldob, lbldobformat, lblgender,
             lbldept, lblstatus, lblpost, lbldoj, lbldojformat, lblshiftfron, lblshiftto;
@@ -46,8 +42,6 @@ public class StaffAdd extends JInternalFrame {
 
     public StaffAdd() {
         super(LayoutUtils.NEW_STAFF_TITLE);
-
-        Container con = getContentPane();
 
         //Patient's Personal Information...
         mainTitle = new JLabel(messages.getString("label.add.staff.information"));
@@ -166,7 +160,44 @@ public class StaffAdd extends JInternalFrame {
         btnAdd = new JButton(messages.getString("common.add"));
         btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
-        btnAdd.addActionListener(new submit());
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fullname = txtfullname.getText().trim();
+                String address = txtaddress.getText().trim();
+                String contact = txtcontact.getText().trim();
+                String department = txtDept.getText().trim();
+                String post = txtpost.getText().trim();
+                String shiftto = txtshiftto.getText().trim();
+                String shiftfrom = txtshiftfrom.getText().trim();
+                String dob = txtdob.getText().trim();
+                String doj = txtdoj.getText().trim();
+                String gender = (cbm.getState() == true) ? "Male" : ((cbf.getState() == true) ? "Female" : null);
+                staffStatus = (chkboxStatus.isSelected()) ? 1 : 0;
+
+                if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || department.isEmpty() || post.isEmpty()
+                        || shiftto.isEmpty() || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
+                } else {
+                    HashMap staffDto = new HashMap();
+                    staffDto.put("fullName", fullname);
+                    staffDto.put("address", address);
+                    staffDto.put("contact", contact);
+                    staffDto.put("post", post);
+                    staffDto.put("status", staffStatus);
+                    staffDto.put("gender", gender);
+                    staffDto.put("dateOfBirth", dob);
+                    staffDto.put("dateOfJoin", doj);
+                    staffDto.put("department", department);
+                    staffDto.put("shiftFrom", shiftfrom);
+                    staffDto.put("shiftTo", shiftto);
+                    staffDto.put("shiftFrom", shiftfrom);
+                    staffDto.put("shiftTo", shiftto);
+
+                    Staff.create(staffDto);
+                }
+            }
+        });
 
         //Button to clear information...
         btnClear = new JButton(messages.getString("common.clear"));
@@ -200,46 +231,6 @@ public class StaffAdd extends JInternalFrame {
         txtcontact.setText("");
         txtshiftto.setText("");
         txtdoj.setText("");
-    }
-
-    class submit implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            String fullname = txtfullname.getText().trim();
-            String address = txtaddress.getText().trim();
-            String contact = txtcontact.getText().trim();
-            String department = txtDept.getText().trim();
-            String post = txtpost.getText().trim();
-            String shiftto = txtshiftto.getText().trim();
-            String shiftfrom = txtshiftfrom.getText().trim();
-            String dob = txtdob.getText().trim();
-            String doj = txtdoj.getText().trim();
-            String gender = (cbm.getState() == true) ? "M" : ((cbf.getState() == true) ? "F" : null);
-            staffStatus = (chkboxStatus.isSelected()) ? 1 : 0;
-
-            if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || department.isEmpty() || post.isEmpty()
-                    || shiftto.isEmpty() || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
-            } else {
-                HashMap staffDto = new HashMap();
-                staffDto.put("fullName", fullname);
-                staffDto.put("address", address);
-                staffDto.put("contact", contact);
-                staffDto.put("post", post);
-                staffDto.put("status", staffStatus);
-                staffDto.put("gender", gender);
-                staffDto.put("dateOfBirth", dob);
-                staffDto.put("dateOfJoin", doj);
-                staffDto.put("department", department);
-                staffDto.put("shiftFrom", shiftfrom);
-                staffDto.put("shiftTo", shiftto);
-                staffDto.put("shiftFrom", shiftfrom);
-                staffDto.put("shiftTo", shiftto);
-
-                Staff.create(staffDto);
-            }
-        }
     }
 
 }

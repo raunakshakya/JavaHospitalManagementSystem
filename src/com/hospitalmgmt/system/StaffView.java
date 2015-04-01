@@ -5,6 +5,7 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Staff;
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
@@ -73,10 +74,53 @@ public class StaffView extends JInternalFrame {
         btnSubmit = new JButton(messages.getString("common.search"));
         btnSubmit.setBounds(320, 98, 100, 30);
         add(btnSubmit);
+        btnSubmit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!txtstaffid.getText().trim().equals("")) {
+                    Integer staffId = Integer.parseInt(txtstaffid.getText());
+                    Staff staff = Staff.findById(staffId);
+                    if (staff == null) {
+                        String fullName = staff.getFullName();
+                        String address = staff.getAddress();
+                        String contact = staff.getContact();
+                        String gender = staff.getGender().getName();
+                        String department = staff.getDepartment();
+                        String post = staff.getPost();
+                        String dateOfBirth = staff.getDateOfBirth().toString();
+                        String dateOfJoin = staff.getDateOfJoin().toString();
+                        String shiftFrom = staff.getShiftFrom().toString();
+                        String shiftTo = staff.getShiftTo().toString();
+
+                        txtfullname.setText(fullName);
+                        txtaddress.setText(address);
+                        txtcontact.setText(contact);
+                        txtdepartment.setText(department);
+                        txtworkfrom.setText(shiftFrom);
+                        txtworkto.setText(shiftTo);
+                        txtdob.setText(dateOfBirth);
+                        txtdoj.setText(dateOfJoin);
+                        txtgender.setText(gender);
+                        txtpost.setText(post);
+                    } else {
+                        doClearTheTextFields();
+                        JOptionPane.showMessageDialog(null, "Staff Record Not Found!!!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "First Enter the Staff ID!!!");
+                }
+            }
+        });
 
         btnClear = new JButton(messages.getString("common.clear.all"));
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doClearTheTextFields();
+            }
+        });
 
         lblsubTitle = new JLabel(messages.getString("personal.information.title"));
         lblsubTitle.setFont(new Font("Arial", Font.BOLD, 20));
@@ -178,17 +222,6 @@ public class StaffView extends JInternalFrame {
         txtpost.setEditable(false);
         add(txtpost);
 
-        //Database Connection...
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
-
-        btnClear.addActionListener(new clear());
-        btnSubmit.addActionListener(new submit());
-
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
@@ -198,84 +231,18 @@ public class StaffView extends JInternalFrame {
         setLayout(null);
     }
 
-    class clear implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            txtstaffid.setText("");
-            txtfullname.setText("");
-            txtaddress.setText("");
-            txtcontact.setText("");
-            txtworkfrom.setText("");
-            txtworkto.setText("");
-            txtdepartment.setText("");
-            txtpost.setText("");
-            txtdoj.setText("");
-            txtdob.setText("");
-            txtgender.setText("");
-        }
-    }
-
-    public void actionPerformed(ActionEvent ae) {
-    }
-
-    class submit implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            try {
-                if (!txtstaffid.getText().trim().equals("")) {
-                    Integer num = Integer.parseInt(txtstaffid.getText());
-                    String name, addr, contact, dept, post, workf, workt, gender, dob, doj;
-
-                    stmt1 = conn.prepareStatement("SELECT * FROM staff_table WHERE staff_id=?");
-                    stmt1.setInt(1, num);
-                    ResultSet rs1 = stmt1.executeQuery();
-
-                    if (rs1.next()) {
-                        name = rs1.getString("staff_fullname");
-                        addr = rs1.getString("staff_address");
-                        contact = rs1.getString("staff_contact");
-                        gender = rs1.getString("staff_gender");
-                        dob = rs1.getString("staff_dateofbirth");
-                        doj = rs1.getString("staff_dateofjoin");
-                        dept = rs1.getString("staff_department");
-                        workf = rs1.getString("staff_workshiftfrom");
-                        workt = rs1.getString("staff_workshiftto");
-                        post = rs1.getString("staff_post");
-
-                        txtfullname.setText(name);
-                        txtaddress.setText(addr);
-                        txtcontact.setText(contact);
-                        txtdepartment.setText(dept);
-                        txtworkfrom.setText(workf);
-                        txtworkto.setText(workt);
-                        txtdob.setText(dob);
-                        txtdoj.setText(doj);
-                        txtgender.setText(gender);
-                        txtpost.setText(post);
-
-                    } else {
-                        txtstaffid.setText("");
-                        txtfullname.setText("");
-                        txtaddress.setText("");
-                        txtcontact.setText("");
-                        txtworkfrom.setText("");
-                        txtworkto.setText("");
-                        txtdepartment.setText("");
-                        txtpost.setText("");
-                        txtdoj.setText("");
-                        txtdob.setText("");
-                        txtgender.setText("");
-                        JOptionPane.showMessageDialog(null, "Staff Record Not Found!!!");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "First Enter the Staff ID!!!");
-                }
-            } catch (SQLException sq) {
-                JOptionPane.showMessageDialog(null, "Error in retrieving Staff Data!!!");
-            }
-        }
+    public void doClearTheTextFields() {
+        txtstaffid.setText("");
+        txtfullname.setText("");
+        txtaddress.setText("");
+        txtcontact.setText("");
+        txtworkfrom.setText("");
+        txtworkto.setText("");
+        txtdepartment.setText("");
+        txtpost.setText("");
+        txtdoj.setText("");
+        txtdob.setText("");
+        txtgender.setText("");
     }
 
 }

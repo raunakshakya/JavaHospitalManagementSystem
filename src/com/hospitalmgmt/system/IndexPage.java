@@ -15,7 +15,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -39,7 +38,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class IndexPage extends JFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     JButton bpat, bdoc, bbill, breport, bback, bexit;
     JLabel linfo, linfo1, linfo2, linfo3, linfo4;
 
@@ -265,8 +264,8 @@ public class IndexPage extends JFrame {
         menuBar.add(helpMenu);
         setJMenuBar(menuBar);
 
-        Container con = getContentPane();
-        con.setBackground(Color.GRAY);
+        Container container = getContentPane();
+        container.setBackground(Color.GRAY);
 
         //setSize(new Dimension(screen.width/2, screen.height/2));
         //setSize(screen.width, screen.height);

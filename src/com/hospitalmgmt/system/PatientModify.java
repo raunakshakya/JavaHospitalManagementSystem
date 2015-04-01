@@ -257,7 +257,7 @@ public class PatientModify extends JInternalFrame {
                     String problem = txtcurrentproblem.getText().trim();
                     String roomNumber = txtroomno.getText().trim();
                     String dateOfJoin = txtdoa.getText().trim();
-                    String gender = (cbm.getState() == true) ? "M" : ((cbf.getState() == true) ? "F" : null);
+                    String gender = (cbm.getState() == true) ? "Male" : ((cbf.getState() == true) ? "Female" : null);
 
                     HashMap patientDto = new HashMap();
                     patientDto.put("fullName", fullName);
