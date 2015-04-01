@@ -14,12 +14,10 @@ import javax.swing.JInternalFrame;
 public class DoctorReportPage extends JInternalFrame {
 
     public DoctorReportPage() {
-        
         DoctorDBData frame = new DoctorDBData();
         frame.setDefaultCloseOperation(1);
         frame.pack();
         frame.setVisible(true);
-
     }
 
 }

@@ -5,19 +5,19 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Doctor;
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Font;
-import java.awt.HeadlessException;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -185,7 +185,43 @@ public class DoctorModify extends JInternalFrame {
         add(lbldf2);
 
         btnSubmit.addActionListener(new submit());
-        btnModify.addActionListener(new modify());
+        btnModify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer doctorId = Integer.parseInt(txtdoctorid.getText().trim());
+                if (doctorId == null) {
+                    JOptionPane.showMessageDialog(null, "First Enter the Doctor ID...");
+                }
+
+                String fullName = txtfullname.getText().trim();
+                String address = txtaddress.getText().trim();
+                String contact = txtcontact.getText().trim();
+                String specialization = txtspecialization.getText().trim();
+                //String status = status.getText().trim();
+                String shiftFrom = txtworkfrom.getText().trim();
+                String shiftTo = txtworkto.getText().trim();
+                String dateOfBirth = txtdob.getText().trim();
+                String dateOfJoin = txtdoj.getText().trim();
+                String gender = (cbm.getState() == true) ? "Male" : ((cbf.getState() == true) ? "Female" : null);
+
+                HashMap doctorDto = new HashMap();
+                doctorDto.put("fullName", fullName);
+                doctorDto.put("address", address);
+                doctorDto.put("contact", contact);
+                //doctorDto.put("status", status);
+                doctorDto.put("gender", gender);
+                doctorDto.put("dateOfBirth", dateOfBirth);
+                doctorDto.put("dateOfJoin", dateOfJoin);
+                doctorDto.put("specialization", specialization);
+                doctorDto.put("shiftFrom", shiftFrom);
+                doctorDto.put("shiftTo", shiftTo);
+
+                Doctor.update(doctorId, doctorDto);
+
+                JOptionPane.showMessageDialog(new JFrame(), "Data Modified successfully!", "Done!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
@@ -222,113 +258,42 @@ public class DoctorModify extends JInternalFrame {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            try {
-                if (!txtdoctorid.getText().isEmpty()) {
-                    Integer num = null;
-                    try {
-                        num = Integer.parseInt(txtdoctorid.getText().trim());
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Enter Valid Doctor ID......");
-                        txtdoctorid.setText("");
-                    }
-
-                    String name, addr, contact, gender, spec, workf, workt, dob, doj;
-
-                    if (!txtdoctorid.getText().trim().equals("")) {
-                        stmt = conn.prepareStatement("SELECT * FROM doctor_table WHERE doctor_id=?");
-                        stmt.setInt(1, num);
-                        rs = stmt.executeQuery();
-
-                        if (rs.next()) {
-                            name = rs.getString("doctor_fullname");
-                            addr = rs.getString("doctor_address");
-                            contact = rs.getString("doctor_contact");
-                            gender = rs.getString("doctor_gender");
-                            spec = rs.getString("doctor_specialization");
-                            workf = rs.getString("doctor_workshiftfrom");
-                            workt = rs.getString("doctor_workshiftto");
-                            dob = rs.getString("doctor_dateofbirth");
-                            doj = rs.getString("doctor_dateofjoin");
-
-                            if (gender.equals("M")) {
-                                cbm.setState(true);
-                            }
-                            if (gender.equals("F")) {
-                                cbf.setState(true);
-                            }
-
-                            txtfullname.setText(name);
-                            txtaddress.setText(addr);
-                            txtcontact.setText(contact);
-                            txtspecialization.setText(spec);
-                            txtworkfrom.setText(workf);
-                            txtworkto.setText(workt);
-                            txtdob.setText(dob);
-                            txtdoj.setText(doj);
-
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Patient Record Not Found!!!");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Enter the Doctor ID!!!");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "First Enter the Patient ID......");
+            if (!txtdoctorid.getText().isEmpty()) {
+                Integer doctorId = Integer.parseInt(txtdoctorid.getText().trim());
+                Doctor doctor = Doctor.findById(doctorId);
+                if (doctor == null) {
+                    JOptionPane.showMessageDialog(null, "Doctor Record Not Found!!!");
                 }
-            } catch (SQLException sq) {
-
-            }
-        }
-    }
-
-    class modify implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            try {
-                Integer num1 = Integer.parseInt(txtdoctorid.getText().trim());
-                if (num1 == null) {
-                    JOptionPane.showMessageDialog(null, "First Enter the Doctor ID...");
-                } else {
-
-                    String name1 = txtfullname.getText().trim();
-                    String addr1 = txtaddress.getText().trim();
-                    String contact1 = txtcontact.getText().trim();
-                    String spec1 = txtspecialization.getText().trim();
-                    String workf1 = txtworkfrom.getText().trim();
-                    String workt1 = txtworkto.getText().trim();
-                    String dob1 = txtdob.getText().trim();
-                    String datedoj1 = txtdoj.getText().trim();
-
-                    String query = "UPDATE doctor_table SET doctor_fullname=?, doctor_address=?, doctor_contact=?, "
-                            + "doctor_specialization=?, doctor_gender=?, doctor_workshiftfrom='" + workf1 + "', "
-                            + "doctor_workshiftto='" + workt1 + "', doctor_dateofbirth='" + dob1 + "', doctor_dateofjoin='"
-                            + datedoj1 + "' WHERE doctor_id=?";
-
-                    String gender1 = "";
-                    if (cbm.getState() == true) {
-                        gender1 = "M";
-                    }
-                    if (cbf.getState() == true) {
-                        gender1 = "F";
-                    }
-
-                    stmt = conn.prepareStatement(query);
-                    stmt.setString(1, name1);
-                    stmt.setString(2, addr1);
-                    stmt.setString(3, contact1);
-                    stmt.setString(4, spec1);
-                    stmt.setString(5, gender1);
-                    stmt.setInt(6, num1);
-
-                    stmt.executeUpdate();
-
-                    JOptionPane.showMessageDialog(new JFrame(), "Data Modified successfully!", "Done!",
-                            JOptionPane.INFORMATION_MESSAGE);
+                String fullName = doctor.getFullName();
+                String address = doctor.getAddress();
+                String contact = doctor.getContact();
+                String gender = doctor.getGender().getName();
+                String specialization = doctor.getSpecialization();
+                String shiftFrom = doctor.getShiftFrom().toString();
+                String shiftTo = doctor.getShiftTo().toString();
+                String dateOfBirth = doctor.getDateOfBirth().toString();
+                String dateOfJoin = doctor.getDateOfJoin().toString();
+                switch (gender) {
+                    case "Male":
+                        cbm.setState(true);
+                        break;
+                    case "Female":
+                        cbf.setState(true);
+                        break;
+                    default:
+                        throw new RuntimeException("Incorrect gender");
                 }
-            } catch (NumberFormatException | HeadlessException | SQLException e) {
-                JOptionPane.showMessageDialog(new JFrame(), "Error in updating Doctor Data......", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+
+                txtfullname.setText(fullName);
+                txtaddress.setText(address);
+                txtcontact.setText(contact);
+                txtspecialization.setText(specialization);
+                txtworkfrom.setText(shiftFrom);
+                txtworkto.setText(shiftTo);
+                txtdob.setText(dateOfBirth);
+                txtdoj.setText(dateOfJoin);
+            } else {
+                JOptionPane.showMessageDialog(null, "First Enter the Patient ID......");
             }
         }
     }

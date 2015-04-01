@@ -152,6 +152,7 @@ public class StaffModify extends JInternalFrame {
                     staffDto.put("fullName", fullName);
                     staffDto.put("address", address);
                     staffDto.put("contact", contact);
+                    staffDto.put("gender", gender);
                     staffDto.put("department", department);
                     staffDto.put("shiftFrom", shiftFrom);
                     staffDto.put("shiftTo", shiftTo);

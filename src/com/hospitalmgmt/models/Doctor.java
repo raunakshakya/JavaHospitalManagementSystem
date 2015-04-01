@@ -104,7 +104,7 @@ public class Doctor extends Employee {
      * @param id
      * @param doctorDto
      */
-    public static void updateDoctor(Integer id, HashMap doctorDto) {
+    public static void update(Integer id, HashMap doctorDto) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
             Session session = hibernateUtils.getSession();

@@ -110,5 +110,5 @@ public class DoctorDBData extends JInternalFrame {
         }
         DoctorDBData doctorDBData = new DoctorDBData();
     }
-    
+
 }
