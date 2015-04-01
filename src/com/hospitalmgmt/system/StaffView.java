@@ -7,7 +7,6 @@ package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.models.Staff;
 import com.hospitalmgmt.utils.LayoutUtils;
-import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
@@ -17,10 +16,8 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
