@@ -7,6 +7,7 @@ package com.hospitalmgmt.models;
 
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.HibernateUtils;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import org.hibernate.HibernateException;
@@ -20,7 +21,6 @@ public class Staff extends Employee {
 
     String department;
     String post;
-    String status;
     Date shiftFrom;
     Date shiftTo;
     Date dateOfJoin;
@@ -39,14 +39,6 @@ public class Staff extends Employee {
 
     public void setPost(String post) {
         this.post = post;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Date getShiftFrom() {
@@ -120,7 +112,7 @@ public class Staff extends Employee {
      * @param id
      * @param staffDto
      */
-    public static void updateStaff(Integer id, HashMap staffDto) {
+    public static void update(Integer id, HashMap staffDto) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
             Session session = hibernateUtils.getSession();
@@ -140,7 +132,7 @@ public class Staff extends Employee {
      *
      * @param id
      */
-    public static void deleteStaff(Integer id) {
+    public static void delete(Integer id) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
             Session session = hibernateUtils.getSession();
@@ -165,6 +157,13 @@ public class Staff extends Employee {
         //staff.setShiftFrom((Date) staffDto.get("shiftFrom"));
         //staff.setShiftTo((Date) staffDto.get("shiftTo"));
         //staff.setSpecialization((String) staffDto.get("specialization"));
+    }
+    
+    public static ArrayList<Staff> findAll() {
+        ArrayList<Staff> staffList = new ArrayList<>();
+        //retrieve all the active staffs
+
+        return staffList;
     }
 
 }

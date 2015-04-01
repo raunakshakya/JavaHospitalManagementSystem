@@ -11,6 +11,7 @@ import com.hospitalmgmt.utils.HibernateUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -18,14 +19,68 @@ import org.hibernate.Session;
  *
  * @author raunakshakya
  */
-public class Patient extends Employee {
+public class Patient {
 
+    private Integer id;
+    private String fullName;
+    private String address;
+    private Date dateOfBirth;
+    private Gender gender;
+    private String contact;
     private BloodGroup bloodgroup;
     private String history;
     private Date dateOfAdmission;
     private String currentProblem;
     private Integer roomNumber;
     private Doctor attendingDoctor;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 
     public BloodGroup getBloodgroup() {
         return bloodgroup;
@@ -75,6 +130,7 @@ public class Patient extends Employee {
         this.attendingDoctor = attendingDoctor;
     }
 
+
     /**
      * gets the patient instance with the given id
      *
@@ -111,6 +167,7 @@ public class Patient extends Employee {
             hibernateUtils.commitTransaction();
         } catch (HibernateException hibernateException) {
             hibernateUtils.rollbackTransaction();
+            JOptionPane.showMessageDialog(null, "Error in inserting New Patient!!!", "Insert Failure", JOptionPane.ERROR_MESSAGE);
         } finally {
             hibernateUtils.closeSession();
         }
@@ -122,7 +179,7 @@ public class Patient extends Employee {
      * @param id
      * @param patientDto
      */
-    public static void updatePatient(Integer id, HashMap patientDto) {
+    public static void update(Integer id, HashMap patientDto) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
             Session session = hibernateUtils.getSession();
@@ -132,6 +189,7 @@ public class Patient extends Employee {
             hibernateUtils.commitTransaction();
         } catch (HibernateException e) {
             hibernateUtils.rollbackTransaction();
+            JOptionPane.showMessageDialog(null, "Patient Record Not Found!!!");
         } finally {
             hibernateUtils.closeSession();
         }
@@ -142,7 +200,7 @@ public class Patient extends Employee {
      *
      * @param id
      */
-    public static void deletePatient(Integer id) {
+    public static void delete(Integer id) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
             Session session = hibernateUtils.getSession();
@@ -160,24 +218,24 @@ public class Patient extends Employee {
         patient.setFullName((String) patientDto.get("fullName"));
         patient.setAddress((String) patientDto.get("address"));
         patient.setContact((String) patientDto.get("contact"));
-        String genderValue = (String) patientDto.get("gender");
-        patient.setGender(Gender.valueOf(genderValue));
-        patient.setDateOfBirth((Date) patientDto.get("dateOfBirthd"));
+        String gender = (String) patientDto.get("gender");
+        patient.setGender(Gender.valueOf(gender));
+        patient.setDateOfBirth((Date) patientDto.get("dateOfBirth"));
         //patient.setDateOfJoin((Date) patientDto.get("dateOfJoin"));
         //patient.setShiftFrom((Date) patientDto.get("shiftFrom"));
         //patient.setShiftTo((Date) patientDto.get("shiftTo"));
         //patient.setSpecialization((String) patientDto.get("specialization"));
     }
-    
+
     public static ArrayList<Patient> findAllByDoctor(Integer id) {
         Doctor doctor = Doctor.findById(id);
         if (doctor == null) {
             throw new RuntimeException("Doctor with given id " + id + " not found!");
         }
-        
+
         ArrayList<Patient> patientList = new ArrayList<>();
         //retrieve all the patients for the given doctor
-        
+
         return patientList;
     }
 

@@ -41,7 +41,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
     CheckboxGroup cbmf;
     Checkbox cbm, cbf;
     JButton btnAdd, btnClear;
-    int doctorStatus;
+    int status;
 
     public DoctorAdd() {
         super(LayoutUtils.NEW_DOCTOR_TITLE);
@@ -212,7 +212,7 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
             String dob = txtdob.getText().trim();
             String doj = txtdoj.getText().trim();
             String gender = (cbm.getState() == true) ? "M" : ((cbf.getState() == true) ? "F" : null);
-            doctorStatus = chkboxStatus.isSelected() ? 1 : 0;
+            status = chkboxStatus.isSelected() ? 1 : 0;
             
             if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || specialization.isEmpty() || shiftto.isEmpty()
                     || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
@@ -222,13 +222,13 @@ public final class DoctorAdd extends JInternalFrame implements ActionListener {
                 doctorDto.put("fullName", fullname);
                 doctorDto.put("address", address);
                 doctorDto.put("contact", contact);
+                doctorDto.put("status", status);
+                doctorDto.put("gender", gender);
                 doctorDto.put("dateOfBirth", dob);
                 doctorDto.put("dateOfJoin", doj);
                 doctorDto.put("specialization", specialization);
                 doctorDto.put("shiftFrom", shiftfrom);
                 doctorDto.put("shiftTo", shiftto);
-                doctorDto.put("gender", gender);
-                doctorDto.put("doctorStatus", doctorStatus);
                 
                 Doctor.create(doctorDto);
             }

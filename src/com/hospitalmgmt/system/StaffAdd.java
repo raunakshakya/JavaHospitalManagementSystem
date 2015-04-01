@@ -5,8 +5,8 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Staff;
 import com.hospitalmgmt.utils.LayoutUtils;
-import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.*;
 
@@ -23,10 +24,10 @@ import javax.swing.*;
  *
  * @author Raunak Shakya
  */
-public final class StaffAdd extends JInternalFrame implements ActionListener {
+public class StaffAdd extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -165,22 +166,18 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         btnAdd = new JButton(messages.getString("common.add"));
         btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
+        btnAdd.addActionListener(new submit());
 
         //Button to clear information...
         btnClear = new JButton(messages.getString("common.clear"));
         btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
-
-        //Database Connection...
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
-
-        btnClear.addActionListener(new clear());
-        btnAdd.addActionListener(new submit());
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doClearTheTextFields();
+            }
+        });
 
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
@@ -191,26 +188,18 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
         setLayout(null);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-    }
-
-    class clear implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            txtfullname.setText("");
-            txtDept.setText("");
-            txtdob.setText("");
-            cbmf.setSelectedCheckbox(null);
-            txtaddress.setText("");
-            txtpost.setText("");
-            chkboxStatus.setSelected(false);
-            txtshiftfrom.setText("");
-            txtcontact.setText("");
-            txtshiftto.setText("");
-            txtdoj.setText("");
-        }
+    public void doClearTheTextFields() {
+        txtfullname.setText("");
+        txtDept.setText("");
+        txtdob.setText("");
+        cbmf.setSelectedCheckbox(null);
+        txtaddress.setText("");
+        txtpost.setText("");
+        chkboxStatus.setSelected(false);
+        txtshiftfrom.setText("");
+        txtcontact.setText("");
+        txtshiftto.setText("");
+        txtdoj.setText("");
     }
 
     class submit implements ActionListener {
@@ -226,38 +215,29 @@ public final class StaffAdd extends JInternalFrame implements ActionListener {
             String shiftfrom = txtshiftfrom.getText().trim();
             String dob = txtdob.getText().trim();
             String doj = txtdoj.getText().trim();
-            String gender = "";
-            if (cbm.getState() == true) {
-                gender = "M";
-            }
-            if (cbf.getState() == true) {
-                gender = "F";
-            }
-
-            if (chkboxStatus.isSelected()) {
-                staffStatus = 1;
-            } else {
-                staffStatus = 0;
-            }
+            String gender = (cbm.getState() == true) ? "M" : ((cbf.getState() == true) ? "F" : null);
+            staffStatus = (chkboxStatus.isSelected()) ? 1 : 0;
 
             if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || department.isEmpty() || post.isEmpty()
                     || shiftto.isEmpty() || shiftfrom.isEmpty() || dob.isEmpty() || doj.isEmpty() || gender.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
             } else {
-                try {
-                    stmt = conn.prepareStatement("INSERT INTO staff_table(staff_fullname, staff_address, "
-                            + "staff_contact, staff_dateofbirth, staff_dateofjoin, "
-                            + "staff_department, staff_post, staff_workshiftfrom, staff_workshiftto, staff_gender, staff_isactive) VALUES('" + fullname + "', '" + address + "', '" + contact + "', '"
-                            + dob + "', '" + doj + "', '" + department + "', '" + post + "', '" + shiftfrom + "', '" + shiftto + "', '" + gender + "', '" + staffStatus + "');");
+                HashMap staffDto = new HashMap();
+                staffDto.put("fullName", fullname);
+                staffDto.put("address", address);
+                staffDto.put("contact", contact);
+                staffDto.put("post", post);
+                staffDto.put("status", staffStatus);
+                staffDto.put("gender", gender);
+                staffDto.put("dateOfBirth", dob);
+                staffDto.put("dateOfJoin", doj);
+                staffDto.put("department", department);
+                staffDto.put("shiftFrom", shiftfrom);
+                staffDto.put("shiftTo", shiftto);
+                staffDto.put("shiftFrom", shiftfrom);
+                staffDto.put("shiftTo", shiftto);
 
-                    int success = stmt.executeUpdate();
-                    if (success > 0) {
-                        JOptionPane.showMessageDialog(new JFrame(), "New Staff Has Been Added!!!", "Insert Success", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    conn.close();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error in inserting Doctor Data!!!");
-                }
+                Staff.create(staffDto);
             }
         }
     }

@@ -5,13 +5,14 @@
  */
 package com.hospitalmgmt.models;
 
+import com.hospitalmgmt.utils.EmployeeStatus;
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.HibernateUtils;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -20,7 +21,6 @@ import org.hibernate.Transaction;
 public class Doctor extends Employee {
 
     private String specialization;
-    private String status;
     private Date dateOfJoin;
     private Date shiftFrom;
     private Date shiftTo;
@@ -31,14 +31,6 @@ public class Doctor extends Employee {
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Date getDateOfJoin() {
@@ -150,13 +142,22 @@ public class Doctor extends Employee {
         doctor.setFullName((String) doctorDto.get("fullName"));
         doctor.setAddress((String) doctorDto.get("address"));
         doctor.setContact((String) doctorDto.get("contact"));
-        String genderValue = (String) doctorDto.get("gender");
-        doctor.setGender(Gender.valueOf(genderValue));
+        String status = (String) doctorDto.get("status");
+        doctor.setStatus(EmployeeStatus.valueOf(status));
+        String gender = (String) doctorDto.get("gender");
+        doctor.setGender(Gender.valueOf(gender));
         doctor.setDateOfBirth((Date) doctorDto.get("dateOfBirthd"));
         doctor.setDateOfJoin((Date) doctorDto.get("dateOfJoin"));
         doctor.setShiftFrom((Date) doctorDto.get("shiftFrom"));
         doctor.setShiftTo((Date) doctorDto.get("shiftTo"));
         doctor.setSpecialization((String) doctorDto.get("specialization"));
+    }
+    
+    public static ArrayList<Doctor> findAll() {
+        ArrayList<Doctor> doctorList = new ArrayList<>();
+        //retrieve all the active doctors
+
+        return doctorList;
     }
 
 }

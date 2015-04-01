@@ -5,6 +5,7 @@
  */
 package com.hospitalmgmt.models;
 
+import com.hospitalmgmt.utils.EmployeeStatus;
 import com.hospitalmgmt.utils.Gender;
 import java.util.Date;
 
@@ -14,12 +15,22 @@ import java.util.Date;
  */
 public class Employee {
 
+    private Integer id;
     private String fullName;
     private String address;
     private Date dateOfBirth;
     private Gender gender;
     private String contact;
+    private EmployeeStatus status;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
     public String getFullName() {
         return fullName;
     }
@@ -58,6 +69,14 @@ public class Employee {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public EmployeeStatus getIsActive() {
+        return status;
+    }
+
+    public void setStatus(EmployeeStatus status) {
+        this.status = status;
     }
 
 }

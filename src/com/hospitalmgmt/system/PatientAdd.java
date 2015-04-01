@@ -5,9 +5,10 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Doctor;
+import com.hospitalmgmt.models.Patient;
 import com.hospitalmgmt.utils.BloodGroup;
 import com.hospitalmgmt.utils.LayoutUtils;
-import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
@@ -18,6 +19,8 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.*;
 
@@ -25,10 +28,10 @@ import javax.swing.*;
  *
  * @author Raunak Shakya
  */
-public final class PatientAdd extends JInternalFrame implements ActionListener {
+public final class PatientAdd extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -176,32 +179,75 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         btnAdd = new JButton(messages.getString("common.add"));
         btnAdd.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE + 80, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnAdd);
+        btnAdd.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fullname = txtfullname.getText().trim();
+                String address = txtaddress.getText().trim();
+                String contact = txtcontact.getText().trim();
+                String currentproblem = txtcurrentprob.getText().trim();
+                String roomno = txtroom.getText().trim();
+                String bloodgroup = (choiceBG.getSelectedIndex() != 0) ? choiceBG.getSelectedItem() : null;
+                String history = txthistory.getText().trim();
+                String dob = txtdob.getText().trim();
+                String doa = txtdoa.getText().trim();
+                String doctorname = (choiceDoc.getSelectedIndex() != 0) ? choiceDoc.getSelectedItem() : null;
+                String gender = (cbm.getState() == true) ? "MALE" : ((cbf.getState() == true) ? "FEMALE" : null);
+
+                if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || currentproblem.isEmpty() || roomno.isEmpty()
+                        || bloodgroup.isEmpty() || dob.isEmpty() || doa.isEmpty() || gender.isEmpty() || doctorname.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
+                } else {
+                    int doctorid = 0;
+                    try {
+                        System.out.println(doctorname);
+                        stmt = conn.prepareStatement("SELECT doctor_id FROM doctor_table WHERE doctor_fullname='"
+                                + doctorname + "'");
+                        rs = stmt.executeQuery();
+                        if (rs.next()) {
+                            doctorid = rs.getInt("doctor_id");
+                        }
+                    } catch (SQLException exc) {
+                        JOptionPane.showMessageDialog(null, "Error retrieving Doctor ID from doctor_table!!!");
+                    }
+
+                    if (doctorid != 0) {
+                        HashMap patientDto = new HashMap();
+                        patientDto.put("fullName", fullname);
+                        patientDto.put("address", address);
+                        patientDto.put("contact", contact);
+                        patientDto.put("gender", gender);
+                        patientDto.put("bloodgroup", bloodgroup);
+                        patientDto.put("dateOfBirth", dob);
+                        patientDto.put("dateOfJoin", doa);
+                        patientDto.put("currentproblem", currentproblem);
+                        patientDto.put("history", history);
+                        patientDto.put("roomno", roomno);
+                        patientDto.put("doctorid", doctorid);
+
+                        Patient.create(patientDto);
+                        JOptionPane.showMessageDialog(null, "New Patient Has Been Added!!!", "Insert Success", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        });
 
         //Button to clear information...
         btnClear = new JButton(messages.getString("common.clear"));
         btnClear.setBounds(LayoutUtils.INNER_WINDOW_BUTTON_X_COORDINATE + 120, LayoutUtils.INNER_WINDOW_BUTTON_Y_COORDINATE + 80, LayoutUtils.INNER_WINDOW_BUTTON_WIDTH, LayoutUtils.INNER_WINDOW_BUTTON_HEIGHT);
         add(btnClear);
-
-        //Database Connection...
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error connecting to the Database!!!");
-        }
-
-        try {
-            stmt = conn.prepareStatement("SELECT * FROM doctor_table");
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                choiceDoc.addItem(rs.getString("doctor_fullname"));
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doClearTheTextFields();
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error in populating Doctors!!!");
-        }
+        });
 
-        btnClear.addActionListener(new clear());
-        btnAdd.addActionListener(new submit());
+        ArrayList<Doctor> doctors = Doctor.findAll();
+        for (Doctor doctor : doctors) {
+            choiceDoc.addItem(doctor.getFullName());
+        }
 
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
@@ -212,98 +258,18 @@ public final class PatientAdd extends JInternalFrame implements ActionListener {
         setLayout(null);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
+    public void doClearTheTextFields() {
+        txtfullname.setText("");
+        txtdob.setText("");
+        txtaddress.setText("");
+        txthistory.setText("");
+        txtcurrentprob.setText("");
+        txtcontact.setText("");
+        txtroom.setText("");
+        txtdoa.setText("");
+        cbmf.setSelectedCheckbox(null);
+        choiceBG.select(0);
+        choiceDoc.select(0);
     }
 
-    class clear implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            txtfullname.setText("");
-            txtdob.setText("");
-            txtaddress.setText("");
-            txthistory.setText("");
-            txtcurrentprob.setText("");
-            txtcontact.setText("");
-            txtroom.setText("");
-            txtdoa.setText("");
-            cbmf.setSelectedCheckbox(null);
-            choiceBG.select(0);
-            choiceDoc.select(0);
-        }
-    }
-
-    class submit implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            String fullname = txtfullname.getText().trim();
-            String address = txtaddress.getText().trim();
-            String contact = txtcontact.getText().trim();
-            String currentproblem = txtcurrentprob.getText().trim();
-            String roomno = txtroom.getText().trim();
-
-            int bgindex = choiceBG.getSelectedIndex();
-            String bloodgroup = "";
-            if (bgindex != 0) {
-                bloodgroup = choiceBG.getSelectedItem();
-            }
-
-            String history = txthistory.getText().trim();
-            String dob = txtdob.getText().trim();
-            String doa = txtdoa.getText().trim();
-
-            int docindex = choiceDoc.getSelectedIndex();
-            String doctorname = "";
-            if (docindex != 0) {
-                doctorname = choiceDoc.getSelectedItem();
-            }
-
-            String gender = "";
-            if (cbm.getState() == true) {
-                gender = "M";
-            }
-            if (cbf.getState() == true) {
-                gender = "F";
-            }
-
-            if (fullname.isEmpty() || address.isEmpty() || contact.isEmpty() || currentproblem.isEmpty() || roomno.isEmpty()
-                    || bloodgroup.isEmpty() || dob.isEmpty() || doa.isEmpty() || gender.isEmpty() || doctorname.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Enter all the field data correctly!!!");
-            } else {
-                int doctorid = 0;
-
-                try {
-                    System.out.println(doctorname);
-                    stmt = conn.prepareStatement("SELECT doctor_id FROM doctor_table WHERE doctor_fullname='"
-                            + doctorname + "'");
-                    rs = stmt.executeQuery();
-                    if (rs.next()) {
-                        doctorid = rs.getInt("doctor_id");
-                    }
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error retrieving Doctor ID from doctor_table!!!");
-                }
-
-                if (doctorid != 0) {
-                    try {
-                        stmt = conn.prepareStatement("INSERT INTO patient_table(patient_fullname, patient_address, "
-                                + "patient_contact, patient_bloodgroup, patient_history, patient_dateofbirth, "
-                                + "patient_currentproblem, patient_roomid, patient_doa, patient_gender, patient_doctorid) "
-                                + "VALUES('" + fullname + "', '" + address + "', '" + contact + "', '"
-                                + bloodgroup + "', '" + history + "', '" + dob + "', '" + currentproblem + "', '"
-                                + roomno + "', '" + doa + "', '" + gender + "', '" + doctorid + "');");
-
-                        int success = stmt.executeUpdate();
-                        if (success > 0) {
-                            JOptionPane.showMessageDialog(null, "New Patient Has Been Added!!!", "Insert Success", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Error in inserting New Patient!!!", "Insert Failure", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        }
-    }
 }

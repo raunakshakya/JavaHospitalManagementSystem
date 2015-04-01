@@ -5,8 +5,8 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Admin;
 import com.hospitalmgmt.utils.LayoutUtils;
-import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.MessageUtils;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import java.awt.Color;
@@ -15,16 +15,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -44,20 +39,16 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Raunak Shakya
  */
-public class HospitalMgmtSystem implements ActionListener {
+public class HospitalMgmtSystem {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
 
-    //Declaration of Java Swing Components...
     static JFrame frame;
     private static JPanel panel1, panel2, panel3;
     private final JButton loginBtn, cancelBtn;
     private final JLabel loginFormTitle, usernameLbl, passwordLbl;
     private static JTextField usernameField;
     private static JPasswordField passwordField;
-    private Connection conn = null;
-    private PreparedStatement stmt = null;
-    private ResultSet rs = null;
 
     public HospitalMgmtSystem() {
 
@@ -118,15 +109,43 @@ public class HospitalMgmtSystem implements ActionListener {
         //Login Button...
         loginBtn = new JButton(messages.getString("common.login"));//, new ImageIcon(getClass().getResource("/images/key.gif")));
         loginBtn.setPreferredSize(new Dimension(100, 30));
-        loginBtn.addActionListener(this);
+        loginBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String loginName, loginPassword;
+                loginName = usernameField.getText().trim();
+                loginPassword = passwordField.getText().trim();
+
+                List<Admin> admins = Admin.findAll();
+                boolean loginSuccess = false;
+                for (Admin admin : admins) {
+                    if (loginName.equals(admin.getUsername()) && loginPassword.equals(admin.getPassword())) {
+                        loginSuccess = true;
+                        usernameField.setText("");
+                        passwordField.setText("");
+                        frame.setVisible(false);
+                        frame.dispose();
+                        IndexPage indexPage = new IndexPage();
+                    }
+                }
+                if (!loginSuccess) {
+                    usernameField.setText("");
+                    passwordField.setText("");
+                    JOptionPane.showMessageDialog(null, "User Name and Password Invalid", "Login Failure", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        panel3.add(loginBtn);
 
         //Login Cancel Button...
         cancelBtn = new JButton(messages.getString("common.cancel"));//, new ImageIcon(getClass().getResource("/images/Keys.gif")));
         cancelBtn.setPreferredSize(new Dimension(100, 30));
-        cancelBtn.addActionListener(this);
-
-        //Add Login & Cancel buttons to panel3...
-        panel3.add(loginBtn);
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
         panel3.add(cancelBtn);
 
         //Fourth Panel...
@@ -149,7 +168,6 @@ public class HospitalMgmtSystem implements ActionListener {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         // setup the look and feel properties
         Properties props = new Properties();
         props.put("logoString", "Vayodha");
@@ -157,7 +175,6 @@ public class HospitalMgmtSystem implements ActionListener {
 
         // set your theme
         AcrylLookAndFeel.setCurrentTheme(props);
-
         try {
             UIManager.setLookAndFeel(LayoutUtils.JTATTOO_APPLICATION_THEME);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -166,41 +183,4 @@ public class HospitalMgmtSystem implements ActionListener {
         HospitalMgmtSystem hospitalMgmtSystemProject = new HospitalMgmtSystem();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-
-        if (ae.getSource() == loginBtn) {
-            String loginName, loginPassword;
-            loginName = usernameField.getText().trim();
-            loginPassword = passwordField.getText().trim();
-
-            try {
-                Class.forName(DBConnectionUtils.DB_DRIVER);
-                conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-                stmt = conn.prepareStatement("SELECT username, password FROM admin_table");
-                rs = stmt.executeQuery();
-
-                int flag = 0;
-                while (rs.next()) {
-                    if (loginName.equals(rs.getString("username")) && loginPassword.equals(rs.getString("password"))) {
-                        flag = 1;
-                        usernameField.setText("");
-                        passwordField.setText("");
-                        frame.setVisible(false);
-                        frame.dispose();
-                        IndexPage indexPage = new IndexPage();
-                    }
-                }
-                if (flag != 1) {
-                    usernameField.setText("");
-                    passwordField.setText("");
-                    JOptionPane.showMessageDialog(null, "User Name and Password Invalid", "Login Failure", JOptionPane.WARNING_MESSAGE);
-                }
-            } catch (ClassNotFoundException | SQLException | HeadlessException e) {
-                JOptionPane.showMessageDialog(null, "Error in Logging in!");
-            }
-        } else if (ae.getSource() == cancelBtn) {
-            System.exit(0);
-        }
-    }
 }

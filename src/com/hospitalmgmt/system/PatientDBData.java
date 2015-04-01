@@ -5,7 +5,6 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Container;
@@ -31,7 +30,7 @@ import javax.swing.JTable;
 public class PatientDBData extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     static Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -111,5 +110,5 @@ public class PatientDBData extends JInternalFrame {
         setLocation(50, 50);
         setLayout(new FlowLayout(FlowLayout.CENTER));
     }
-    
+
 }

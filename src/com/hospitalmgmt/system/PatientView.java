@@ -5,9 +5,10 @@
  */
 package com.hospitalmgmt.system;
 
+import com.hospitalmgmt.models.Doctor;
+import com.hospitalmgmt.models.Patient;
 import com.hospitalmgmt.utils.BloodGroup;
 import com.hospitalmgmt.utils.LayoutUtils;
-import com.hospitalmgmt.utils.DBConnectionUtils;
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Checkbox;
@@ -18,10 +19,8 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -36,7 +35,7 @@ import javax.swing.JTextField;
 public class PatientView extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
+
     Connection conn = null;
     PreparedStatement stmt1 = null;
     PreparedStatement stmt2 = null;
@@ -77,10 +76,51 @@ public class PatientView extends JInternalFrame {
         btnSubmit = new JButton(messages.getString("common.search"));
         btnSubmit.setBounds(320, 98, 100, 30);
         add(btnSubmit);
+        btnSubmit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!txtpatno.getText().trim().equals("")) {
+                    Integer patientId = Integer.parseInt(txtpatno.getText().trim());
+                    Patient patient = Patient.findById(patientId);
+
+                    String fullName = patient.getFullName();
+                    String address = patient.getAddress();
+                    String contact = patient.getContact();
+                    String bloodgroup = patient.getBloodgroup().getName();
+                    String history = patient.getHistory();
+                    String dateOfBirth = patient.getDateOfBirth().toString();
+                    String problem = patient.getCurrentProblem();
+                    String room = patient.getRoomNumber().toString();
+                    String dateOfJoin = patient.getDateOfAdmission().toString();
+                    String gender = patient.getGender().getName();
+                    Doctor doctor = patient.getAttendingDoctor();
+
+                    txtfullname.setText(fullName);
+                    txtcontact.setText(contact);
+                    txtdob.setText(dateOfBirth);
+                    txtaddress.setText(address);
+                    txthistory.setText(history);
+                    txtcurrentproblem.setText(problem);
+                    txtbloodgroup.setText(bloodgroup);
+                    txtroomno.setText(room);
+                    txtdoa.setText(dateOfJoin);
+                    txtgender.setText(gender);
+                    txtdoctor.setText(doctor.getFullName());
+                } else {
+                    JOptionPane.showMessageDialog(null, "First Enter the Patient ID!!!");
+                }
+            }
+        });
 
         btnClear = new JButton(messages.getString("common.clear.all"));
         btnClear.setBounds(430, 98, 100, 30);
         add(btnClear);
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doClearTheTextFields();
+            }
+        });
 
         //Personal Information Title...
         subTitle = new JLabel(messages.getString("personal.information.title"));
@@ -168,7 +208,7 @@ public class PatientView extends JInternalFrame {
         add(txtroomno);
 
         lbldoa = new JLabel(messages.getString("label.date.of.admission"));
-        lbldoa.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE,400, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
+        lbldoa.setBounds(LayoutUtils.LABEL_RIGHT_X_COORDINATE, 400, LayoutUtils.LABEL_LEFT_HORIZONTAL_LENGTH, LayoutUtils.LABEL_LEFT_VERTICAL_LENGTH);
         add(lbldoa);
         txtdoa = new JTextField(40);
         txtdoa.setBounds(LayoutUtils.TEXTFIELD_RIGHT_X_COORDINATE, 400, LayoutUtils.TEXTFIELD_HORIZONTAL_LENGTH, LayoutUtils.TEXTFIELD_VERTICAL_LENGTH);
@@ -194,17 +234,6 @@ public class PatientView extends JInternalFrame {
         choiceDoc.addItem(messages.getString("label.attending.doctor.select"));
         add(choiceDoc);
 
-        //Database Connection...
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error connecting to the database!!!");
-        }
-
-        btnClear.addActionListener(new clear());
-        btnSubmit.addActionListener(new submit());
-
         setSize(LayoutUtils.INNER_WINDOW_WIDTH, LayoutUtils.INNER_WINDOW_HEIGHT);
         setClosable(true);
         setMaximizable(true);
@@ -214,82 +243,18 @@ public class PatientView extends JInternalFrame {
         setLayout(null);
     }
 
-    public void actionPerformed(ActionEvent ae) {
+    public void doClearTheTextFields() {
+        txtfullname.setText("");
+        txtcontact.setText("");
+        txtdob.setText("");
+        txtaddress.setText("");
+        txthistory.setText("");
+        txtcurrentproblem.setText("");
+        txtpatno.setText("");
+        txtroomno.setText("");
+        txtdoa.setText("");
+        txtgender.setText("");
+        txtbloodgroup.setText("");
     }
 
-    class clear implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            txtfullname.setText("");
-            txtcontact.setText("");
-            txtdob.setText("");
-            txtaddress.setText("");
-            txthistory.setText("");
-            txtcurrentproblem.setText("");
-            txtpatno.setText("");
-            txtroomno.setText("");
-            txtdoa.setText("");
-            txtgender.setText("");
-            txtbloodgroup.setText("");
-        }
-    }
-
-    class submit implements ActionListener {
-
-        Integer num, no = 0;
-        String name, addr, contact, blgr, hist, dob, current, room, dateadd, rtype, mf, docid, docname;
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-
-            try {
-                if (!txtpatno.getText().trim().equals("")) {
-                    num = Integer.parseInt(txtpatno.getText().trim());
-                    stmt1 = conn.prepareStatement("SELECT * FROM patient_table WHERE patient_id=?");
-                    stmt1.setInt(1, num);
-                    rs1 = stmt1.executeQuery();
-                    if (rs1.next()) {
-                        name = rs1.getString("patient_fullname");
-                        addr = rs1.getString("patient_address");
-                        contact = rs1.getString("patient_contact");
-                        hist = rs1.getString("patient_history");
-                        dob = rs1.getString("patient_dateofbirth");
-                        current = rs1.getString("patient_currentproblem");
-                        blgr = rs1.getString("patient_bloodgroup");
-                        room = rs1.getString("patient_roomid");
-                        dateadd = rs1.getString("patient_doa");
-                        mf = rs1.getString("patient_gender");
-                        docid = rs1.getString("patient_doctorid");
-
-                        txtfullname.setText(name);
-                        txtcontact.setText(contact);
-                        txtdob.setText(dob);
-                        txtaddress.setText(addr);
-                        txthistory.setText(hist);
-                        txtcurrentproblem.setText(current);
-                        txtbloodgroup.setText(blgr);
-                        txtroomno.setText(room);
-                        txtdoa.setText(dateadd);
-                        txtgender.setText(mf);
-
-                        stmt2 = conn.prepareStatement("SELECT * FROM doctor_table WHERE doctor_id=?");
-                        stmt2.setInt(1, Integer.parseInt(docid));
-                        rs2 = stmt2.executeQuery();
-                        if (rs2.next()) {
-                            docname = rs2.getString("doctor_fullname");
-                        }
-                        txtdoctor.setText(docname);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No Patient Record Found!!!");
-                        txtpatno.setText("");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "First Enter the Patient ID!!!");
-                }
-            } catch (SQLException sq) {
-                JOptionPane.showMessageDialog(null, "Error in Retrieving Patient Data!!!");
-            }
-        }
-    }
 }
