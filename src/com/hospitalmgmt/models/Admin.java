@@ -6,22 +6,23 @@
 package com.hospitalmgmt.models;
 
 import com.hospitalmgmt.utils.HibernateUtils;
+import com.hospitalmgmt.utils.LoggerUtils;
 import java.util.HashMap;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.slf4j.Logger;
 
 /**
  *
  * @author raunakshakya
  */
-
 public class Admin {
 
     Integer id;
     String username;
-    String password;
+    String pass;
 
     public Integer getId() {
         return id;
@@ -39,20 +40,22 @@ public class Admin {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
-    
-        /**
+
+    /**
      * creates a doctor instance
      *
      * @param adminDto
      */
     public static void create(HashMap adminDto) {
+        Logger log = LoggerUtils.logger;
+
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
             Session session = hibernateUtils.getSession();
@@ -60,22 +63,23 @@ public class Admin {
             bindAdminAttributes(admin, adminDto);
             session.save(admin);
             hibernateUtils.commitTransaction();
+            log.debug("> Admin created with " + admin.id);
         } catch (HibernateException hibernateException) {
             hibernateUtils.rollbackTransaction();
         } finally {
             hibernateUtils.closeSession();
         }
     }
-    
+
     private static void bindAdminAttributes(Admin admin, HashMap adminDto) {
         admin.setUsername((String) adminDto.get("username"));
-        admin.setPassword((String) adminDto.get("password"));
+        admin.setPass((String) adminDto.get("password"));
     }
-    
+
     public static List<Admin> findAll() {
         HibernateUtils hibernateUtils = new HibernateUtils();
         Criteria query = hibernateUtils.getSession().createCriteria(Admin.class);
         return query.list();
     }
-    
+
 }

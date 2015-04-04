@@ -6,6 +6,7 @@
 package com.hospitalmgmt.system;
 
 import com.hospitalmgmt.models.Admin;
+import com.hospitalmgmt.utils.Bootstrap;
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.MessageUtils;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
@@ -51,6 +52,8 @@ public class HospitalMgmtSystem {
     private static JPasswordField passwordField;
 
     public HospitalMgmtSystem() {
+        
+        new Bootstrap();
 
         //Defining the frame properties...
         frame = new JFrame(messages.getString("application.title"));
@@ -119,7 +122,7 @@ public class HospitalMgmtSystem {
                 List<Admin> admins = Admin.findAll();
                 boolean loginSuccess = false;
                 for (Admin admin : admins) {
-                    if (loginName.equals(admin.getUsername()) && loginPassword.equals(admin.getPassword())) {
+                    if (loginName.equals(admin.getUsername()) && loginPassword.equals(admin.getPass())) {
                         loginSuccess = true;
                         usernameField.setText("");
                         passwordField.setText("");

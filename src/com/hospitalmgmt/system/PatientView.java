@@ -93,8 +93,9 @@ public class PatientView extends JInternalFrame {
                     String room = patient.getRoomNumber().toString();
                     String dateOfJoin = patient.getDateOfAdmission().toString();
                     String gender = patient.getGender().getName();
-                    Doctor doctor = patient.getAttendingDoctor();
-
+                    Integer attendingDoctorId = patient.getAttendingDoctor();
+                    Doctor doctor = Doctor.findById(attendingDoctorId);
+                    
                     txtfullname.setText(fullName);
                     txtcontact.setText(contact);
                     txtdob.setText(dateOfBirth);

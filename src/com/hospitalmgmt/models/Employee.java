@@ -71,7 +71,7 @@ public class Employee {
         this.contact = contact;
     }
 
-    public EmployeeStatus getIsActive() {
+    public EmployeeStatus getStatus() {
         return status;
     }
 

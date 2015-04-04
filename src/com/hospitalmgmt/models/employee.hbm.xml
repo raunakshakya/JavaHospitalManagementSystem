@@ -13,8 +13,7 @@
         <property name="address"></property>
         <property name="dateOfBirth"></property>
         <property name="gender"></property>
-        <property name="contact"></property>  
-                
+        <property name="contact"></property> 
     </class>  
                 
 </hibernate-mapping>  

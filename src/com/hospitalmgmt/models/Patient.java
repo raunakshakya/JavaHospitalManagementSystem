@@ -32,7 +32,7 @@ public class Patient {
     private Date dateOfAdmission;
     private String currentProblem;
     private Integer roomNumber;
-    private Doctor attendingDoctor;
+    private Integer attendingDoctor;
 
     public Integer getId() {
         return id;
@@ -122,11 +122,11 @@ public class Patient {
         this.roomNumber = roomNumber;
     }
 
-    public Doctor getAttendingDoctor() {
+    public Integer getAttendingDoctor() {
         return attendingDoctor;
     }
 
-    public void setAttendingDoctor(Doctor attendingDoctor) {
+    public void setAttendingDoctor(Integer attendingDoctor) {
         this.attendingDoctor = attendingDoctor;
     }
 

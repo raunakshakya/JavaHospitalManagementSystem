@@ -221,7 +221,9 @@ public class PatientModify extends JInternalFrame {
                     choiceBG.select(patient.getBloodgroup().getName());
                     txtroomno.setText(patient.getRoomNumber().toString());
                     txtdoa.setText(patient.getDateOfAdmission().toString());
-                    txtdoctor.setText(patient.getAttendingDoctor().getFullName());
+                    Integer attendingDoctorId = patient.getAttendingDoctor();
+                    Doctor doctor = Doctor.findById(attendingDoctorId);
+                    txtdoctor.setText(doctor.getFullName());
                     switch (patient.getGender().getName()) {
                         case "Male":
                             cbm.setState(true);
@@ -246,8 +248,9 @@ public class PatientModify extends JInternalFrame {
                     JOptionPane.showMessageDialog(null, "First Enter the Patient ID...");
                 } else {
                     Patient patient = Patient.findById(patientId);
-                    Doctor doctor = patient.getAttendingDoctor();
-
+                    Integer attendingDoctorId = patient.getAttendingDoctor();
+                    Doctor doctor = Doctor.findById(attendingDoctorId);
+                    
                     String fullName = txtfullname.getText().trim();
                     String address = txtaddress.getText().trim();
                     String contact = txtcontact.getText().trim();

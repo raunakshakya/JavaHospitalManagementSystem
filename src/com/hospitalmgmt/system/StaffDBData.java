@@ -5,20 +5,17 @@
  */
 package com.hospitalmgmt.system;
 
-import com.hospitalmgmt.utils.DBConnectionUtils;
+import com.hospitalmgmt.models.Staff;
 import com.hospitalmgmt.utils.LayoutUtils;
 import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Vector;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,40 +27,31 @@ import javax.swing.JTable;
 public class StaffDBData extends JInternalFrame {
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
-    
-    static Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
 
     public StaffDBData() {
         super(LayoutUtils.VIEW_STAFF_TITLE);
 
         Container container = getContentPane();
 
-        Vector columnNames = new Vector();
-        Vector data = new Vector();
+        String columnNames[] = {"Name", "Address", "Contact", "Gender", "Status", "Date of Birth", 
+            "Date of Join", "Department", "Post", "Shift from", "Shift to"};
+        String data[][] = new String[11][];
 
-        try {
-            Class.forName(DBConnectionUtils.DB_DRIVER);
-            conn = DriverManager.getConnection(DBConnectionUtils.DB_CONNECTION_URL, DBConnectionUtils.DB_USERNAME, DBConnectionUtils.DB_PASSWORD);
-            stmt = conn.prepareStatement("Select * from staff_table");
-            ResultSet resultSet = stmt.executeQuery();
-            ResultSetMetaData md = resultSet.getMetaData();
-            int columns = md.getColumnCount();
-            for (int i = 1; i <= columns; i++) {
-                columnNames.addElement(md.getColumnName(i));
-            }
-
-            //Get row data
-            while (resultSet.next()) {
-                Vector row = new Vector(columns);
-                for (int i = 1; i <= columns; i++) {
-                    row.addElement(resultSet.getObject(i));
-                }
-                data.addElement(row);
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
+        ArrayList<Staff> staffs = Staff.findAll();
+        int i = 0;
+        for (Staff staff : staffs) {
+            data[0][i] = staff.getFullName();
+            data[1][i] = staff.getAddress();
+            data[2][i] = staff.getContact();
+            data[3][i] = staff.getGender().getName();
+            data[4][i] = staff.getStatus().name();
+            data[5][i] = staff.getDateOfBirth().toString();
+            data[6][i] = staff.getDateOfJoin().toString();
+            data[7][i] = staff.getDepartment();
+            data[8][i] = staff.getPost();
+            data[9][i] = staff.getShiftFrom().toString();
+            data[10][i] = staff.getShiftTo().toString();
+            i++;
         }
 
         //  Create table with database data

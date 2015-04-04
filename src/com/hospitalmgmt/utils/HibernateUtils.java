@@ -5,6 +5,8 @@
  */
 package com.hospitalmgmt.utils;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,9 +23,15 @@ public class HibernateUtils {
     private Transaction transaction = null;
 
     public HibernateUtils() {
-        sessionFactory = new Configuration().configure("com/hospitalmgmt/system/hibernate.cfg.xml").buildSessionFactory();
-        session = sessionFactory.openSession();
-        transaction = session.beginTransaction();
+        Logger logger = Logger.getLogger("hibernate log");
+        logger.info("> HibernateUtils initialization started");
+        try {
+            sessionFactory = new Configuration().configure("com/hospitalmgmt/system/hibernate.cfg.xml").buildSessionFactory();
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+        } catch(Exception exception) {
+            logger.log(Level.SEVERE, "HibernateUtils instance could not be initialized: {0}", exception.getMessage());
+        }
     }
 
     public Session getSession() {
