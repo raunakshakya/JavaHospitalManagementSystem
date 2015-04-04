@@ -23,8 +23,6 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,12 +33,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Raunak Shakya
  */
 public class HospitalMgmtSystem {
+
+    public static Logger logger = Logger.getLogger(HospitalMgmtSystem.class);
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
 
@@ -52,7 +53,7 @@ public class HospitalMgmtSystem {
     private static JPasswordField passwordField;
 
     public HospitalMgmtSystem() {
-        
+
         new Bootstrap();
 
         //Defining the frame properties...
@@ -171,6 +172,8 @@ public class HospitalMgmtSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        logger.info("JAVA Hospital Management System started");
+        
         // setup the look and feel properties
         Properties props = new Properties();
         props.put("logoString", "Vayodha");
@@ -180,8 +183,8 @@ public class HospitalMgmtSystem {
         AcrylLookAndFeel.setCurrentTheme(props);
         try {
             UIManager.setLookAndFeel(LayoutUtils.JTATTOO_APPLICATION_THEME);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(HospitalMgmtSystem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException exception) {
+            logger.error("JTattoo theme could not be loaded:\n" + exception.getMessage());
         }
         HospitalMgmtSystem hospitalMgmtSystemProject = new HospitalMgmtSystem();
     }

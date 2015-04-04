@@ -19,6 +19,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import static com.hospitalmgmt.system.HospitalMgmtSystem.logger;
 
 /**
  *
@@ -126,7 +127,8 @@ public class BillingPage extends JInternalFrame {
 
                     Long days = Math.round((difference / (1000 * 60 * 60 * 24)));
                     txtamount.setText(String.valueOf(days * 2000));
-                } catch (Exception exc) {
+                } catch (Exception exception) {
+                    logger.error("Error calculating billing:\n" + exception.getMessage());
                     JOptionPane.showMessageDialog(null, "Error in calcuating bill!!!");
                 }
             }

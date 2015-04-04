@@ -9,6 +9,7 @@ import com.hospitalmgmt.models.Admin;
 import com.hospitalmgmt.models.Doctor;
 import com.hospitalmgmt.models.Patient;
 import com.hospitalmgmt.models.Staff;
+import static com.hospitalmgmt.system.HospitalMgmtSystem.logger;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -19,6 +20,7 @@ import java.util.HashMap;
 public class Bootstrap {
 
     public Bootstrap() {
+        logger.info("Bootstrap loading started");
         bootstrapAdmin();
         bootstrapDoctor();
         bootstrapStaff();
@@ -26,6 +28,8 @@ public class Bootstrap {
     }
 
     private void bootstrapAdmin() {
+        logger.info("Bootstrapping admin instances started");
+
         HashMap adminDto1 = new HashMap();
         adminDto1.put("username", "u1");
         adminDto1.put("password", "u1");
@@ -38,6 +42,8 @@ public class Bootstrap {
     }
 
     private void bootstrapDoctor() {
+        logger.info("Bootstrapping doctor instances started");
+
         HashMap doctorDto1 = new HashMap();
         doctorDto1.put("fullName", "Bob Stalmach");
         doctorDto1.put("address", "Stockholm");
@@ -64,6 +70,8 @@ public class Bootstrap {
     }
 
     private void bootstrapStaff() {
+        logger.info("Bootstrapping staff instances started");
+
         HashMap staffDto1 = new HashMap();
         staffDto1.put("fullName", "Bob Stalmach");
         staffDto1.put("address", "Stockholm");
@@ -90,6 +98,8 @@ public class Bootstrap {
     }
 
     private void bootstrapPatient() {
+        logger.info("Bootstrapping patient instances started");
+
         HashMap patientDto1 = new HashMap();
         patientDto1.put("fullName", "Bob Stalmach");
         patientDto1.put("address", "Stockholm");
