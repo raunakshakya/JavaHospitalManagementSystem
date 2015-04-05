@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
  */
 public class HospitalMgmtSystem {
 
-    public static Logger logger = Logger.getLogger(HospitalMgmtSystem.class);
+    public static Logger logger = Logger.getLogger(HospitalMgmtSystem.class.getName());
 
     public static final ResourceBundle messages = MessageUtils.MESSAGES;
 
@@ -123,7 +123,7 @@ public class HospitalMgmtSystem {
                 List<Admin> admins = Admin.findAll();
                 boolean loginSuccess = false;
                 for (Admin admin : admins) {
-                    if (loginName.equals(admin.getUsername()) && loginPassword.equals(admin.getPass())) {
+                    if (loginName.equals(admin.getUsername()) && loginPassword.equals(admin.getPassword())) {
                         loginSuccess = true;
                         usernameField.setText("");
                         passwordField.setText("");

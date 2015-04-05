@@ -8,7 +8,7 @@
         <id name="id">  
             <generator class="increment"></generator>  
         </id>  
-                
+               
         <property name="specialization"></property>  
         <property name="status"></property>
         <property name="dateOfJoin"></property>

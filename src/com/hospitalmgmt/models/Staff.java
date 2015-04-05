@@ -5,11 +5,13 @@
  */
 package com.hospitalmgmt.models;
 
+import static com.hospitalmgmt.system.HospitalMgmtSystem.logger;
+import com.hospitalmgmt.utils.EmployeeStatus;
 import com.hospitalmgmt.utils.Gender;
 import com.hospitalmgmt.utils.HibernateUtils;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -24,6 +26,16 @@ public class Staff extends Employee {
     Date shiftFrom;
     Date shiftTo;
     Date dateOfJoin;
+
+    public Staff(String fullName, String address, Date dateOfBirth, Gender gender, String contact,
+            EmployeeStatus employeeStatus, String department, String post, Date shiftFrom, Date shiftTo, Date dateOfJoin) {
+        super(fullName, address, dateOfBirth, gender, contact, employeeStatus);
+        this.department = department;
+        this.post = post;
+        this.shiftFrom = shiftFrom;
+        this.shiftTo = shiftTo;
+        this.dateOfJoin = dateOfJoin;
+    }
 
     public String getDepartment() {
         return department;
@@ -79,8 +91,10 @@ public class Staff extends Employee {
             hibernateUtils.commitTransaction();
             return staff;
         } catch (HibernateException hibernateException) {
+            logger.debug("Rolling back transaction:\n" + hibernateException.getMessage());
             hibernateUtils.rollbackTransaction();
         } finally {
+            logger.debug("Closing session instance");
             hibernateUtils.closeSession();
         }
         return null;
@@ -95,13 +109,14 @@ public class Staff extends Employee {
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
             Session session = hibernateUtils.getSession();
-            Staff staff = new Staff();
-            bindStaffAttributes(staff, staffDto);
+            Staff staff = bindStaffAttributes(staffDto);
             session.save(staff);
             hibernateUtils.commitTransaction();
         } catch (HibernateException hibernateException) {
+            logger.debug("Rolling back transaction:\n" + hibernateException.getMessage());
             hibernateUtils.rollbackTransaction();
         } finally {
+            logger.debug("Closing session instance");
             hibernateUtils.closeSession();
         }
     }
@@ -115,14 +130,17 @@ public class Staff extends Employee {
     public static void update(Integer id, HashMap staffDto) {
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
+            logger.debug("Updating staff instance with id: " + id);
             Session session = hibernateUtils.getSession();
             Staff staff = (Staff) session.get(Staff.class, id);
-            bindStaffAttributes(staff, staffDto);
+            bindNewStaffAttributes(staff, staffDto);
             session.update(staff);
             hibernateUtils.commitTransaction();
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateException) {
+            logger.debug("Rolling back transaction:\n" + hibernateException.getMessage());
             hibernateUtils.rollbackTransaction();
         } finally {
+            logger.debug("Closing session instance");
             hibernateUtils.closeSession();
         }
     }
@@ -139,31 +157,54 @@ public class Staff extends Employee {
             Staff staff = (Staff) session.get(Staff.class, id);
             session.delete(staff);
             hibernateUtils.commitTransaction();
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateException) {
+            logger.debug("Rolling back transaction:\n" + hibernateException.getMessage());
             hibernateUtils.rollbackTransaction();
         } finally {
+            logger.debug("Closing session instance");
             hibernateUtils.closeSession();
         }
     }
 
-    private static void bindStaffAttributes(Staff staff, HashMap staffDto) {
+    private static void bindNewStaffAttributes(Staff staff, HashMap staffDto) {
         staff.setFullName((String) staffDto.get("fullName"));
         staff.setAddress((String) staffDto.get("address"));
         staff.setContact((String) staffDto.get("contact"));
         String genderValue = (String) staffDto.get("gender");
         staff.setGender(Gender.valueOf(genderValue));
-        staff.setDateOfBirth((Date) staffDto.get("dateOfBirthd"));
-        //staff.setDateOfJoin((Date) staffDto.get("dateOfJoin"));
-        //staff.setShiftFrom((Date) staffDto.get("shiftFrom"));
-        //staff.setShiftTo((Date) staffDto.get("shiftTo"));
-        //staff.setSpecialization((String) staffDto.get("specialization"));
+        staff.setDateOfBirth((Date) staffDto.get("dateOfBirth"));
+        staff.setDateOfJoin((Date) staffDto.get("dateOfJoin"));
+        staff.setShiftFrom((Date) staffDto.get("shiftFrom"));
+        staff.setShiftTo((Date) staffDto.get("shiftTo"));
+        staff.setDepartment((String) staffDto.get("department"));
     }
-    
-    public static ArrayList<Staff> findAll() {
-        ArrayList<Staff> staffList = new ArrayList<>();
-        //retrieve all the active staffs
 
-        return staffList;
+    private static Staff bindStaffAttributes(HashMap staffDto) {
+        String fullName = (String) staffDto.get("fullName");
+        String address = (String) staffDto.get("address");
+        Date dateOfBirth = (Date) staffDto.get("dateOfBirth");
+        String genderValue = (String) staffDto.get("gender");
+        Gender gender = Gender.valueOf(genderValue);
+        String contact = (String) staffDto.get("contact");
+        String status = (String) staffDto.get("status");
+        EmployeeStatus employeeStatus = EmployeeStatus.valueOf(status);
+        String post = (String) staffDto.get("post");
+        Date shiftFrom = (Date) staffDto.get("shiftFrom");
+        Date shiftTo = (Date) staffDto.get("shiftTo");
+        Date dateOfJoin = (Date) staffDto.get("dateOfJoin");
+        String department = (String) staffDto.get("department");
+
+        return new Staff(fullName, address, dateOfBirth, gender, contact, employeeStatus,
+                department, post, shiftFrom, shiftTo, dateOfJoin);
+    }
+
+    public static List<Staff> findAll() {
+        logger.debug("Listing staffs");
+
+        HibernateUtils hibernateUtils = new HibernateUtils();
+        //Criteria query = hibernateUtils.getSession().createCriteria(Staff.class);
+        List staffs = hibernateUtils.getSession().createQuery("FROM Staff").list();
+        return staffs; //query.list();
     }
 
 }

@@ -21,6 +21,7 @@ import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.*;
 
@@ -243,7 +244,7 @@ public final class PatientAdd extends JInternalFrame {
             }
         });
 
-        ArrayList<Doctor> doctors = Doctor.findAll();
+        List<Doctor> doctors = Doctor.findAll();
         for (Doctor doctor : doctors) {
             choiceDoc.addItem(doctor.getFullName());
         }

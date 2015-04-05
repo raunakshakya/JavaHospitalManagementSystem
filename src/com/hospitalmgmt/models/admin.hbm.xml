@@ -6,14 +6,14 @@
 <hibernate-mapping>  
     <class name="com.hospitalmgmt.models.Admin" table="admin">  
         <meta attribute="class-description">
-            This class contains the employee detail. 
+            This class contains the admin detail. 
         </meta>
         <id name="id" type="int" column="id">
             <generator class="native"/>
-        </id>  
-                
-        <property name="username"></property>  
-        <property name="pass"></property>
+        </id>
+        
+        <property name="username" column="username" type="string"/>
+        <property name="password" column="password" type="string"/>
     </class>  
                 
 </hibernate-mapping>  

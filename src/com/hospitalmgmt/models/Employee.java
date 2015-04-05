@@ -21,7 +21,17 @@ public class Employee {
     private Date dateOfBirth;
     private Gender gender;
     private String contact;
-    private EmployeeStatus status;
+    private EmployeeStatus employeeStatus;
+
+    public Employee(String fullName, String address, Date dateOfBirth, Gender gender,
+            String contact, EmployeeStatus employeeStatus) {
+        this.fullName = fullName;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.contact = contact;
+        this.employeeStatus = employeeStatus;
+    }
 
     public Integer getId() {
         return id;
@@ -30,7 +40,7 @@ public class Employee {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public String getFullName() {
         return fullName;
     }
@@ -71,12 +81,12 @@ public class Employee {
         this.contact = contact;
     }
 
-    public EmployeeStatus getStatus() {
-        return status;
+    public EmployeeStatus getEmployeeStatus() {
+        return employeeStatus;
     }
 
-    public void setStatus(EmployeeStatus status) {
-        this.status = status;
+    public void setStatus(EmployeeStatus employeeStatus) {
+        this.employeeStatus = employeeStatus;
     }
 
 }

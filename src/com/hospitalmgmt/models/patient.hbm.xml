@@ -8,13 +8,18 @@
         <id name="id">  
             <generator class="increment"></generator>  
         </id>  
-                
+        
+        <property name="fullName"></property>  
+        <property name="address"></property>
+        <property name="dateOfBirth"></property>
+        <property name="gender"></property>
+        <property name="contact"></property>         
         <property name="bloodgroup"></property>  
         <property name="history"></property>
         <property name="dateOfAdmission"></property>
-        <property name="currentProblem"></property>
+        <property name="problem"></property>
         <property name="roomNumber"></property>  
-        <property name="attendingDoctor"></property>  
+        <property name="doctorId"></property>  
                 
     </class>  
                 

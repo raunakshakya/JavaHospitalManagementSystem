@@ -9,11 +9,31 @@
             <generator class="increment"></generator>  
         </id>  
                 
+                 
+        <discriminator column="type" type="string"></discriminator>  
         <property name="fullName"></property>  
         <property name="address"></property>
         <property name="dateOfBirth"></property>
         <property name="gender"></property>
         <property name="contact"></property> 
+            
+        <subclass name="com.hospitalmgmt.models.Doctor" discriminator-value="doctor">  
+            <property name="specialization"></property>  
+            <property name="status"></property>
+            <property name="dateOfJoin"></property>
+            <property name="shiftFrom"></property>
+            <property name="shiftTo"></property>   
+        </subclass>  
+            
+        <subclass name="com.hospitalmgmt.models.Staff" discriminator-value="staff">
+            <property name="department"></property>  
+            <property name="post"></property>
+            <property name="status"></property>
+            <property name="shiftFrom"></property>
+            <property name="shiftTo"></property>  
+            <property name="dateOfJoin"></property> 
+        </subclass> 
+         
     </class>  
                 
 </hibernate-mapping>  

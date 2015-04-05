@@ -89,12 +89,12 @@ public class PatientView extends JInternalFrame {
                     String bloodgroup = patient.getBloodgroup().getName();
                     String history = patient.getHistory();
                     String dateOfBirth = patient.getDateOfBirth().toString();
-                    String problem = patient.getCurrentProblem();
+                    String problem = patient.getProblem();
                     String room = patient.getRoomNumber().toString();
                     String dateOfJoin = patient.getDateOfAdmission().toString();
                     String gender = patient.getGender().getName();
-                    Integer attendingDoctorId = patient.getAttendingDoctor();
-                    Doctor doctor = Doctor.findById(attendingDoctorId);
+                    Integer doctorId = patient.getDoctorId();
+                    Doctor doctor = Doctor.findById(doctorId);
                     
                     txtfullname.setText(fullName);
                     txtcontact.setText(contact);

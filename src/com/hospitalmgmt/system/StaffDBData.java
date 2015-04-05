@@ -11,10 +11,8 @@ import com.hospitalmgmt.utils.MessageUtils;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
@@ -33,18 +31,18 @@ public class StaffDBData extends JInternalFrame {
 
         Container container = getContentPane();
 
-        String columnNames[] = {"Name", "Address", "Contact", "Gender", "Status", "Date of Birth", 
+        String columnNames[] = {"Name", "Address", "Contact", "Gender", "Status", "Date of Birth",
             "Date of Join", "Department", "Post", "Shift from", "Shift to"};
         String data[][] = new String[11][];
 
-        ArrayList<Staff> staffs = Staff.findAll();
+        List<Staff> staffs = Staff.findAll();
         int i = 0;
         for (Staff staff : staffs) {
             data[0][i] = staff.getFullName();
             data[1][i] = staff.getAddress();
             data[2][i] = staff.getContact();
             data[3][i] = staff.getGender().getName();
-            data[4][i] = staff.getStatus().name();
+            data[4][i] = staff.getEmployeeStatus().name();
             data[5][i] = staff.getDateOfBirth().toString();
             data[6][i] = staff.getDateOfJoin().toString();
             data[7][i] = staff.getDepartment();

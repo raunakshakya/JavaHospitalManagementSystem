@@ -6,13 +6,11 @@
 package com.hospitalmgmt.models;
 
 import com.hospitalmgmt.utils.HibernateUtils;
-import com.hospitalmgmt.utils.LoggerUtils;
 import java.util.HashMap;
 import java.util.List;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.slf4j.Logger;
+import static com.hospitalmgmt.system.HospitalMgmtSystem.logger;
 
 /**
  *
@@ -22,7 +20,12 @@ public class Admin {
 
     Integer id;
     String username;
-    String pass;
+    String password;
+
+    public Admin(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public Integer getId() {
         return id;
@@ -40,12 +43,12 @@ public class Admin {
         this.username = username;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -54,32 +57,37 @@ public class Admin {
      * @param adminDto
      */
     public static void create(HashMap adminDto) {
-        Logger log = LoggerUtils.logger;
-
         HibernateUtils hibernateUtils = new HibernateUtils();
         try {
+            logger.debug("Creating admin instance");
             Session session = hibernateUtils.getSession();
-            Admin admin = new Admin();
-            bindAdminAttributes(admin, adminDto);
-            session.save(admin);
+            Admin admin = bindNewAdminAttributes(adminDto);
+            Integer adminId = (Integer) session.save(admin);
             hibernateUtils.commitTransaction();
-            log.debug("> Admin created with " + admin.id);
+            logger.debug("Admin instance created with " + adminId);
         } catch (HibernateException hibernateException) {
+            logger.debug("Rolling back transaction:\n" + hibernateException.getMessage());
             hibernateUtils.rollbackTransaction();
         } finally {
+            logger.debug("Closing session instance");
             hibernateUtils.closeSession();
         }
     }
 
-    private static void bindAdminAttributes(Admin admin, HashMap adminDto) {
-        admin.setUsername((String) adminDto.get("username"));
-        admin.setPass((String) adminDto.get("password"));
+    private static Admin bindNewAdminAttributes(HashMap adminDto) {
+        String username = (String) adminDto.get("username");
+        String password = (String) adminDto.get("password");
+        Admin admin = new Admin(username, password);
+        return admin;
     }
 
     public static List<Admin> findAll() {
+        logger.debug("Listing admins");
+
         HibernateUtils hibernateUtils = new HibernateUtils();
-        Criteria query = hibernateUtils.getSession().createCriteria(Admin.class);
-        return query.list();
+        //Criteria query = hibernateUtils.getSession().createCriteria(Admin.class);
+        List admins = hibernateUtils.getSession().createQuery("FROM Admin").list();
+        return admins; //query.list();
     }
 
 }

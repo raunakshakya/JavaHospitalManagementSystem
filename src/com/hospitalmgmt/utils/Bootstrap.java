@@ -21,6 +21,7 @@ public class Bootstrap {
 
     public Bootstrap() {
         logger.info("Bootstrap loading started");
+
         bootstrapAdmin();
         bootstrapDoctor();
         bootstrapStaff();
@@ -42,7 +43,7 @@ public class Bootstrap {
     }
 
     private void bootstrapDoctor() {
-        logger.info("Bootstrapping doctor instances started");
+        logger.debug("Bootstrapping doctor instances started");
 
         HashMap doctorDto1 = new HashMap();
         doctorDto1.put("fullName", "Bob Stalmach");
@@ -70,7 +71,7 @@ public class Bootstrap {
     }
 
     private void bootstrapStaff() {
-        logger.info("Bootstrapping staff instances started");
+        logger.debug("Bootstrapping staff instances started");
 
         HashMap staffDto1 = new HashMap();
         staffDto1.put("fullName", "Bob Stalmach");
@@ -79,7 +80,6 @@ public class Bootstrap {
         staffDto1.put("status", "ACTIVE");
         staffDto1.put("gender", "MALE");
         staffDto1.put("dateOfJoin", new Date());
-        staffDto1.put("specialization", "Cardiology");
         staffDto1.put("shiftFrom", new Date());
         staffDto1.put("shiftTo", new Date());
         Staff.create(staffDto1);
@@ -98,7 +98,7 @@ public class Bootstrap {
     }
 
     private void bootstrapPatient() {
-        logger.info("Bootstrapping patient instances started");
+        logger.debug("Bootstrapping patient instances started");
 
         HashMap patientDto1 = new HashMap();
         patientDto1.put("fullName", "Bob Stalmach");
@@ -106,10 +106,11 @@ public class Bootstrap {
         patientDto1.put("contact", "977-1-4222456");
         patientDto1.put("status", "ACTIVE");
         patientDto1.put("gender", "MALE");
-        patientDto1.put("dateOfJoin", new Date());
-        patientDto1.put("specialization", "Cardiology");
-        patientDto1.put("shiftFrom", new Date());
-        patientDto1.put("shiftTo", new Date());
+        patientDto1.put("dateOfAdmission", new Date());
+        patientDto1.put("problem", "Pain in throat");
+        patientDto1.put("history", "Nothing");
+        patientDto1.put("dateOfBirth", new Date());
+        patientDto1.put("doctorId", 1);
         Patient.create(patientDto1);
 
         HashMap patientDto2 = new HashMap();
@@ -118,10 +119,11 @@ public class Bootstrap {
         patientDto2.put("contact", "977-1-4555789");
         patientDto2.put("status", "ACTIVE");
         patientDto2.put("gender", "MALE");
-        patientDto2.put("dateOfJoin", new Date());
-        patientDto2.put("specialization", "Nerve Pyschiatry");
-        patientDto2.put("shiftFrom", new Date());
-        patientDto2.put("shiftTo", new Date());
+        patientDto1.put("dateOfAdmission", new Date());
+        patientDto1.put("problem", "Pain in heart");
+        patientDto1.put("history", "Nothing");
+        patientDto1.put("dateOfBirth", new Date());
+        patientDto2.put("doctorId", 2);
         Patient.create(patientDto2);
     }
 

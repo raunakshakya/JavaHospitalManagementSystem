@@ -217,12 +217,12 @@ public class PatientModify extends JInternalFrame {
                     txtdob.setText(patient.getDateOfBirth().toString());
                     txtaddress.setText(patient.getAddress());
                     txthistory.setText(patient.getHistory());
-                    txtcurrentproblem.setText(patient.getCurrentProblem());
+                    txtcurrentproblem.setText(patient.getProblem());
                     choiceBG.select(patient.getBloodgroup().getName());
                     txtroomno.setText(patient.getRoomNumber().toString());
                     txtdoa.setText(patient.getDateOfAdmission().toString());
-                    Integer attendingDoctorId = patient.getAttendingDoctor();
-                    Doctor doctor = Doctor.findById(attendingDoctorId);
+                    Integer doctorId = patient.getDoctorId();
+                    Doctor doctor = Doctor.findById(doctorId);
                     txtdoctor.setText(doctor.getFullName());
                     switch (patient.getGender().getName()) {
                         case "Male":
@@ -248,7 +248,7 @@ public class PatientModify extends JInternalFrame {
                     JOptionPane.showMessageDialog(null, "First Enter the Patient ID...");
                 } else {
                     Patient patient = Patient.findById(patientId);
-                    Integer attendingDoctorId = patient.getAttendingDoctor();
+                    Integer attendingDoctorId = patient.getDoctorId();
                     Doctor doctor = Doctor.findById(attendingDoctorId);
                     
                     String fullName = txtfullname.getText().trim();
@@ -269,11 +269,11 @@ public class PatientModify extends JInternalFrame {
                     patientDto.put("gender", gender);
                     patientDto.put("bloodgroup", bloodgroup);
                     patientDto.put("dateOfBirth", dateOfBirth);
-                    patientDto.put("dateOfJoin", dateOfJoin);
-                    patientDto.put("currentproblem", problem);
+                    patientDto.put("dateOfAdmission", dateOfJoin);
+                    patientDto.put("problem", problem);
                     patientDto.put("history", history);
-                    patientDto.put("roomno", roomNumber);
-                    patientDto.put("doctorid", doctor.getId());
+                    patientDto.put("roomNumber", roomNumber);
+                    patientDto.put("doctorId", doctor.getId());
 
                     Patient.update(patient.getId(), patientDto);
                 }

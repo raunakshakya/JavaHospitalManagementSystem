@@ -8,7 +8,7 @@
         <id name="id">  
             <generator class="increment"></generator>  
         </id>  
-                
+         
         <property name="department"></property>  
         <property name="post"></property>
         <property name="status"></property>
