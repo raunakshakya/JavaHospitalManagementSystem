@@ -23,7 +23,7 @@ public class HibernateUtils {
 
     public HibernateUtils() {
         try {
-            sessionFactory = new Configuration().configure("com/hospitalmgmt/system/hibernate.cfg.xml").buildSessionFactory();
+            sessionFactory = new Configuration().configure("com/hospitalmgmt/datasource/hibernate.cfg.xml").buildSessionFactory();
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
         } catch (Exception exception) {
