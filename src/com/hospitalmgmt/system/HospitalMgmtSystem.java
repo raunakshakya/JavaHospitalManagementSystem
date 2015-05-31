@@ -172,8 +172,10 @@ public class HospitalMgmtSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // BasicConfigurator.configure();
+
         logger.info("JAVA Hospital Management System started");
-        
+
         // setup the look and feel properties
         Properties props = new Properties();
         props.put("logoString", "Vayodha");

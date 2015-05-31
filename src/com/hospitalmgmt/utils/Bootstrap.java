@@ -111,6 +111,7 @@ public class Bootstrap {
         patientDto1.put("history", "Nothing");
         patientDto1.put("dateOfBirth", new Date());
         patientDto1.put("doctorId", 1);
+        patientDto1.put("bloodGroup", "A +ve");
         Patient.create(patientDto1);
 
         HashMap patientDto2 = new HashMap();
@@ -124,6 +125,7 @@ public class Bootstrap {
         patientDto1.put("history", "Nothing");
         patientDto1.put("dateOfBirth", new Date());
         patientDto2.put("doctorId", 2);
+        patientDto2.put("bloodGroup", "A -ve");
         Patient.create(patientDto2);
     }
 

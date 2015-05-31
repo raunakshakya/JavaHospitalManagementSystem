@@ -12,6 +12,8 @@ import com.hospitalmgmt.utils.HibernateUtils;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -19,6 +21,8 @@ import org.hibernate.Session;
  *
  * @author raunakshakya
  */
+@Entity
+@DiscriminatorValue("staff")
 public class Staff extends Employee {
 
     String department;

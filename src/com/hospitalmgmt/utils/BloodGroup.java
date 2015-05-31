@@ -29,4 +29,20 @@ public enum BloodGroup {
         return this.name;
     }
 
+    public static BloodGroup getBloodGroupFromName(String name) {
+        BloodGroup bloodGroup = null;
+        if (name != null) {
+            for (BloodGroup b : BloodGroup.values()) {
+                if (name.equalsIgnoreCase(b.name)) {
+                    bloodGroup = b;
+                }
+            }
+        }
+        if (bloodGroup == null) {
+            throw new IllegalArgumentException("No constant with name " + name + " found");
+        } else {
+            return bloodGroup;
+        }
+    }
+
 }

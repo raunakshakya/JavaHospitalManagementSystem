@@ -11,27 +11,39 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import static com.hospitalmgmt.system.HospitalMgmtSystem.logger;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author raunakshakya
  */
+@Entity
+@Table(name = "admin")
 public class Admin {
 
-    Integer id;
-    String username;
-    String password;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, nullable = false)
+    private int id;
+    
+    private String username;
+    private String password;
 
     public Admin(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -63,6 +75,7 @@ public class Admin {
             Session session = hibernateUtils.getSession();
             Admin admin = bindNewAdminAttributes(adminDto);
             Integer adminId = (Integer) session.save(admin);
+            session.flush();
             hibernateUtils.commitTransaction();
             logger.debug("Admin instance created with " + adminId);
         } catch (HibernateException hibernateException) {

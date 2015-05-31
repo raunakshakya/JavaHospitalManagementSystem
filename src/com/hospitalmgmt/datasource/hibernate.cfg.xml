@@ -14,17 +14,24 @@
         <property name="hbm2ddl.auto">create</property>  
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>  
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>  
-        <property name="connection.url">jdbc:mysql://localhost:3306/test2</property>  
+        <property name="connection.url">jdbc:mysql://localhost:3306/HospitalManagementSystem</property>  
         <property name="connection.username">root</property>  
         <property name="connection.password">root</property>  
         
+        <mapping class="com.hospitalmgmt.models.Admin"/>
+        <mapping class="com.hospitalmgmt.models.Employee"/> 
+        <mapping class="com.hospitalmgmt.models.Doctor"/>
+        <mapping class="com.hospitalmgmt.models.Staff"/>
+        <mapping class="com.hospitalmgmt.models.Patient"/>   
         <!-- List of XML mapping files -->
+        <!--
         <mapping resource="com/hospitalmgmt/models/admin.hbm.xml"/>
         <mapping resource="com/hospitalmgmt/models/employee.hbm.xml"/>
-        <!--        
+                
         <mapping resource="com/hospitalmgmt/models/doctor.hbm.xml"/>
         <mapping resource="com/hospitalmgmt/models/staff.hbm.xml"/>
-        -->
+        
         <mapping resource="com/hospitalmgmt/models/patient.hbm.xml"/>
+        -->
     </session-factory>
 </hibernate-configuration>

@@ -12,6 +12,12 @@ import com.hospitalmgmt.utils.HibernateUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -20,9 +26,16 @@ import org.hibernate.Session;
  *
  * @author raunakshakya
  */
+@Entity
+@Table(name = "patient")
 public class Patient {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)  
+    
+    @Column(name = "id")
     private Integer id;
+    
     private String fullName;
     private String address;
     private Date dateOfBirth;
@@ -267,7 +280,7 @@ public class Patient {
         String problem = (String) patientDto.get("problem");
         String history = (String) patientDto.get("history");
         String bloodgroupValue = (String) patientDto.get("bloodGroup");
-        BloodGroup bloodGroup = BloodGroup.valueOf(bloodgroupValue);
+        BloodGroup bloodGroup = BloodGroup.getBloodGroupFromName(bloodgroupValue);
         String genderValue = (String) patientDto.get("gender");
         Gender gender = (Gender.valueOf(genderValue));
         Integer roomNumber = (Integer) patientDto.get("roomNumber");
